@@ -1,3 +1,5 @@
+import { AdvancedCollapseList } from '@/src/components/Advanced/AdvancedCollapseList';
+import { AdvancedTabs } from '@/src/components/Advanced/AdvancedTabs';
 import ProgressBar from '@/src/components/ProgressBar.tsx';
 import { createFileRoute } from '@tanstack/react-router';
 
@@ -10,6 +12,8 @@ function AdvancedPage() {
 		<div className={'flex flex-col items-center'}>
 			<div className={'font-semibold  text-2xl uppercase'}>Advanced academy</div>
 			<ProgressBar />
+
+			<AdvancedTabs />
 		</div>
 	);
 }
