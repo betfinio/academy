@@ -118,20 +118,24 @@ export const AdvancedCollapseList = () => {
 		<Accordion type="single" collapsible className="w-full gap-4 flex flex-col">
 			{data?.map((section) => (
 				<AccordionItem className="p-0" key={section.title} value={section.title}>
-					<AccordionTrigger className="bg-card-secondary   rounded-md  flex  py-5 px-6 h-20">
-						<div className="flex gap-4 items-center text-xl font-semibold">
+					<AccordionTrigger className="bg-card-secondary   rounded-md  flex  py-5 px-6 h-20 gap-4">
+						<div className='flex items-center flex-grow flex-wrap'>
+
+						<div className="flex gap-4 items-center text-xl font-semibold whitespace-nowrap">
 							{getBlockIcon(section)}
 
 							{section.title}
 						</div>
-						<span className="text-yellow-400 font-bold ml-auto mr-4">+{section.sectionXp}XP</span>
+						<span className="text-yellow-400 font-bold ml-auto ">+{section.sectionXp}XP</span>
+						</div>
 					</AccordionTrigger>
 					<AccordionContent className="flex p-0">
-						<div className="w-14 flex justify-center after:border-l  after:border-l-gray-800 after:h-full after:block  py-2" />
+						<div className="w-14  justify-center after:border-l  after:border-l-gray-800 after:h-full after:block  py-2 hidden md:flex" />
 
 						<div className="flex flex-col shrink grow ">
 							{section.lessons.map((lesson) => (
-								<AccordionContent key={lesson.title} className="bg-card mt-2 rounded-sm min-h-14 flex items-center  justify-between   ml-auto px-6 py-4">
+								<AccordionContent key={lesson.title} className="bg-card mt-2 rounded-sm min-h-14 flex items-center  justify-between  text-lg font-semibold  ml-auto px-6 py-4">
+									
 									<a href={lesson.src}>{lesson.title}</a>
 									<span className="flex gap-4 items-center">
 										<b className="text-tertiary-foreground">+{lesson.xp}XP</b>

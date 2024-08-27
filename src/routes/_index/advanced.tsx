@@ -10,7 +10,7 @@ export const Route = createFileRoute('/_index/advanced')({
 function AdvancedPage() {
 	return (
 		<div className={'flex flex-col items-center'}>
-			<div className={'font-semibold  text-2xl uppercase'}>Advanced academy</div>
+			<div className={'font-semibold  text-4xl uppercase'}>Advanced academy</div>
 			<ProgressBar />
 
 			<AdvancedTabs />

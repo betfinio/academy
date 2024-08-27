@@ -6,9 +6,9 @@ export const AdvancedTabs = () => {
 	return (
 		<div>
 			<Tabs defaultValue={tabs[0]}>
-				<TabsList>
+				<TabsList className='flex-wrap justify-center  md:justify-normal'>
 					{tabs.map((tab) => (
-						<TabsTrigger variant="contained" className="w-64 bg-primaryLight" value={tab} key={tab}>
+						<TabsTrigger variant="contained" className="w-64 bg-primaryLight text-base" value={tab} key={tab}>
 							{tab}
 						</TabsTrigger>
 					))}
