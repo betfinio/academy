@@ -33,7 +33,7 @@ function Layout() {
 						to={`/${link}`}
 						key={link}
 						className={cx(
-							'flex py-2 lg:p-4 justify-center font-semibold items-center gap-2   rounded-xl',
+							'flex py-2 lg:p-4 justify-center font-semibold items-center gap-2   rounded-xl duration-200 hover:bg-secondary/50',
 							isActive(link) ? 'text-yellow-400 bg-secondaryLight' : 'text-gray-400',
 						)}
 					>
