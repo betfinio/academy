@@ -1,5 +1,5 @@
-import type { SupabaseClient } from 'betfinio_app/supabase';
 import type { DocumentProps } from '@/src/lib/types.ts';
+import type { SupabaseClient } from 'betfinio_app/supabase';
 
 export const fetchDocs = async (lang: string, client?: SupabaseClient): Promise<DocumentProps[]> => {
 	if (!client) {

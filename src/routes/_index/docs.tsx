@@ -1,6 +1,6 @@
 import DocumentBlock from '@/src/components/DocumentBlock.tsx';
-import { createFileRoute } from '@tanstack/react-router';
 import { useDocs } from '@/src/lib/query';
+import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_index/docs')({
 	component: DocsPage,

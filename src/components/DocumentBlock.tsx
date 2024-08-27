@@ -1,9 +1,9 @@
-import type { FC } from 'react';
-import { Separator } from 'betfinio_app/separator';
-import { Button } from 'betfinio_app/button';
-import { useTranslation } from 'react-i18next';
-import { BookIcon } from 'lucide-react';
 import type { DocumentProps } from '@/src/lib/types.ts';
+import { Button } from 'betfinio_app/button';
+import { Separator } from 'betfinio_app/separator';
+import { BookIcon } from 'lucide-react';
+import type { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const DocumentBlock: FC<DocumentProps> = ({ isPlayable = false, title = 'Placeholder', points = '', url = '/' }) => {
 	const { t } = useTranslation('', { keyPrefix: 'academy.document' });
