@@ -10,6 +10,7 @@ export const Route = createFileRoute('/_index/lesson/$section/$lesson')({
 function LessonPage() {
 	return (
 		<div className={'flex flex-col items-center mb-10'}>
+			<div className={'font-semibold  text-4xl uppercase'}>Academy</div>
 			<ProgressBar />
 			<div className={'w-full pt-5 grid grid-cols-5 gap-10'}>
 				<div className={'col-span-5 sm:col-span-3'}>

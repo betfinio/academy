@@ -1,7 +1,8 @@
 import { Quiz } from '@/src/components/Lesson/Quiz.tsx';
 import { useLesson } from '@/src/lib/query';
 import { Route } from '@/src/routes/_index/lesson/$section.$lesson.tsx';
-import { Link } from '@tanstack/react-router';
+import { Link, useLocation, useRouter } from '@tanstack/react-router';
+import { Button } from 'betfinio_app/button';
 import { ArrowLeft, Loader } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -10,16 +11,19 @@ export const LessonLeft = () => {
 
 	const { data: lessonData } = useLesson(Number(lesson));
 	const { i18n } = useTranslation();
+	const { history } = useRouter();
 	if (!lessonData) {
 		return <Loader className={'animate-spin'} />;
 	}
-
+	const onBack = () => {
+		history.go(-1);
+	};
 	return (
 		<div>
-			<Link to={'/new'} className={'flex gap-1 items-center text-[#6A6F84]'}>
+			<Button variant={'ghost'} onClick={onBack} className={'flex gap-1 items-center text-[#6A6F84]'}>
 				<ArrowLeft height={18} />
 				Back
-			</Link>
+			</Button>
 
 			<div className={'mt-8'}>
 				<div className={'text-[24px] leading-[24px] font-semibold'}>{JSON.parse(lessonData.title)[i18n.language]}</div>
