@@ -27,3 +27,14 @@ export const initialStatus: Status = {
 	xp: 0,
 	done: false,
 };
+
+export type QuizOption = {
+	content: string;
+	is_right: boolean;
+};
+
+export type QuizQuestion = {
+	question: string;
+	exp: number;
+	options: QuizOption[];
+};

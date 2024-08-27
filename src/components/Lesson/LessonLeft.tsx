@@ -1,17 +1,28 @@
-import { LessonQuiz } from '@/src/components/Lesson/LessonQuiz.tsx';
+import { Quiz } from '@/src/components/Lesson/Quiz.tsx';
+import { useLesson } from '@/src/lib/query';
+import { Route } from '@/src/routes/_index/lesson/$section.$lesson.tsx';
 import { Link } from '@tanstack/react-router';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Loader } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const LessonLeft = () => {
+	const { lesson } = Route.useParams();
+
+	const { data: lessonData } = useLesson(Number(lesson));
+	const { i18n } = useTranslation();
+	if (!lessonData) {
+		return <Loader className={'animate-spin'} />;
+	}
+
 	return (
 		<div>
-			<Link to={'/academy'} className={'flex gap-1 items-center text-[#6A6F84]'}>
+			<Link to={'/new'} className={'flex gap-1 items-center text-[#6A6F84]'}>
 				<ArrowLeft height={18} />
 				Back
 			</Link>
 
 			<div className={'mt-8'}>
-				<div className={'text-[24px] leading-[24px] font-semibold'}>1. Setup wallet</div>
+				<div className={'text-[24px] leading-[24px] font-semibold'}>{JSON.parse(lessonData.title)[i18n.language]}</div>
 				<div className={'mt-4 w-full bg-blue-400 rounded-[10px] aspect-video'} />
 			</div>
 
@@ -24,7 +35,7 @@ export const LessonLeft = () => {
 				</div>
 			</div>
 
-			<LessonQuiz />
+			<Quiz />
 		</div>
 	);
 };

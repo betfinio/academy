@@ -15,25 +15,25 @@ const Lesson: FC<{ lesson: AdvancedLesson }> = ({ lesson }) => {
 
 	const { data: status = initialStatus } = useLessonStatus(lesson.id, address);
 	return (
-		<AccordionContent
-			key={lesson.title}
-			className="bg-card mt-2 rounded-sm min-h-14 flex items-center  justify-between  text-lg font-semibold  ml-auto px-6 py-4"
-		>
-			<Link to={'/lesson/$section/$lesson'} params={{ lesson: lesson.id.toString(), section: lesson.section.toString() }}>
+		<Link to={'/lesson/$section/$lesson'} params={{ lesson: lesson.id.toString(), section: lesson.section.toString() }}>
+			<AccordionContent
+				key={lesson.title}
+				className="bg-card mt-2 rounded-sm min-h-14 flex items-center  justify-between  text-lg font-semibold  ml-auto px-6 py-4"
+			>
 				{JSON.parse(lesson.title)[i18n.language]}
-			</Link>
-			<span className="flex gap-4 items-center">
-				<span className={cx('text-tertiary-foreground', status.done && 'text-yellow-400')}>+{lesson.xp}XP</span>
-				<span
-					className={cx({
-						'text-success': status.done,
-						'text-transparent': !status.done,
-					})}
-				>
-					<Check />
+				<span className="flex gap-4 items-center">
+					<span className={cx('text-tertiary-foreground', status.done && 'text-yellow-400')}>+{lesson.xp}XP</span>
+					<span
+						className={cx({
+							'text-success': status.done,
+							'text-transparent': !status.done,
+						})}
+					>
+						<Check />
+					</span>
 				</span>
-			</span>
-		</AccordionContent>
+			</AccordionContent>
+		</Link>
 	);
 };
 export default Lesson;

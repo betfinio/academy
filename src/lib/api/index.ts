@@ -67,3 +67,13 @@ export const completeLesson = async (lesson: number, xp: number, address: Addres
 	console.log(result);
 	return true;
 };
+
+export const fetchProgress = async (address: Address, client?: SupabaseClient): Promise<number> => {
+	if (!client) {
+		throw new Error('No client provided');
+	}
+
+	const result = await client.from('sections_progress').select('xp', { count: 'exact' }).eq('member', address.toLowerCase());
+	if (!result.data) return 0;
+	return result.data.map((x) => x.xp).reduce((a, b) => Number(a) + Number(b), 0);
+};

@@ -1,4 +1,13 @@
-import { completeLesson, fetchAdvancedLessons, fetchAdvancedSections, fetchDocs, fetchLesson, fetchLessonStatus, fetchSectionStatus } from '@/src/lib/api';
+import {
+	completeLesson,
+	fetchAdvancedLessons,
+	fetchAdvancedSections,
+	fetchDocs,
+	fetchLesson,
+	fetchLessonStatus,
+	fetchProgress,
+	fetchSectionStatus,
+} from '@/src/lib/api';
 import type { AdvancedLesson, Status } from '@/src/lib/types.ts';
 import { ZeroAddress } from '@betfinio/abi';
 import type { DefaultError } from '@tanstack/query-core';
@@ -47,6 +56,13 @@ export const useLessonStatus = (lessonId: number, address: Address) => {
 	return useQuery<Status>({
 		queryKey: ['academy', 'advanced', 'lesson', 'status', lessonId, address],
 		queryFn: () => fetchLessonStatus(lessonId, address, client),
+	});
+};
+export const useProgress = (address: Address) => {
+	const { client } = useSupabase();
+	return useQuery<number>({
+		queryKey: ['academy', 'progress', address],
+		queryFn: () => fetchProgress(address, client),
 	});
 };
 

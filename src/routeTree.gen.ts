@@ -17,9 +17,7 @@ import { Route as IndexNewImport } from './routes/_index/new'
 import { Route as IndexEventsImport } from './routes/_index/events'
 import { Route as IndexDocsImport } from './routes/_index/docs'
 import { Route as IndexAdvancedImport } from './routes/_index/advanced'
-import { Route as IndexLessonIndexImport } from './routes/_index/lesson/index'
-import { Route as LessonSectionLessonImport } from './routes/lesson/$section.$lesson'
-import { Route as IndexLessonIdImport } from './routes/_index/lesson/$id'
+import { Route as IndexLessonSectionLessonImport } from './routes/_index/lesson/$section.$lesson'
 
 // Create/Update Routes
 
@@ -53,18 +51,8 @@ const IndexAdvancedRoute = IndexAdvancedImport.update({
   getParentRoute: () => IndexRoute,
 } as any)
 
-const IndexLessonIndexRoute = IndexLessonIndexImport.update({
-  path: '/lesson/',
-  getParentRoute: () => IndexRoute,
-} as any)
-
-const LessonSectionLessonRoute = LessonSectionLessonImport.update({
+const IndexLessonSectionLessonRoute = IndexLessonSectionLessonImport.update({
   path: '/lesson/$section/$lesson',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const IndexLessonIdRoute = IndexLessonIdImport.update({
-  path: '/lesson/$id',
   getParentRoute: () => IndexRoute,
 } as any)
 
@@ -114,25 +102,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexIndexImport
       parentRoute: typeof IndexImport
     }
-    '/_index/lesson/$id': {
-      id: '/_index/lesson/$id'
-      path: '/lesson/$id'
-      fullPath: '/lesson/$id'
-      preLoaderRoute: typeof IndexLessonIdImport
-      parentRoute: typeof IndexImport
-    }
-    '/lesson/$section/$lesson': {
-      id: '/lesson/$section/$lesson'
+    '/_index/lesson/$section/$lesson': {
+      id: '/_index/lesson/$section/$lesson'
       path: '/lesson/$section/$lesson'
       fullPath: '/lesson/$section/$lesson'
-      preLoaderRoute: typeof LessonSectionLessonImport
-      parentRoute: typeof rootRoute
-    }
-    '/_index/lesson/': {
-      id: '/_index/lesson/'
-      path: '/lesson'
-      fullPath: '/lesson'
-      preLoaderRoute: typeof IndexLessonIndexImport
+      preLoaderRoute: typeof IndexLessonSectionLessonImport
       parentRoute: typeof IndexImport
     }
   }
@@ -147,10 +121,8 @@ export const routeTree = rootRoute.addChildren({
     IndexEventsRoute,
     IndexNewRoute,
     IndexIndexRoute,
-    IndexLessonIdRoute,
-    IndexLessonIndexRoute,
+    IndexLessonSectionLessonRoute,
   }),
-  LessonSectionLessonRoute,
 })
 
 /* prettier-ignore-end */
@@ -161,8 +133,7 @@ export const routeTree = rootRoute.addChildren({
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/_index",
-        "/lesson/$section/$lesson"
+        "/_index"
       ]
     },
     "/_index": {
@@ -173,8 +144,7 @@ export const routeTree = rootRoute.addChildren({
         "/_index/events",
         "/_index/new",
         "/_index/",
-        "/_index/lesson/$id",
-        "/_index/lesson/"
+        "/_index/lesson/$section/$lesson"
       ]
     },
     "/_index/advanced": {
@@ -197,15 +167,8 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "_index/index.tsx",
       "parent": "/_index"
     },
-    "/_index/lesson/$id": {
-      "filePath": "_index/lesson/$id.tsx",
-      "parent": "/_index"
-    },
-    "/lesson/$section/$lesson": {
-      "filePath": "lesson/$section.$lesson.tsx"
-    },
-    "/_index/lesson/": {
-      "filePath": "_index/lesson/index.tsx",
+    "/_index/lesson/$section/$lesson": {
+      "filePath": "_index/lesson/$section.$lesson.tsx",
       "parent": "/_index"
     }
   }

@@ -26,6 +26,9 @@ module.exports = {
 					DEFAULT: 'hsl(var(--secondary))',
 					//	foreground: 'hsl(var(--success-foreground))',
 				},
+				quiz: {
+					background: '#161A25',
+				},
 				secondaryLight: '#292546',
 				secondaryLighter: '#201C4080',
 				destructive: {

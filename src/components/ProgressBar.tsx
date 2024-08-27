@@ -1,7 +1,12 @@
+import { useProgress } from '@/src/lib/query';
+import { ZeroAddress } from '@betfinio/abi';
 import { Progress } from 'betfinio_app/progress';
 import { StarIcon } from 'lucide-react';
+import { useAccount } from 'wagmi';
 
 const ProgressBar = () => {
+	const { address = ZeroAddress } = useAccount();
+	const { data: xp = 0 } = useProgress(address);
 	return (
 		<div className={'w-full min-h-[100px] flex flex-wrap flex-row items-center gap-2 md:gap-3 lg:gap-4'}>
 			<div className={'flex flex-col items-start gap-1'}>
@@ -13,10 +18,10 @@ const ProgressBar = () => {
 			</div>
 			<div className="flex flex-grow items-center gap-x-6 flex-wrap">
 				<div className={'flex-grow min-w-64'}>
-					<Progress value={30} className={'bg-primaryLighter '} />
+					<Progress value={(xp * 100) / 1000} className={'bg-primaryLighter '} />
 				</div>
 				<div className={'font-semibold text-lg'}>
-					500XP <span className={'text-gray-600'}> / 3000</span>
+					{xp}XP <span className={'text-gray-600'}> / 1000</span>
 				</div>
 			</div>
 		</div>
