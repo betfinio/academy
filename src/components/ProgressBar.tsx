@@ -11,8 +11,7 @@ const ProgressBar = () => {
 					LVL 1
 				</div>
 			</div>
-			<div className='flex flex-grow items-center gap-x-6 flex-wrap'>
-
+			<div className="flex flex-grow items-center gap-x-6 flex-wrap">
 				<div className={'flex-grow min-w-64'}>
 					<Progress value={30} className={'bg-primaryLighter '} />
 				</div>

@@ -119,14 +119,13 @@ export const AdvancedCollapseList = () => {
 			{data?.map((section) => (
 				<AccordionItem className="p-0" key={section.title} value={section.title}>
 					<AccordionTrigger className="bg-card-secondary   rounded-md  flex  py-5 px-6 h-20 gap-4">
-						<div className='flex items-center flex-grow flex-wrap'>
+						<div className="flex items-center flex-grow flex-wrap">
+							<div className="flex gap-4 items-center text-xl font-semibold whitespace-nowrap">
+								{getBlockIcon(section)}
 
-						<div className="flex gap-4 items-center text-xl font-semibold whitespace-nowrap">
-							{getBlockIcon(section)}
-
-							{section.title}
-						</div>
-						<span className="text-yellow-400 font-bold ml-auto ">+{section.sectionXp}XP</span>
+								{section.title}
+							</div>
+							<span className="text-yellow-400 font-bold ml-auto ">+{section.sectionXp}XP</span>
 						</div>
 					</AccordionTrigger>
 					<AccordionContent className="flex p-0">
@@ -134,8 +133,10 @@ export const AdvancedCollapseList = () => {
 
 						<div className="flex flex-col shrink grow ">
 							{section.lessons.map((lesson) => (
-								<AccordionContent key={lesson.title} className="bg-card mt-2 rounded-sm min-h-14 flex items-center  justify-between  text-lg font-semibold  ml-auto px-6 py-4">
-									
+								<AccordionContent
+									key={lesson.title}
+									className="bg-card mt-2 rounded-sm min-h-14 flex items-center  justify-between  text-lg font-semibold  ml-auto px-6 py-4"
+								>
 									<a href={lesson.src}>{lesson.title}</a>
 									<span className="flex gap-4 items-center">
 										<b className="text-tertiary-foreground">+{lesson.xp}XP</b>
