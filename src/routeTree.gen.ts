@@ -17,6 +17,8 @@ import { Route as IndexNewImport } from './routes/_index/new'
 import { Route as IndexEventsImport } from './routes/_index/events'
 import { Route as IndexDocsImport } from './routes/_index/docs'
 import { Route as IndexAdvancedImport } from './routes/_index/advanced'
+import { Route as IndexLessonIndexImport } from './routes/_index/lesson/index'
+import { Route as IndexLessonIdImport } from './routes/_index/lesson/$id'
 
 // Create/Update Routes
 
@@ -47,6 +49,16 @@ const IndexDocsRoute = IndexDocsImport.update({
 
 const IndexAdvancedRoute = IndexAdvancedImport.update({
   path: '/advanced',
+  getParentRoute: () => IndexRoute,
+} as any)
+
+const IndexLessonIndexRoute = IndexLessonIndexImport.update({
+  path: '/lesson/',
+  getParentRoute: () => IndexRoute,
+} as any)
+
+const IndexLessonIdRoute = IndexLessonIdImport.update({
+  path: '/lesson/$id',
   getParentRoute: () => IndexRoute,
 } as any)
 
@@ -96,6 +108,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexIndexImport
       parentRoute: typeof IndexImport
     }
+    '/_index/lesson/$id': {
+      id: '/_index/lesson/$id'
+      path: '/lesson/$id'
+      fullPath: '/lesson/$id'
+      preLoaderRoute: typeof IndexLessonIdImport
+      parentRoute: typeof IndexImport
+    }
+    '/_index/lesson/': {
+      id: '/_index/lesson/'
+      path: '/lesson'
+      fullPath: '/lesson'
+      preLoaderRoute: typeof IndexLessonIndexImport
+      parentRoute: typeof IndexImport
+    }
   }
 }
 
@@ -108,6 +134,8 @@ export const routeTree = rootRoute.addChildren({
     IndexEventsRoute,
     IndexNewRoute,
     IndexIndexRoute,
+    IndexLessonIdRoute,
+    IndexLessonIndexRoute,
   }),
 })
 
@@ -129,7 +157,9 @@ export const routeTree = rootRoute.addChildren({
         "/_index/docs",
         "/_index/events",
         "/_index/new",
-        "/_index/"
+        "/_index/",
+        "/_index/lesson/$id",
+        "/_index/lesson/"
       ]
     },
     "/_index/advanced": {
@@ -150,6 +180,14 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_index/": {
       "filePath": "_index/index.tsx",
+      "parent": "/_index"
+    },
+    "/_index/lesson/$id": {
+      "filePath": "_index/lesson/$id.tsx",
+      "parent": "/_index"
+    },
+    "/_index/lesson/": {
+      "filePath": "_index/lesson/index.tsx",
       "parent": "/_index"
     }
   }
