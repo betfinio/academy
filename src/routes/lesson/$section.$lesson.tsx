@@ -12,7 +12,7 @@ function LessonPage() {
 	const { data: lessonData = null } = useLesson(Number(lesson));
 
 	const handleClick = () => {
-		console.log(lessonData)
+		console.log(lessonData);
 		complete({ lesson: Number(lesson), xp: lessonData?.xp || 100 });
 	};
 	return (
