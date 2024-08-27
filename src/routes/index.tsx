@@ -6,7 +6,7 @@ export const Route = createFileRoute('/')({
 });
 
 function Index() {
-	const { t } = useTranslation('', { keyPrefix: 'template' });
+	const { t } = useTranslation('', { keyPrefix: 'academy' });
 	return (
 		<div
 			className={

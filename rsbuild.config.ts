@@ -20,25 +20,25 @@ const getApp = () => {
 function getOutput() {
 	switch (process.env.PUBLIC_ENVIRONMENT) {
 		case 'development':
-			return 'https://template.betfin.dev';
+			return 'https://academy.betfin.dev';
 		case 'production':
-			return 'https://template.betfin.io';
+			return 'https://academy.betfin.io';
 		case 'production-ua':
-			return 'https://template.betfin.gg';
+			return 'https://academy.betfin.gg';
 		default:
-			return 'http://localhost:4000';
+			return 'http://localhost:6000';
 	}
 }
 
 export default defineConfig({
 	server: {
-		port: 4000,
+		port: 6000,
 	},
 	dev: {
-		assetPrefix: 'http://localhost:4000',
+		assetPrefix: 'http://localhost:6000',
 	},
 	html: {
-		title: 'BetFin Games',
+		title: 'BetFin Academy',
 		favicon: './src/assets/favicon.svg',
 	},
 	output: {
@@ -48,12 +48,12 @@ export default defineConfig({
 	tools: {
 		rspack: {
 			output: {
-				uniqueName: 'betfinio_games',
+				uniqueName: 'betfinio_academy',
 			},
 			plugins: [
 				TanStackRouterRspack(),
 				new ModuleFederationPlugin({
-					name: 'betfinio_games',
+					name: 'betfinio_academy',
 					remotes: {
 						betfinio_app: getApp(),
 					},
