@@ -4,5 +4,9 @@
 		"advanced": "Advanced",
 		"docs": "Documents",
 		"events": "Events"
+	},
+	"document": {
+		"visit": "Visit",
+		"play": "Play"
 	}
 }

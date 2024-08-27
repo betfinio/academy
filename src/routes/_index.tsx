@@ -26,14 +26,14 @@ function Layout() {
 		}
 	};
 	return (
-		<div className={'p-2 md:p-3 lg:p-4 text-white h-full'}>
-			<div className={'grid grid-cols-4 w-full gap-2 md:gap-3 lg:gap-4 '}>
+		<div className={'p-2 md:p-3 lg:p-4 text-white h-full flex flex-col gap-2 md:gap-3 lg:gap-4'}>
+			<div className={'grid grid-cols-2 md:grid-cols-4 w-full gap-2 md:gap-3 lg:gap-4 bg-primaryLighter rounded-xl '}>
 				{['docs', 'new', 'advanced', 'events'].map((link) => (
 					<Link
 						to={`/${link}`}
 						key={link}
 						className={cx(
-							'flex p-4 justify-center font-semibold items-center gap-2   rounded-xl',
+							'flex py-2 lg:p-4 justify-center font-semibold items-center gap-2   rounded-xl',
 							isActive(link) ? 'text-yellow-400 bg-secondaryLight' : 'text-gray-400',
 						)}
 					>
