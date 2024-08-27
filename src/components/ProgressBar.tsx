@@ -1,5 +1,5 @@
-import { StarIcon } from 'lucide-react';
 import { Progress } from 'betfinio_app/progress';
+import { StarIcon } from 'lucide-react';
 
 const ProgressBar = () => {
 	return (
