@@ -5,7 +5,5 @@ export const Route = createFileRoute('/_index/new')({
 });
 
 function NewPage() {
-	return <div className={'border border-red-roulette'}>
-	
-	</div>;
+	return <div className={'border border-red-roulette'}>news</div>;
 }
