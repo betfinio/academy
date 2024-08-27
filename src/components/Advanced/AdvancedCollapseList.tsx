@@ -67,7 +67,7 @@ export const AdvancedCollapseList = () => {
 						<span className="text-yellow-400 font-bold ml-auto mr-4">+{section.sectionXp}XP</span>
 					</AccordionTrigger>
 					<AccordionContent className="flex p-0">
-						<div className="w-14 flex justify-center after:border-l  after:border-l-gray-800 after:h-full after:block  py-2"/>
+						<div className="w-14 flex justify-center after:border-l  after:border-l-gray-800 after:h-full after:block  py-2" />
 
 						<div className="flex flex-col shrink grow ">
 							{section.lessons.map((lesson) => (
