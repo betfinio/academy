@@ -26,16 +26,16 @@ function getOutput() {
 		case 'production-ua':
 			return 'https://academy.betfin.gg';
 		default:
-			return 'http://localhost:6000';
+			return 'http://localhost:8000';
 	}
 }
 
 export default defineConfig({
 	server: {
-		port: 6000,
+		port: 8000,
 	},
 	dev: {
-		assetPrefix: 'http://localhost:6000',
+		assetPrefix: 'http://localhost:8000',
 	},
 	html: {
 		title: 'BetFin Academy',
