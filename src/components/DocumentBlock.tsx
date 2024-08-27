@@ -22,7 +22,7 @@ const DocumentBlock: FC<DocumentProps> = ({ isPlayable = false, title = 'Placeho
 			</div>
 			<Separator />
 			<div className={'grid grid-cols-2 p-4 gap-2 md:gap-3 lg:gap-4'}>
-				<a href={url}>
+				<a target={'_blank'} rel={'noreferrer'} href={url}>
 					<Button variant={'outline'} className={'w-full border-yellow-400 text-yellow-400'}>
 						{t('visit')}{' '}
 					</Button>
