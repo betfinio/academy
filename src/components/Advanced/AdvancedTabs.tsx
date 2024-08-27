@@ -4,11 +4,11 @@ import { Stacking } from './Stacking';
 const tabs = ['Staking', 'Affiliate', 'Gaming', 'Partners'];
 export const AdvancedTabs = () => {
 	return (
-		<div>
+		<div className={'w-full'}>
 			<Tabs defaultValue={tabs[0]}>
-				<TabsList className="flex-wrap justify-center  md:justify-normal">
+				<TabsList className=" w-full grid grid-cols-4 ">
 					{tabs.map((tab) => (
-						<TabsTrigger variant="contained" className="w-64 bg-primaryLight text-base" value={tab} key={tab}>
+						<TabsTrigger variant="contained" className="w-full bg-primaryLight text-base" value={tab} key={tab}>
 							{tab}
 						</TabsTrigger>
 					))}

@@ -117,7 +117,7 @@ export const AdvancedCollapseList = () => {
 	return (
 		<Accordion type="single" collapsible className="w-full gap-4 flex flex-col">
 			{data?.map((section) => (
-				<AccordionItem className="p-0" key={section.title} value={section.title}>
+				<AccordionItem className="p-0 w-full" key={section.title} value={section.title}>
 					<AccordionTrigger className="bg-card-secondary   rounded-md  flex  py-5 px-6 h-20 gap-4">
 						<div className="flex items-center flex-grow flex-wrap">
 							<div className="flex gap-4 items-center text-xl font-semibold whitespace-nowrap">
@@ -125,7 +125,7 @@ export const AdvancedCollapseList = () => {
 
 								{section.title}
 							</div>
-							<span className="text-yellow-400 font-bold ml-auto text-lg">+{section.sectionXp}XP</span>
+							<span className="text-yellow-400 font-semibold  ml-auto text-lg">+{section.sectionXp}XP</span>
 						</div>
 					</AccordionTrigger>
 					<AccordionContent className="flex p-0">
@@ -139,7 +139,7 @@ export const AdvancedCollapseList = () => {
 								>
 									<a href={lesson.src}>{lesson.title}</a>
 									<span className="flex gap-4 items-center">
-										<b className="text-tertiary-foreground">+{lesson.xp}XP</b>
+										<span className="text-tertiary-foreground">+{lesson.xp}XP</span>
 										<span
 											className={cn({
 												'text-success': lesson.done,
