@@ -1,4 +1,4 @@
-import { useCompleteLesson } from '@/src/lib/query';
+import { useCompleteLesson, useLesson } from '@/src/lib/query';
 import { createFileRoute } from '@tanstack/react-router';
 import { Button } from 'betfinio_app/button';
 
@@ -9,9 +9,11 @@ export const Route = createFileRoute('/lesson/$section/$lesson')({
 function LessonPage() {
 	const { lesson, section } = Route.useParams();
 	const { mutate: complete } = useCompleteLesson();
+	const { data: lessonData = null } = useLesson(Number(lesson));
 
 	const handleClick = () => {
-		complete({ lesson: Number(lesson), xp: 100 });
+		console.log(lessonData)
+		complete({ lesson: Number(lesson), xp: lessonData?.xp || 100 });
 	};
 	return (
 		<div>

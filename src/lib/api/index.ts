@@ -25,6 +25,16 @@ export const fetchAdvancedLessons = async (id: number, client?: SupabaseClient):
 	return sections.data as AdvancedLesson[];
 };
 
+export const fetchLesson = async (id: number, client?: SupabaseClient): Promise<AdvancedLesson> => {
+	if (!client) {
+		throw new Error('No client provided');
+	}
+	const lesson = await client.from('lessons').select('title::text, xp, id, section').eq('id', id).maybeSingle<AdvancedLesson>();
+	console.log();
+	if (!lesson.data) throw new Error('not found');
+	return lesson.data;
+};
+
 export const fetchSectionStatus = async (sectionId: number, address: Address, client?: SupabaseClient): Promise<Status> => {
 	if (!client) {
 		throw new Error('No client provided');
@@ -48,7 +58,12 @@ export const fetchLessonStatus = async (lessonId: number, address: Address, clie
 	return { done: true, xp: status.data.xp };
 };
 
-export const completeLesson = async (lesson: number, xp: number, address: Address): Promise<boolean> => {
+export const completeLesson = async (lesson: number, xp: number, address: Address, client?: SupabaseClient): Promise<boolean> => {
+	if (!client) {
+		throw new Error('No client provided');
+	}
 	console.log('completing', lesson, xp, address);
+	const result = await client.rpc('complete_lesson', { lesson_id: lesson, xp: xp, member: address.toLowerCase() });
+	console.log(result);
 	return true;
 };

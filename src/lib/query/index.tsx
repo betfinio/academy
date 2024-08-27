@@ -1,4 +1,4 @@
-import { completeLesson, fetchAdvancedLessons, fetchAdvancedSections, fetchDocs, fetchLessonStatus, fetchSectionStatus } from '@/src/lib/api';
+import {completeLesson, fetchAdvancedLessons, fetchAdvancedSections, fetchDocs, fetchLesson, fetchLessonStatus, fetchSectionStatus} from '@/src/lib/api';
 import type { AdvancedLesson, Status } from '@/src/lib/types.ts';
 import { ZeroAddress } from '@betfinio/abi';
 import type { DefaultError } from '@tanstack/query-core';
@@ -28,6 +28,13 @@ export const useAdvancedLessons = (id: number) => {
 		queryFn: () => fetchAdvancedLessons(id, client),
 	});
 };
+export const useLesson = (lesson: number) => {
+	const { client } = useSupabase();
+	return useQuery<AdvancedLesson>({
+		queryKey: ['academy', 'advanced', 'lessons', 'lesson', lesson],
+		queryFn: () => fetchLesson(lesson, client),
+	});
+};
 export const useSectionStatus = (sectionId: number, address: Address) => {
 	const { client } = useSupabase();
 	return useQuery<Status>({
@@ -45,8 +52,9 @@ export const useLessonStatus = (lessonId: number, address: Address) => {
 
 export const useCompleteLesson = () => {
 	const { address = ZeroAddress } = useAccount();
+	const {client} = useSupabase();
 	return useMutation<boolean, DefaultError, { lesson: number; xp: number }>({
 		mutationKey: ['academy', 'advanced', 'lesson', 'complete'],
-		mutationFn: ({ lesson, xp }) => completeLesson(lesson, xp, address),
+		mutationFn: ({ lesson, xp }) => completeLesson(lesson, xp, address, client),
 	});
 };
