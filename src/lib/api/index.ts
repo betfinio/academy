@@ -8,14 +8,12 @@ export const fetchDocs = async (lang: string, client?: SupabaseClient) => {
 		throw new Error('No client provided');
 	}
 	const data = await client.from('documents').select('*').eq('language', lang).returns<DocumentProps[]>();
-	return data.data ;
+	return data.data;
 };
 export const fetchAdvancedLessonsDocs = async (client?: SupabaseClient) => {
 	if (!client) {
 		throw new Error('No client provided');
 	}
 	//const data = await client.from('documents').select('*').eq('language', lang).returns<AdvancedLessonBlock[]>();
-	return mockServerResponse(accordion,1000)
-	
-	
+	return mockServerResponse(accordion, 1000);
 };

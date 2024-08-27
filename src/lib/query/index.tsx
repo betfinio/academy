@@ -13,7 +13,7 @@ export const useDocs = (lang: string) => {
 export const useAdvancedLessonsDocs = () => {
 	const { client } = useSupabase();
 	return useQuery({
-		queryKey: ['academy', 'advanced','lessons' ],
+		queryKey: ['academy', 'advanced', 'lessons'],
 		queryFn: () => fetchAdvancedLessonsDocs(client),
 	});
 };

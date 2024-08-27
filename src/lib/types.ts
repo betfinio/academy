@@ -17,5 +17,5 @@ export interface AdvancedLesson {
 	title: string;
 	xp: number;
 	done: boolean;
-	src:string;
+	src: string;
 }
