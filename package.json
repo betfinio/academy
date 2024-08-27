@@ -12,6 +12,7 @@
 		"preview": "rsbuild preview"
 	},
 	"dependencies": {
+		"@betfinio/abi": "^1.0.4",
 		"@betfinio/ui": "betfinio/ui",
 		"@module-federation/enhanced": "^0.3.5",
 		"@radix-ui/react-primitive": "^2.0.0",

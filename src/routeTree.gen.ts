@@ -17,6 +17,7 @@ import { Route as IndexNewImport } from './routes/_index/new'
 import { Route as IndexEventsImport } from './routes/_index/events'
 import { Route as IndexDocsImport } from './routes/_index/docs'
 import { Route as IndexAdvancedImport } from './routes/_index/advanced'
+import { Route as LessonSectionLessonImport } from './routes/lesson/$section.$lesson'
 
 // Create/Update Routes
 
@@ -48,6 +49,11 @@ const IndexDocsRoute = IndexDocsImport.update({
 const IndexAdvancedRoute = IndexAdvancedImport.update({
   path: '/advanced',
   getParentRoute: () => IndexRoute,
+} as any)
+
+const LessonSectionLessonRoute = LessonSectionLessonImport.update({
+  path: '/lesson/$section/$lesson',
+  getParentRoute: () => rootRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -96,6 +102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexIndexImport
       parentRoute: typeof IndexImport
     }
+    '/lesson/$section/$lesson': {
+      id: '/lesson/$section/$lesson'
+      path: '/lesson/$section/$lesson'
+      fullPath: '/lesson/$section/$lesson'
+      preLoaderRoute: typeof LessonSectionLessonImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -109,6 +122,7 @@ export const routeTree = rootRoute.addChildren({
     IndexNewRoute,
     IndexIndexRoute,
   }),
+  LessonSectionLessonRoute,
 })
 
 /* prettier-ignore-end */
@@ -119,7 +133,8 @@ export const routeTree = rootRoute.addChildren({
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/_index"
+        "/_index",
+        "/lesson/$section/$lesson"
       ]
     },
     "/_index": {
@@ -151,6 +166,9 @@ export const routeTree = rootRoute.addChildren({
     "/_index/": {
       "filePath": "_index/index.tsx",
       "parent": "/_index"
+    },
+    "/lesson/$section/$lesson": {
+      "filePath": "lesson/$section.$lesson.tsx"
     }
   }
 }

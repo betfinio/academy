@@ -1,21 +1,29 @@
-export interface DocumentProps {
+export interface Document {
 	title: string;
 	points: string;
 	url: string;
 	isPlayable?: boolean;
 }
 
-export interface AdvancedLessonBlock {
+export interface AdvancedLessonSection {
+	id: number;
 	title: string;
-	lessons: AdvancedLesson[];
-	sectionXp: number;
-	total: number;
-	done: number;
+	xp: number;
 }
 
 export interface AdvancedLesson {
+	id: number;
 	title: string;
 	xp: number;
-	done: boolean;
-	src: string;
+	section: number;
 }
+
+export interface Status {
+	xp: number;
+	done: boolean;
+}
+
+export const initialStatus: Status = {
+	xp: 0,
+	done: false,
+};
