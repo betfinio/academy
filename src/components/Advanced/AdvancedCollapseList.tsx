@@ -125,7 +125,7 @@ export const AdvancedCollapseList = () => {
 
 								{section.title}
 							</div>
-							<span className="text-yellow-400 font-bold ml-auto ">+{section.sectionXp}XP</span>
+							<span className="text-yellow-400 font-bold ml-auto text-lg">+{section.sectionXp}XP</span>
 						</div>
 					</AccordionTrigger>
 					<AccordionContent className="flex p-0">
