@@ -36,7 +36,6 @@ export default defineConfig({
 	},
 	dev: {
 		assetPrefix: 'http://localhost:8000',
-		hmr: true,
 	},
 	html: {
 		title: 'BetFin Academy',
