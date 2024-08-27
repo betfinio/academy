@@ -29,7 +29,7 @@ export const fetchLesson = async (id: number, client?: SupabaseClient): Promise<
 	if (!client) {
 		throw new Error('No client provided');
 	}
-	const lesson = await client.from('lessons').select('title::text, xp, id, section').eq('id', id).maybeSingle<AdvancedLesson>();
+	const lesson = await client.from('lessons').select('title::text, xp, id, section, content::text, video, quiz').eq('id', id).maybeSingle<AdvancedLesson>();
 	console.log();
 	if (!lesson.data) throw new Error('not found');
 	return lesson.data;

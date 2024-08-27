@@ -17,6 +17,7 @@ import { Route as IndexNewImport } from './routes/_index/new'
 import { Route as IndexEventsImport } from './routes/_index/events'
 import { Route as IndexDocsImport } from './routes/_index/docs'
 import { Route as IndexAdvancedImport } from './routes/_index/advanced'
+import { Route as IndexLessonCreateImport } from './routes/_index/lesson/create'
 import { Route as IndexLessonSectionLessonImport } from './routes/_index/lesson/$section.$lesson'
 
 // Create/Update Routes
@@ -48,6 +49,11 @@ const IndexDocsRoute = IndexDocsImport.update({
 
 const IndexAdvancedRoute = IndexAdvancedImport.update({
   path: '/advanced',
+  getParentRoute: () => IndexRoute,
+} as any)
+
+const IndexLessonCreateRoute = IndexLessonCreateImport.update({
+  path: '/lesson/create',
   getParentRoute: () => IndexRoute,
 } as any)
 
@@ -102,6 +108,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexIndexImport
       parentRoute: typeof IndexImport
     }
+    '/_index/lesson/create': {
+      id: '/_index/lesson/create'
+      path: '/lesson/create'
+      fullPath: '/lesson/create'
+      preLoaderRoute: typeof IndexLessonCreateImport
+      parentRoute: typeof IndexImport
+    }
     '/_index/lesson/$section/$lesson': {
       id: '/_index/lesson/$section/$lesson'
       path: '/lesson/$section/$lesson'
@@ -121,6 +134,7 @@ export const routeTree = rootRoute.addChildren({
     IndexEventsRoute,
     IndexNewRoute,
     IndexIndexRoute,
+    IndexLessonCreateRoute,
     IndexLessonSectionLessonRoute,
   }),
 })
@@ -144,6 +158,7 @@ export const routeTree = rootRoute.addChildren({
         "/_index/events",
         "/_index/new",
         "/_index/",
+        "/_index/lesson/create",
         "/_index/lesson/$section/$lesson"
       ]
     },
@@ -165,6 +180,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_index/": {
       "filePath": "_index/index.tsx",
+      "parent": "/_index"
+    },
+    "/_index/lesson/create": {
+      "filePath": "_index/lesson/create.tsx",
       "parent": "/_index"
     },
     "/_index/lesson/$section/$lesson": {

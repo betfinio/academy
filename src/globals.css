@@ -69,3 +69,11 @@ html, body {
 		user-select: none;
 	}
 }
+
+.se-wrapper-wysiwyg {
+	background: #0F121D;
+}
+
+strong {
+	font-weight: 600 !important;
+}

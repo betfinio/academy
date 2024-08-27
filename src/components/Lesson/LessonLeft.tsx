@@ -29,16 +29,12 @@ export const LessonLeft = () => {
 				<div className={'text-[24px] leading-[24px] font-semibold'}>{JSON.parse(lessonData.title)[i18n.language]}</div>
 				<div className={'mt-4 w-full bg-blue-400 rounded-[10px] aspect-video'} />
 			</div>
-
-			<div className={'mt-8'}>
-				<div className={'text-[24px] leading-[24px] font-semibold'}>Welcome to WEB3</div>
-				<div className={'mt-6 text-lg text-[#E8E8E8]'}>
-					Lörem ipsum pantik kiligt i suprasperöst om än sosk. Blogga sofol. Monorössade spen. Veganisera nyngen koldioxidsänka i pretöll nysement. Enaren
-					yreledes, eurogen inte fukaren, hemisoll. Lörem ipsum pantik kiligt i suprasperöst om än sosk. Blogga sofol. Monorössade spen. Veganisera nyngen
-					koldioxidsänka i pretöll nysement. Enaren yreledes, eurogen inte fukaren, hemisoll.
-				</div>
-			</div>
-
+			{lessonData.content && (
+				<div
+					className={' mt-8 text-lg text-[#E8E8E8]'}
+					dangerouslySetInnerHTML={{ __html: decodeURIComponent(atob(JSON.parse(lessonData.content)[i18n.language])) }}
+				/>
+			)}
 			<Quiz />
 		</div>
 	);

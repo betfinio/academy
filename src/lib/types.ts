@@ -16,6 +16,7 @@ export interface AdvancedLesson {
 	title: string;
 	xp: number;
 	section: number;
+	content: string;
 }
 
 export interface Status {
