@@ -6,7 +6,7 @@ import { useAccount } from 'wagmi';
 
 const ProgressBar = () => {
 	const { address = ZeroAddress } = useAccount();
-	const { data: xp = 0 } = useProgress(address);
+	const { data: xp } = useProgress(address);
 	return (
 		<div className={'w-full min-h-[100px] flex flex-wrap flex-row items-center gap-2 md:gap-3 lg:gap-4'}>
 			<div className={'flex flex-col items-start gap-1'}>

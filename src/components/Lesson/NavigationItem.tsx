@@ -4,7 +4,7 @@ import { Route } from '@/src/routes/_index/lesson/$section.$lesson.tsx';
 import { ZeroAddress } from '@betfinio/abi';
 import { Link } from '@tanstack/react-router';
 import { cx } from 'class-variance-authority';
-import { Check, CircleCheck, Milestone } from 'lucide-react';
+import { Book, Check } from 'lucide-react';
 import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAccount } from 'wagmi';
@@ -34,7 +34,7 @@ const Icon: FC<{ status: Status }> = ({ status }) => {
 				'bg-secondaryLight text-yellow-400': status.done,
 			})}
 		>
-			{status.done ? <Check className={'w-4 h-4'} /> : <Milestone className={'w-4 h-4'} />}
+			{status.done ? <Check className={'w-4 h-4'} /> : <Book className={'w-4 h-4'} />}
 		</div>
 	);
 };

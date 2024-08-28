@@ -2,6 +2,7 @@ import NavigationItem from '@/src/components/Lesson/NavigationItem.tsx';
 import { useAdvancedLessons } from '@/src/lib/query';
 import { Route } from '@/src/routes/_index/lesson/$section.$lesson.tsx';
 import { Separator } from 'betfinio_app/separator';
+import { motion } from 'framer-motion';
 
 export const Navigation = () => {
 	const { section } = Route.useParams();
@@ -9,10 +10,10 @@ export const Navigation = () => {
 	return (
 		<div className={' rounded-xl bg-quiz-background flex flex-col'}>
 			{lessons.map((lesson, id) => (
-				<div key={id}>
+				<motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: id * 0.1 }} key={id}>
 					{id !== 0 && <Separator />}
 					<NavigationItem lesson={lesson} />
-				</div>
+				</motion.div>
 			))}
 		</div>
 	);

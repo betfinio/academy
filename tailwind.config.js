@@ -28,6 +28,7 @@ module.exports = {
 				},
 				quiz: {
 					background: '#161A25',
+					purple: '#201C40',
 				},
 				secondaryLight: '#292546',
 				secondaryLighter: '#201C4080',

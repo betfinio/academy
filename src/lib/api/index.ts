@@ -58,14 +58,19 @@ export const fetchLessonStatus = async (lessonId: number, address: Address, clie
 	return { done: true, xp: status.data.xp };
 };
 
-export const completeLesson = async (lesson: number, xp: number, address: Address, client?: SupabaseClient): Promise<boolean> => {
+export const completeLesson = async (
+	lesson: number,
+	xp: number,
+	address: Address,
+	client?: SupabaseClient,
+): Promise<{ data: string; error: string; status: string }> => {
 	if (!client) {
 		throw new Error('No client provided');
 	}
 	console.log('completing', lesson, xp, address);
-	const result = await client.rpc('complete_lesson', { lesson_id: lesson, xp: xp, member: address.toLowerCase() });
-	console.log(result);
-	return true;
+	const { data, error, status } = await client.rpc('complete_lesson', { lesson_id: lesson, xp: xp, member: address.toLowerCase() });
+	console.log(data, error, status);
+	return { data, error, status };
 };
 
 export const fetchProgress = async (address: Address, client?: SupabaseClient): Promise<number> => {

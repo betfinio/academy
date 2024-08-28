@@ -1,10 +1,12 @@
 import { Quiz } from '@/src/components/Lesson/Quiz.tsx';
 import { useLesson } from '@/src/lib/query';
 import { Route } from '@/src/routes/_index/lesson/$section.$lesson.tsx';
-import { Link, useLocation, useRouter } from '@tanstack/react-router';
-import { Button } from 'betfinio_app/button';
-import { ArrowLeft, Loader } from 'lucide-react';
+import { useRouter } from '@tanstack/react-router';
+import { cx } from 'class-variance-authority';
+import { motion } from 'framer-motion';
+import { ArrowLeft, Loader, TriangleIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import ReactPlayer from 'react-player/lazy';
 
 export const LessonLeft = () => {
 	const { lesson } = Route.useParams();
@@ -18,24 +20,58 @@ export const LessonLeft = () => {
 	const onBack = () => {
 		history.go(-1);
 	};
-	return (
-		<div>
-			<Button variant={'ghost'} onClick={onBack} className={'flex gap-1 items-center text-[#6A6F84]'}>
-				<ArrowLeft height={18} />
-				Back
-			</Button>
 
+	return (
+		<motion.div initial={{ opacity: 1 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0 }}>
+			<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1 }}>
+				<div onClick={onBack} className={'flex cursor-pointer gap-1 items-center text-[#6A6F84] hover:text-yellow-400 group'}>
+					<ArrowLeft height={18} className={'group-hover:-translate-x-[3px] duration-300'} />
+					<span className={'duration-300'}>Back</span>
+				</div>
+			</motion.div>
 			<div className={'mt-8'}>
-				<div className={'text-[24px] leading-[24px] font-semibold'}>{JSON.parse(lessonData.title)[i18n.language]}</div>
-				<div className={'mt-4 w-full bg-blue-400 rounded-[10px] aspect-video'} />
+				<motion.div
+					initial={{ opacity: 0, y: 20 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.5, delay: 0.1 }}
+					className={'text-[24px] leading-[24px] font-semibold'}
+				>
+					{JSON.parse(lessonData.title)[i18n.language]}
+				</motion.div>
+				<motion.div
+					initial={{ opacity: 0, y: 20 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.5, delay: 0.2 }}
+					className={cx('mt-4 w-full bg-quiz-background rounded-[10px] aspect-video overflow-hidden', !lessonData.video && 'hidden')}
+				>
+					<ReactPlayer url={lessonData.video} light={true} width="100%" height="100%" controls={true} playing={true} playIcon={<PlayButton />} />
+				</motion.div>
 			</div>
 			{lessonData.content && (
-				<div
-					className={' mt-8 text-lg text-[#E8E8E8]'}
+				<motion.div
+					initial={{ opacity: 0, y: 20 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.5, delay: 0.6 }}
+					className={'mt-6 text-lg text-[#E8E8E8]'}
 					dangerouslySetInnerHTML={{ __html: decodeURIComponent(atob(JSON.parse(lessonData.content)[i18n.language])) }}
 				/>
 			)}
 			<Quiz />
-		</div>
+		</motion.div>
+	);
+};
+
+const PlayButton = () => {
+	return (
+		<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1 }}>
+			<motion.div
+				whileTap={{ scale: 0.95 }}
+				whileHover={{ scale: 1.03 }}
+				className={'bg-quiz-purple cursor-pointer py-3 px-10 flex items-center gap-2 rounded-lg group duration-300 hover:text-black hover:bg-yellow-400'}
+			>
+				<span>Play</span>
+				<TriangleIcon width={16} className={' duration-300 text-yellow-400 group-hover:text-black fill-current rotate-90'} />
+			</motion.div>
+		</motion.div>
 	);
 };
