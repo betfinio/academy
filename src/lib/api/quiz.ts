@@ -38,7 +38,10 @@ const mockQuestions: QuizQuestion[] = [
 		exp: 100,
 		options: [
 			{ content: 'BET is necessary to mine Bitcoin', is_right: false },
-			{ content: 'BET allows players to participate in casino games and provides investors the opportunity to stake and become co-owners of the casino', is_right: true },
+			{
+				content: 'BET allows players to participate in casino games and provides investors the opportunity to stake and become co-owners of the casino',
+				is_right: true,
+			},
 			{ content: 'BET is needed to pay for gas fees on the Polygon network', is_right: false },
 			{ content: 'BET provides discounts on Ethereum gas fees', is_right: false },
 		],
@@ -49,7 +52,7 @@ const mockQuestions: QuizQuestion[] = [
 		options: [
 			{ content: 'To purchase in-game items', is_right: false },
 			{ content: 'To trade for other cryptocurrencies', is_right: false },
-			{ content: 'To stake and earn a share of the casino\'s profits as a co-owner', is_right: true },
+			{ content: "To stake and earn a share of the casino's profits as a co-owner", is_right: true },
 			{ content: 'To pay for transaction fees on Uniswap', is_right: false },
 		],
 	},

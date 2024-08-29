@@ -99,7 +99,7 @@ export const fetchProgress = async (address: Address, client?: SupabaseClient): 
 	return result.data.map((x) => x.xp).reduce((a, b) => Number(a) + Number(b), 0);
 };
 
-export const fetchLessonValidation = async (id: number, client?: SupabaseClient): Promise<LessonValidation|null> => {
+export const fetchLessonValidation = async (id: number, client?: SupabaseClient): Promise<LessonValidation | null> => {
 	if (!client) {
 		throw new Error('No client provided');
 	}
