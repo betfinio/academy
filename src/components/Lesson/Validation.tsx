@@ -17,6 +17,7 @@ const Validation = () => {
 
 	const [valid, setValid] = useState(false);
 	const [error, setError] = useState('');
+
 	const { data: balance } = useBalance({ address: address || ZeroAddress });
 	const { data: betBalance = 0n } = useBetBalance(address || ZeroAddress);
 	useEffect(() => {
@@ -56,7 +57,8 @@ const Validation = () => {
 		complete({ lesson: Number(lesson), xp: lessonData?.xp || 0 });
 	};
 
-	if (lessonStatus.done) {
+	console.log(validation);
+	if (lessonStatus.done || validation === null) {
 		return null;
 	}
 

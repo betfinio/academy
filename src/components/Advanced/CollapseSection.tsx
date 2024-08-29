@@ -22,7 +22,7 @@ const CollapseSection: FC<{ section: AdvancedLessonSection }> = ({ section }) =>
 						{getBlockIcon(status, section.xp)}
 						{JSON.parse(section.title)[i18n.language]}
 					</div>
-					<span className="text-yellow-400 font-semibold  ml-auto text-lg">+{section.xp}XP</span>
+					<span className="text-yellow-400 font-semibold  ml-auto text-lg">{section.xp}XP</span>
 				</div>
 			</AccordionTrigger>
 			<AccordionContent className="flex p-0">

@@ -22,7 +22,9 @@ const Lesson: FC<{ lesson: AdvancedLesson }> = ({ lesson }) => {
 			>
 				{JSON.parse(lesson.title)[i18n.language]}
 				<span className="flex gap-4 items-center">
-					<span className={cx('text-tertiary-foreground', status.done && 'text-yellow-400')}>+{lesson.xp}XP</span>
+					<div className={cx('text-tertiary-foreground flex flex-row gap-1', status.done && 'text-yellow-400')}>
+						{status.xp > 0 && `${status.xp.toString()} /`} <div className={'text-gray-500'}>{lesson.xp}XP</div>
+					</div>
 					<span
 						className={cx({
 							'text-success': status.done,

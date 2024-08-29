@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import SunEditor, { buttonList } from 'suneditor-react';
 import 'suneditor/dist/css/suneditor.min.css';
-import { useState } from 'react'; // Import Sun Editor's CSS File
+import { type ChangeEvent, useState } from 'react'; // Import Sun Editor's CSS File
 
 export const Route = createFileRoute('/_index/lesson/create')({
 	component: CreateLessonPage,
@@ -13,6 +13,7 @@ function CreateLessonPage() {
 	const handleChange = (content: string) => {
 		setContent(content);
 	};
+
 	return (
 		<div className={'border border-red-500 p-4 flex flex-col gap-4'}>
 			<div className={'uppercase text-xl'}>Create new lesson</div>

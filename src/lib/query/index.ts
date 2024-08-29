@@ -78,7 +78,7 @@ export const useSection = (id: number) => {
 
 export const useLessonValidation = (id: number) => {
 	const { client } = useSupabase();
-	return useQuery<LessonValidation>({
+	return useQuery<LessonValidation|null>({
 		queryKey: ['academy', 'section', 'any', 'lesson', id, 'validation'],
 		queryFn: () => fetchLessonValidation(id, client),
 	});

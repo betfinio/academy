@@ -99,10 +99,10 @@ export const fetchProgress = async (address: Address, client?: SupabaseClient): 
 	return result.data.map((x) => x.xp).reduce((a, b) => Number(a) + Number(b), 0);
 };
 
-export const fetchLessonValidation = async (id: number, client?: SupabaseClient): Promise<LessonValidation> => {
+export const fetchLessonValidation = async (id: number, client?: SupabaseClient): Promise<LessonValidation|null> => {
 	if (!client) {
 		throw new Error('No client provided');
 	}
 	const lesson = await client.from('lessons').select('validation').eq('id', id).single();
-	return lesson.data?.validation || { key: 'wallet_connect' };
+	return lesson.data?.validation || null;
 };
