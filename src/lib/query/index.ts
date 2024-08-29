@@ -11,13 +11,13 @@ import {
 	fetchSectionStatus,
 } from '@/src/lib/api';
 import type { AdvancedLesson, AdvancedLessonSection, LessonValidation, Status } from '@/src/lib/types.ts';
+import { shootConfetti } from '@/src/lib/utilts.ts';
 import { ZeroAddress } from '@betfinio/abi';
 import type { DefaultError } from '@tanstack/query-core';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSupabase } from 'betfinio_app/supabase';
 import type { Address } from 'viem';
 import { useAccount } from 'wagmi';
-import { shootConfetti } from '@/src/lib/utilts.ts';
 
 export const useDocs = (lang: string) => {
 	const { client } = useSupabase();

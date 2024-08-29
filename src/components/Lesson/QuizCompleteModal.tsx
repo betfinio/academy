@@ -1,4 +1,5 @@
 import { useProgress } from '@/src/lib/query';
+import { shootConfetti } from '@/src/lib/utilts.ts';
 import { ZeroAddress } from '@betfinio/abi';
 import { useQueryClient } from '@tanstack/react-query';
 import { Button } from 'betfinio_app/button';
@@ -8,9 +9,6 @@ import { motion } from 'framer-motion';
 import { X } from 'lucide-react';
 import React, { type FC, useEffect } from 'react';
 import { useAccount } from 'wagmi';
-import {shootConfetti} from "@/src/lib/utilts.ts";
-
-
 
 export const QuizCompleteModal: FC<{ onClose: () => void; newXp: number }> = ({ onClose, newXp }) => {
 	const { address = ZeroAddress } = useAccount();

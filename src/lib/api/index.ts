@@ -1,4 +1,4 @@
-import { type AdvancedLesson, type AdvancedLessonSection, type Document, type Status, initialStatus, type LessonValidation } from '@/src/lib/types.ts';
+import { type AdvancedLesson, type AdvancedLessonSection, type Document, type LessonValidation, type Status, initialStatus } from '@/src/lib/types.ts';
 import type { SupabaseClient } from 'betfinio_app/supabase';
 import type { Address } from 'viem';
 

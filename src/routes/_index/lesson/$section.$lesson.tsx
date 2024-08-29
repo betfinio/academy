@@ -1,10 +1,10 @@
 import { LessonLeft } from '@/src/components/Lesson/LessonLeft.tsx';
 import { Navigation } from '@/src/components/Lesson/Navigation.tsx';
 import ProgressBar from '@/src/components/ProgressBar.tsx';
-import { createFileRoute } from '@tanstack/react-router';
 import { useSection } from '@/src/lib/query';
-import { useTranslation } from 'react-i18next';
+import { createFileRoute } from '@tanstack/react-router';
 import { Loader } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/_index/lesson/$section/$lesson')({
 	component: LessonPage,

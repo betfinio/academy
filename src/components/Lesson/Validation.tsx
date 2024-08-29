@@ -1,11 +1,11 @@
-import { Route } from '@/src/routes/_index/lesson/$section.$lesson.tsx';
 import { useCompleteLesson, useLesson, useLessonStatus, useLessonValidation } from '@/src/lib/query';
-import { useEffect, useState } from 'react';
-import { useAccount, useBalance } from 'wagmi';
+import { initialStatus } from '@/src/lib/types.ts';
+import { Route } from '@/src/routes/_index/lesson/$section.$lesson.tsx';
 import { ZeroAddress } from '@betfinio/abi';
 import { Button } from 'betfinio_app/button';
-import { initialStatus } from '@/src/lib/types.ts';
 import { useBalance as useBetBalance } from 'betfinio_app/lib/query/token';
+import { useEffect, useState } from 'react';
+import { useAccount, useBalance } from 'wagmi';
 
 const Validation = () => {
 	const { lesson } = Route.useParams();

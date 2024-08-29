@@ -1,4 +1,5 @@
 import { Quiz } from '@/src/components/Lesson/Quiz.tsx';
+import Validation from '@/src/components/Lesson/Validation.tsx';
 import { useLesson } from '@/src/lib/query';
 import { Route } from '@/src/routes/_index/lesson/$section.$lesson.tsx';
 import { useRouter } from '@tanstack/react-router';
@@ -7,7 +8,6 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Loader, TriangleIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import ReactPlayer from 'react-player/lazy';
-import Validation from "@/src/components/Lesson/Validation.tsx";
 
 export const LessonLeft = () => {
 	const { lesson } = Route.useParams();
