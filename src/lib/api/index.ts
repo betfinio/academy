@@ -1,4 +1,4 @@
-import { type AdvancedLesson, type AdvancedLessonSection, type Document, type Status, initialStatus } from '@/src/lib/types.ts';
+import { type AdvancedLesson, type AdvancedLessonSection, type Document, type Status, initialStatus, type LessonValidation } from '@/src/lib/types.ts';
 import type { SupabaseClient } from 'betfinio_app/supabase';
 import type { Address } from 'viem';
 
@@ -21,7 +21,12 @@ export const fetchAdvancedLessons = async (id: number, client?: SupabaseClient):
 	if (!client) {
 		throw new Error('No client provided');
 	}
-	const sections = await client.from('lessons').select('title::text, xp, id, section').eq('section', id).returns<AdvancedLessonSection[]>();
+	const sections = await client
+		.from('lessons')
+		.select('title::text, xp, id, section')
+		.eq('section', id)
+		.order('order', { ascending: true })
+		.returns<AdvancedLessonSection[]>();
 	return sections.data as AdvancedLesson[];
 };
 
@@ -33,6 +38,16 @@ export const fetchLesson = async (id: number, client?: SupabaseClient): Promise<
 	console.log();
 	if (!lesson.data) throw new Error('not found');
 	return lesson.data;
+};
+
+export const fetchSection = async (id: number, client?: SupabaseClient): Promise<AdvancedLessonSection> => {
+	if (!client) {
+		throw new Error('No client provided');
+	}
+	const section = await client.from('sections').select('title::text, xp, id').eq('id', id).maybeSingle<AdvancedLesson>();
+	console.log();
+	if (!section.data) throw new Error('not found');
+	return section.data;
 };
 
 export const fetchSectionStatus = async (sectionId: number, address: Address, client?: SupabaseClient): Promise<Status> => {
@@ -63,14 +78,15 @@ export const completeLesson = async (
 	xp: number,
 	address: Address,
 	client?: SupabaseClient,
-): Promise<{ data: string; error: string; status: string }> => {
+): Promise<{ data: string; error?: string; status?: string }> => {
 	if (!client) {
 		throw new Error('No client provided');
 	}
+
 	console.log('completing', lesson, xp, address);
 	const { data, error, status } = await client.rpc('complete_lesson', { lesson_id: lesson, xp: xp, member: address.toLowerCase() });
 	console.log(data, error, status);
-	return { data, error, status };
+	return { data, error: error?.message, status: status.toString() };
 };
 
 export const fetchProgress = async (address: Address, client?: SupabaseClient): Promise<number> => {
@@ -81,4 +97,12 @@ export const fetchProgress = async (address: Address, client?: SupabaseClient): 
 	const result = await client.from('sections_progress').select('xp', { count: 'exact' }).eq('member', address.toLowerCase());
 	if (!result.data) return 0;
 	return result.data.map((x) => x.xp).reduce((a, b) => Number(a) + Number(b), 0);
+};
+
+export const fetchLessonValidation = async (id: number, client?: SupabaseClient): Promise<LessonValidation> => {
+	if (!client) {
+		throw new Error('No client provided');
+	}
+	const lesson = await client.from('lessons').select('validation').eq('id', id).single();
+	return lesson.data?.validation || { key: 'wallet_connect' };
 };

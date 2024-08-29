@@ -4,35 +4,13 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Button } from 'betfinio_app/button';
 import { DialogClose } from 'betfinio_app/dialog';
 import { Progress } from 'betfinio_app/progress';
-import confetti from 'canvas-confetti';
 import { motion } from 'framer-motion';
 import { X } from 'lucide-react';
 import React, { type FC, useEffect } from 'react';
 import { useAccount } from 'wagmi';
+import {shootConfetti} from "@/src/lib/utilts.ts";
 
-const shootConfetti = () => {
-	confetti({
-		particleCount: 400,
-		angle: 0,
-		spread: 360,
-		startVelocity: 40,
-		scalar: 1,
-		origin: { x: 0.5, y: 0.4 },
-		colors: ['#FF2A51', '#B100A8', '#FFB300', '#B0D100', '#2462E7'],
-	});
 
-	confetti({
-		particleCount: 50,
-		spread: 360,
-		startVelocity: 35,
-		gravity: 0,
-		decay: 0.96,
-		scalar: 2,
-		shapes: ['circle'],
-		colors: ['#FF2A51', '#B100A8', '#FFB300', '#B0D100', '#2462E7'],
-		origin: { x: 0.5, y: 0.4 },
-	});
-};
 
 export const QuizCompleteModal: FC<{ onClose: () => void; newXp: number }> = ({ onClose, newXp }) => {
 	const { address = ZeroAddress } = useAccount();

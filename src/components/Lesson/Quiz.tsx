@@ -16,17 +16,23 @@ import { useEffect, useMemo, useState } from 'react';
 import { useAccount } from 'wagmi';
 
 const encodeErrors = (errors: Record<string, Set<string>>): Record<string, string[]> => {
-	return Object.entries(errors).reduce((acc, [question, error]) => {
-		acc[question] = Array.from(error);
-		return acc;
-	}, {});
+	return Object.entries(errors).reduce(
+		(acc, [question, error]) => {
+			acc[question] = Array.from(error);
+			return acc;
+		},
+		{} as Record<string, string[]>,
+	);
 };
 
 const decodeErrors = (errors: Record<string, string[]>): Record<string, Set<string>> => {
-	return Object.entries(errors).reduce((acc, [question, error]) => {
-		acc[question] = new Set(error);
-		return acc;
-	}, {});
+	return Object.entries(errors).reduce(
+		(acc, [question, error]) => {
+			acc[question] = new Set(error);
+			return acc;
+		},
+		{} as Record<string, Set<string>>,
+	);
 };
 
 export const Quiz = () => {
@@ -38,9 +44,9 @@ export const Quiz = () => {
 
 	const { data: quiz = [], isLoading: isQuizLoading } = useQuiz(Number(lesson));
 
-	const localStorageErrors = decodeErrors(JSON.parse(localStorage.getItem(`lesson-${lesson}`))?.errors ?? {});
-	const localStorageSelected = JSON.parse(localStorage.getItem(`lesson-${lesson}`))?.selected ?? {};
-	const localStorageCorrect = JSON.parse(localStorage.getItem(`lesson-${lesson}`))?.correct ?? {};
+	const localStorageErrors = decodeErrors(JSON.parse(localStorage.getItem(`lesson-${lesson}`) || '{}')?.errors ?? {});
+	const localStorageSelected = JSON.parse(localStorage.getItem(`lesson-${lesson}`) || '{}')?.selected ?? {};
+	const localStorageCorrect = JSON.parse(localStorage.getItem(`lesson-${lesson}`) || '{}')?.correct ?? {};
 
 	const [selectedAnswers, setSelectedAnswers] = useState<{
 		[key: number]: string | undefined;
@@ -134,12 +140,16 @@ export const Quiz = () => {
 			return;
 		}
 
-		complete({ lesson: Number(lesson), xp: syncExp || lessonData.xp });
+		complete({ lesson: Number(lesson), xp: syncExp || lessonData?.xp || 0 });
 	};
 
 	const handleClose = () => {
 		setModalOpen(false);
 	};
+
+	if (quiz.length === 0) {
+		return null;
+	}
 
 	return (
 		<Dialog open={modalOpen} onOpenChange={handleClose}>

@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Loader, TriangleIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import ReactPlayer from 'react-player/lazy';
+import Validation from "@/src/components/Lesson/Validation.tsx";
 
 export const LessonLeft = () => {
 	const { lesson } = Route.useParams();
@@ -57,6 +58,7 @@ export const LessonLeft = () => {
 				/>
 			)}
 			<Quiz />
+			<Validation />
 		</motion.div>
 	);
 };

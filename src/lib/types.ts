@@ -17,6 +17,8 @@ export interface AdvancedLesson {
 	xp: number;
 	section: number;
 	content: string;
+	video: string;
+	quiz: QuizQuestion[];
 }
 
 export interface Status {
@@ -38,4 +40,9 @@ export type QuizQuestion = {
 	question: string;
 	exp: number;
 	options: QuizOption[];
+};
+
+export type LessonValidation = {
+	key: string;
+	value?: unknown;
 };
