@@ -34,9 +34,11 @@ const Validation = () => {
 					setValid(true);
 					setError('');
 					setSuccess('Wallet connected');
+					handleFinish();
 				} else {
 					setValid(false);
 					setError('Connect your wallet to finish the lesson');
+					handleFinish();
 					setSuccess('');
 				}
 			}
@@ -45,6 +47,7 @@ const Validation = () => {
 					setValid(true);
 					setError('');
 					setSuccess(`You have ${valueToNumber(balance?.value).toFixed(2)} MATIC`);
+					handleFinish();
 				} else {
 					setValid(false);
 					setError('Buy MATIC to finish the lesson');
@@ -56,6 +59,7 @@ const Validation = () => {
 					setValid(true);
 					setError('');
 					setSuccess(`You have ${valueToNumber(betBalance).toFixed(2)} BET`);
+					handleFinish();
 				} else {
 					setValid(false);
 					setError('Own BETs to finish the lesson');
@@ -67,6 +71,7 @@ const Validation = () => {
 					setValid(true);
 					setError('');
 					setSuccess('You have a Pass');
+					handleFinish();
 				} else {
 					setValid(false);
 					setError('Mint a Pass to finish the lesson');
@@ -77,7 +82,9 @@ const Validation = () => {
 	}, [validation, address, balance]);
 
 	const handleFinish = () => {
-		complete({ lesson: Number(lesson), xp: lessonData?.xp || 0 });
+		if (address && address !== ZeroAddress) {
+			complete({ lesson: Number(lesson), xp: lessonData?.xp || 0 });
+		}
 	};
 
 	const handleNext = async () => {
