@@ -30,6 +30,10 @@ module.exports = {
 					background: '#161A25',
 					purple: '#201C40',
 				},
+				red: {
+					600: '#B80042',
+					roulette: '#dd375f',
+				},
 				secondaryLight: '#292546',
 				secondaryLighter: '#201C4080',
 				destructive: {

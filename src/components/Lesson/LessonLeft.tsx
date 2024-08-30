@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import ReactPlayer from 'react-player/lazy';
 
 export const LessonLeft = () => {
-	const { lesson } = Route.useParams();
+	const { lesson, section } = Route.useParams();
 
 	const { data: lessonData } = useLesson(Number(lesson));
 	const { i18n } = useTranslation();
@@ -25,7 +25,7 @@ export const LessonLeft = () => {
 	return (
 		<motion.div initial={{ opacity: 1 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0 }}>
 			<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1 }}>
-				<div onClick={onBack} className={'flex cursor-pointer gap-1 items-center text-[#6A6F84] hover:text-yellow-400 group'}>
+				<div onClick={onBack} className={cx('flex cursor-pointer gap-1 items-center text-[#6A6F84] hover:text-yellow-400 group', section === '1' && 'hidden')}>
 					<ArrowLeft height={18} className={'group-hover:-translate-x-[3px] duration-300'} />
 					<span className={'duration-300'}>Back</span>
 				</div>
@@ -54,6 +54,7 @@ export const LessonLeft = () => {
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.5, delay: 0.6 }}
 					className={'mt-6 text-lg text-[#E8E8E8]'}
+					// biome-ignore lint/security/noDangerouslySetInnerHtml: parsing lesson content
 					dangerouslySetInnerHTML={{ __html: decodeURIComponent(atob(JSON.parse(lessonData.content)[i18n.language])) }}
 				/>
 			)}

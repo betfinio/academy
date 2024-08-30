@@ -35,7 +35,8 @@
 				"useExhaustiveDependencies": "off"
 			},
 			"security": {
-				"noDangerouslySetInnerHtml": "off"
+				"noDangerouslySetInnerHtml": "off",
+				"noDangerouslySetInnerHtmlWithChildren": "off"
 			},
 			"recommended": true
 		}
