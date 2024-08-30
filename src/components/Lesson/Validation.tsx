@@ -114,7 +114,7 @@ const Validation = () => {
 			<div className={cx('border border-red-roulette bg-red-roulette/10 rounded-lg p-2 w-full text-center', valid && 'hidden')}>{error}</div>
 			<div className={cx('border border-green-500 bg-green-500/10 rounded-lg p-2 w-full text-center', !valid && 'hidden')}>{success}</div>
 			<Button onClick={handleFinish} className={'w-48'} disabled={!valid}>
-				Continue
+				Next lesson
 			</Button>
 		</div>
 	);
