@@ -1,4 +1,4 @@
-import { Quiz } from '@/src/components/Lesson/Quiz.tsx';
+import { Quiz } from '@/src/components/Lesson/Quiz/Quiz.tsx';
 import Validation from '@/src/components/Lesson/Validation.tsx';
 import { useLesson } from '@/src/lib/query';
 import { Route } from '@/src/routes/_index/lesson/$section.$lesson.tsx';
