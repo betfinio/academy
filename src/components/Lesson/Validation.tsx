@@ -1,14 +1,14 @@
 import { useAdvancedLessons, useCompleteLesson, useLesson, useLessonStatus, useLessonValidation, useSection } from '@/src/lib/query';
 import { initialStatus } from '@/src/lib/types.ts';
 import { Route } from '@/src/routes/_index/lesson/$section.$lesson.tsx';
-import { valueToNumber, ZeroAddress } from '@betfinio/abi';
+import { ZeroAddress, valueToNumber } from '@betfinio/abi';
+import { useNavigate } from '@tanstack/react-router';
 import { Button } from 'betfinio_app/button';
+import { useIsMember } from 'betfinio_app/lib/query/pass';
 import { useBalance as useBetBalance } from 'betfinio_app/lib/query/token';
+import { cx } from 'class-variance-authority';
 import { useEffect, useState } from 'react';
 import { useAccount, useBalance } from 'wagmi';
-import { cx } from 'class-variance-authority';
-import { useNavigate } from '@tanstack/react-router';
-import { useIsMember } from 'betfinio_app/lib/query/pass';
 
 const Validation = () => {
 	const { lesson, section } = Route.useParams();

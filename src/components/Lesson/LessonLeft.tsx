@@ -54,7 +54,6 @@ export const LessonLeft = () => {
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.5, delay: 0.6 }}
 					className={'mt-6 text-lg text-[#E8E8E8]'}
-					// biome-ignore lint/security/noDangerouslySetInnerHtml: parsing lesson content
 					dangerouslySetInnerHTML={{ __html: decodeURIComponent(atob(JSON.parse(lessonData.content)[i18n.language])) }}
 				/>
 			)}

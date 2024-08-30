@@ -101,7 +101,7 @@ export default defineConfig({
 						'@web3modal/wagmi': {
 							singleton: true,
 							requiredVersion: dependencies['@web3modal/wagmi'],
-						}
+						},
 					},
 				}),
 			],
