@@ -19,7 +19,7 @@ export const QuizOption: FC<QuizOptionProps> = ({ option, index, hasError, corre
 				correct && '!border-green-400',
 			)}
 		>
-			<RadioGroupItem value={index} />
+			<RadioGroupItem value={index} classname={'shrink-0'} />
 			{option.content}
 		</label>
 	);
