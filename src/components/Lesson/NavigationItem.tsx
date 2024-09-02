@@ -11,12 +11,16 @@ import { useAccount } from 'wagmi';
 
 const NavigationItem: FC<{ lesson: AdvancedLesson }> = ({ lesson }) => {
 	const { i18n } = useTranslation();
-	const { section } = Route.useParams();
+	const { section, lesson: activeLesson } = Route.useParams();
 	const lang = i18n.language;
 	const { address = ZeroAddress } = useAccount();
 	const { data: lessonStatus = initialStatus } = useLessonStatus(lesson.id, address);
 	return (
-		<Link to={'/lesson/$section/$lesson'} params={{ lesson: lesson.id.toString(), section: section }} className={'p-4 flex flex-row items-center gap-4'}>
+		<Link
+			to={'/lesson/$section/$lesson'}
+			params={{ lesson: lesson.id.toString(), section: section }}
+			className={cx('p-4 flex flex-row items-center gap-4', Number(activeLesson) === lesson.id && 'border-yellow-400 border rounded-lg')}
+		>
 			<Icon status={lessonStatus} />
 			<div className={'flex-grow'}>{JSON.parse(lesson.title)[lang]}</div>
 			<div className={cx(lessonStatus.done ? 'text-yellow-400' : 'text-gray-600')}>+{lesson.xp}XP</div>
