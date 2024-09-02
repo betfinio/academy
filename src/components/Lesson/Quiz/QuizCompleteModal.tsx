@@ -2,6 +2,7 @@ import { useProgress } from '@/src/lib/query';
 import { shootConfetti } from '@/src/lib/utilts.ts';
 import { ZeroAddress } from '@betfinio/abi';
 import { useQueryClient } from '@tanstack/react-query';
+import { Link } from '@tanstack/react-router';
 import { Button } from 'betfinio_app/button';
 import { DialogClose } from 'betfinio_app/dialog';
 import { Progress } from 'betfinio_app/progress';
@@ -12,7 +13,7 @@ import { useAccount } from 'wagmi';
 
 export const QuizCompleteModal: FC<{ onClose: () => void; newXp: number }> = ({ onClose, newXp }) => {
 	const { address = ZeroAddress } = useAccount();
-	const { data: xp } = useProgress(address);
+	const { data: xp = 0 } = useProgress(address);
 
 	const queryClient = useQueryClient();
 
@@ -42,9 +43,11 @@ export const QuizCompleteModal: FC<{ onClose: () => void; newXp: number }> = ({ 
 				<Progress value={((xp % 1000) * 100) / 1000} className={'bg-primary h-[8px] w-full mt-4'} size={100} height={100} />
 			</div>
 
-			<Button className={'uppercase w-full'} size={'lg'}>
-				Tackle to the next unit
-			</Button>
+			<Link to={'/academy/advanced'}>
+				<Button className={'uppercase w-full'} size={'lg'}>
+					Tackle to the next unit
+				</Button>
+			</Link>
 		</motion.div>
 	);
 };
