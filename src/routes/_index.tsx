@@ -3,6 +3,8 @@ import { cx } from 'class-variance-authority';
 import { BookIcon, CalendarHeart, GraduationCap, PencilRulerIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAccount } from 'wagmi';
+import { useIsMember } from 'betfinio_app/lib/query/pass';
+import { ZeroAddress } from '@betfinio/abi';
 
 export const Route = createFileRoute('/_index')({
 	component: () => <Layout />,
@@ -12,6 +14,7 @@ function Layout() {
 	const { t } = useTranslation('', { keyPrefix: 'academy.layout' });
 	const router = useLocation();
 	const { address } = useAccount();
+	const { data: hasPass, refetch } = useIsMember(address || ZeroAddress);
 	const isActive = (path: string) => {
 		switch (path) {
 			case 'new':
@@ -54,12 +57,12 @@ function Layout() {
 				))}
 			</div>
 			<div className={'relative w-full'}>
-				<div className={cx(!address && !parent && 'blur')}>
+				<div className={cx(!hasPass && !parent && 'blur')}>
 					<Outlet />
 				</div>
-				{!address && !parent && (
+				{!hasPass && !parent && (
 					<div className={'absolute top-[200px] flex z-[10] justify-center w-full'}>
-						<div className={cx(!address && !parent && 'bg-primaryLight text-center  border border-red-roulette rounded-lg p-4')}>
+						<div className={cx(!hasPass && !parent && 'bg-primaryLight text-center  border border-red-roulette rounded-lg p-4')}>
 							Content is locked for you <br /> Please connect wallet or paste invitation link
 						</div>
 					</div>
