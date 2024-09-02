@@ -2,6 +2,7 @@ import { Link, Outlet, createFileRoute, useLocation } from '@tanstack/react-rout
 import { cx } from 'class-variance-authority';
 import { BookIcon, CalendarHeart, GraduationCap, PencilRulerIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useAccount } from 'wagmi';
 
 export const Route = createFileRoute('/_index')({
 	component: () => <Layout />,
@@ -10,6 +11,7 @@ export const Route = createFileRoute('/_index')({
 function Layout() {
 	const { t } = useTranslation('', { keyPrefix: 'academy.layout' });
 	const router = useLocation();
+	const { address } = useAccount();
 	const isActive = (path: string) => {
 		switch (path) {
 			case 'new':
@@ -32,6 +34,8 @@ function Layout() {
 				return <BookIcon className={'w-5 h-5 '} />;
 		}
 	};
+	const code = JSON.parse(localStorage.getItem('code') || '{}');
+	const parent = code.parent;
 	return (
 		<div className={'p-2 md:p-3 lg:p-4 text-white h-full flex flex-col gap-10 md:gap-3 lg:gap-10'}>
 			<div className={'grid grid-cols-4 md:grid-cols-4 w-full gap-2 md:gap-3 lg:gap-4  rounded-xl '}>
@@ -49,7 +53,18 @@ function Layout() {
 					</Link>
 				))}
 			</div>
-			<Outlet />
+			<div className={'relative w-full'}>
+				<div className={cx(!address && !parent && 'blur')}>
+					<Outlet />
+				</div>
+				{!address && !parent && (
+					<div className={'absolute top-[200px] flex z-[10] justify-center w-full'}>
+						<div className={cx(!address && !parent && 'bg-primaryLight text-center  border border-red-roulette rounded-lg p-4')}>
+							Content is locked for you <br /> Please connect wallet or paste invitation link
+						</div>
+					</div>
+				)}
+			</div>
 		</div>
 	);
 }
