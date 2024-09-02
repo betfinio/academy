@@ -1,10 +1,10 @@
+import { ZeroAddress } from '@betfinio/abi';
 import { Link, Outlet, createFileRoute, useLocation } from '@tanstack/react-router';
+import { useIsMember } from 'betfinio_app/lib/query/pass';
 import { cx } from 'class-variance-authority';
 import { BookIcon, CalendarHeart, GraduationCap, PencilRulerIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAccount } from 'wagmi';
-import { useIsMember } from 'betfinio_app/lib/query/pass';
-import { ZeroAddress } from '@betfinio/abi';
 
 export const Route = createFileRoute('/_index')({
 	component: () => <Layout />,
