@@ -15,7 +15,7 @@ import { useAccount, useBalance } from 'wagmi';
 const Validation = () => {
 	const { lesson, section } = Route.useParams();
 	const { address } = useAccount();
-	const { data: hasPass } = useIsMember(address || ZeroAddress);
+	const { data: hasPass, refetch } = useIsMember(address || ZeroAddress);
 	const { data: validation } = useLessonValidation(Number(lesson));
 	const { data: lessonData = null } = useLesson(Number(lesson));
 	const { mutate: complete } = useCompleteLesson();
@@ -25,10 +25,14 @@ const Validation = () => {
 	const [error, setError] = useState('');
 	const [success, setSuccess] = useState('');
 	const navigate = useNavigate();
-	const { mutate: mint, isPending } = useMint();
+	const { mutate: mint, isPending, data, status } = useMint();
 
 	const { data: balance } = useBalance({ address: address || ZeroAddress });
 	const { data: betBalance = 0n } = useBetBalance(address || ZeroAddress);
+
+	useEffect(() => {
+		refetch();
+	}, [data, status]);
 	useEffect(() => {
 		if (validation) {
 			console.log(validation);
@@ -82,7 +86,7 @@ const Validation = () => {
 				}
 			}
 		}
-	}, [validation, address, balance]);
+	}, [validation, address, balance, hasPass]);
 
 	const handleFinish = () => {
 		if (address && address !== ZeroAddress) {
