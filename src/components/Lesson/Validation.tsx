@@ -7,10 +7,10 @@ import { Button } from 'betfinio_app/button';
 import { useIsMember, useMint } from 'betfinio_app/lib/query/pass';
 import { useBalance as useBetBalance } from 'betfinio_app/lib/query/token';
 import { cx } from 'class-variance-authority';
-import { useEffect, useState } from 'react';
-import { useAccount, useBalance } from 'wagmi';
-import type { Address } from 'viem';
 import { Loader } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import type { Address } from 'viem';
+import { useAccount, useBalance } from 'wagmi';
 
 const Validation = () => {
 	const { lesson, section } = Route.useParams();
