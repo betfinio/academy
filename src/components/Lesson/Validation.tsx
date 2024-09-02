@@ -1,14 +1,16 @@
-import { useAdvancedLessons, useCompleteLesson, useLesson, useLessonStatus, useLessonValidation, useSection } from '@/src/lib/query';
+import { useAdvancedLessons, useCompleteLesson, useLesson, useLessonStatus, useLessonValidation } from '@/src/lib/query';
 import { initialStatus } from '@/src/lib/types.ts';
 import { Route } from '@/src/routes/_index/lesson/$section.$lesson.tsx';
 import { ZeroAddress, valueToNumber } from '@betfinio/abi';
 import { useNavigate } from '@tanstack/react-router';
 import { Button } from 'betfinio_app/button';
-import { useIsMember } from 'betfinio_app/lib/query/pass';
+import { useIsMember, useMint } from 'betfinio_app/lib/query/pass';
 import { useBalance as useBetBalance } from 'betfinio_app/lib/query/token';
 import { cx } from 'class-variance-authority';
 import { useEffect, useState } from 'react';
 import { useAccount, useBalance } from 'wagmi';
+import type { Address } from 'viem';
+import { Loader } from 'lucide-react';
 
 const Validation = () => {
 	const { lesson, section } = Route.useParams();
@@ -23,6 +25,7 @@ const Validation = () => {
 	const [error, setError] = useState('');
 	const [success, setSuccess] = useState('');
 	const navigate = useNavigate();
+	const { mutate: mint, isPending } = useMint();
 
 	const { data: balance } = useBalance({ address: address || ZeroAddress });
 	const { data: betBalance = 0n } = useBetBalance(address || ZeroAddress);
@@ -94,6 +97,15 @@ const Validation = () => {
 		await navigate({ to: '/lesson/$section/$lesson', params: { lesson: lessons[next + 1].id.toString(), section: lessons[next + 1].section.toString() } });
 	};
 
+	const handleMint = () => {
+		const code = JSON.parse(localStorage.getItem('code') || '{}');
+		if (code.parent && code.inviter) {
+			console.log('minting');
+			console.log(code.inviter, code.parent);
+			mint({ address: address as Address, inviter: code.inviter, parent: code.parent });
+		}
+	};
+
 	if (validation === null) {
 		return null;
 	}
@@ -104,6 +116,18 @@ const Validation = () => {
 				<div className={'border border-green-500 bg-green-500/10 rounded-lg p-2 w-full text-center'}>Lesson completed</div>
 				<Button onClick={handleNext} className={'w-48'} disabled={!valid}>
 					Next lesson
+				</Button>
+			</div>
+		);
+	}
+
+	const code = JSON.parse(localStorage.getItem('code') || '{}');
+	if (validation && validation.key === 'has_pass' && !hasPass && code.parent && code.inviter) {
+		return (
+			<div className={'flex flex-row items-center gap-2 my-2'}>
+				<div className={cx('border border-green-500 bg-green-500/10 rounded-lg p-2 w-full text-center')}>You have been invited to Betfin.io</div>
+				<Button onClick={handleMint} className={'w-48'} disabled={hasPass}>
+					{isPending ? <Loader className={'animate-spin'} /> : 'Mint pass'}
 				</Button>
 			</div>
 		);
