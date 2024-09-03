@@ -1,4 +1,4 @@
-import { useAdvancedLessons, useCompleteLesson, useLesson, useLessonStatus, useLessonValidation } from '@/src/lib/query';
+import { useAdvancedLessons, useCompleteLesson, useLesson, useLessonStatus, useLessonValidation, useStaked } from '@/src/lib/query';
 import { initialStatus } from '@/src/lib/types.ts';
 import { Route } from '@/src/routes/_index/lesson/$section.$lesson.tsx';
 import { ZeroAddress, valueToNumber } from '@betfinio/abi';
@@ -17,6 +17,7 @@ const Validation = () => {
 	const { address } = useAccount();
 	const { data: hasPass, refetch } = useIsMember(address || ZeroAddress);
 	const { data: validation } = useLessonValidation(Number(lesson));
+	const { data: staked = 0n } = useStaked(address || ZeroAddress);
 	const { data: lessonData = null } = useLesson(Number(lesson));
 	const { mutate: complete } = useCompleteLesson();
 	const { data: lessonStatus = initialStatus } = useLessonStatus(Number(lesson), address || ZeroAddress);
@@ -85,20 +86,36 @@ const Validation = () => {
 					setSuccess('');
 				}
 			}
+			if (validation.key === 'staked') {
+				if (!!address && address !== ZeroAddress && staked > 0n) {
+					setValid(true);
+					setError('');
+					setSuccess('You have staked');
+					handleFinish();
+				} else {
+					setValid(false);
+					setError('Stake BET tokens to finish the lesson');
+					setSuccess('');
+				}
+			}
 		}
-	}, [validation, address, balance, hasPass]);
+	}, [validation, address, balance, hasPass, staked]);
 
 	const handleFinish = () => {
 		if (address && address !== ZeroAddress) {
 			complete({ lesson: Number(lesson), xp: lessonData?.xp || 0 });
 		}
 	};
-
+	const current = lessons.findIndex((l) => l.id === Number(lesson));
+	const next = lessons[current + 1];
 	const handleNext = async () => {
-		console.log('next');
-		const next = lessons.findIndex((l) => l.id === Number(lesson));
-		console.log(lessons[next + 1]);
-		await navigate({ to: '/lesson/$section/$lesson', params: { lesson: lessons[next + 1].id.toString(), section: lessons[next + 1].section.toString() } });
+		if (!next) {
+			await navigate({ to: '/advanced' });
+		}
+		await navigate({
+			to: '/lesson/$section/$lesson',
+			params: { lesson: lessons[current + 1].id.toString(), section: lessons[current + 1].section.toString() },
+		});
 	};
 
 	const handleMint = () => {
@@ -119,7 +136,7 @@ const Validation = () => {
 			<div className={'mt-4 flex flex-row justify-end gap-2 items-center'}>
 				<div className={'border border-green-500 bg-green-500/10 rounded-lg p-2 w-full text-center'}>Lesson completed</div>
 				<Button onClick={handleNext} className={'w-48'} disabled={!valid}>
-					Next lesson
+					{next ? 'Next lesson' : 'Go to advanced'}
 				</Button>
 			</div>
 		);

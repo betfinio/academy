@@ -1,4 +1,7 @@
+import { CONSERVATIVE, DYNAMIC } from '@/src/lib/global.ts';
 import { type AdvancedLesson, type AdvancedLessonSection, type Document, type LessonValidation, type Status, initialStatus } from '@/src/lib/types.ts';
+import { ConservativeStakingContract, DynamicStakingContract, ZeroAddress } from '@betfinio/abi';
+import { type Config, readContract } from '@wagmi/core';
 import type { SupabaseClient } from 'betfinio_app/supabase';
 import type { Address } from 'viem';
 
@@ -71,6 +74,24 @@ export const fetchLessonStatus = async (lessonId: number, address: Address, clie
 		return initialStatus;
 	}
 	return { done: true, xp: status.data.xp };
+};
+
+export const fetchStaked = async (address: Address, config: Config) => {
+	if (address === ZeroAddress) return 0n;
+	const conservative = (await readContract(config, {
+		address: CONSERVATIVE,
+		abi: ConservativeStakingContract.abi,
+		functionName: 'getStaked',
+		args: [address],
+	})) as bigint;
+	const dynamic = (await readContract(config, {
+		address: DYNAMIC,
+		abi: DynamicStakingContract.abi,
+		functionName: 'getStaked',
+		args: [address],
+	})) as bigint;
+
+	return conservative + dynamic;
 };
 
 export const completeLesson = async (
