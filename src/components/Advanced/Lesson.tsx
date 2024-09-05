@@ -18,7 +18,7 @@ const Lesson: FC<{ lesson: AdvancedLesson }> = ({ lesson }) => {
 		<Link to={'/lesson/$section/$lesson'} params={{ lesson: lesson.id.toString(), section: lesson.section.toString() }}>
 			<AccordionContent
 				key={lesson.title}
-				className="bg-card mt-2 rounded-sm min-h-14 flex items-center  justify-between  text-lg font-semibold  ml-auto px-6 py-4"
+				className="bg-card mt-2 rounded-sm min-h-14 flex items-center  justify-between  lg:text-lg font-semibold  ml-auto px-6 py-4"
 			>
 				{JSON.parse(lesson.title)[i18n.language]}
 				<span className="flex gap-4 items-center">

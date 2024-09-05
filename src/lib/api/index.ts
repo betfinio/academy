@@ -105,7 +105,6 @@ export const completeLesson = async (
 		throw new Error('No client provided');
 	}
 
-	console.log('completing', lesson, xp, address);
 	const { data, error, status } = await client.rpc('complete_lesson', { lesson_id: lesson, xp: xp, member: address.toLowerCase() });
 	console.log(data, error, status);
 	return { data, error: error?.message, status: status.toString() };

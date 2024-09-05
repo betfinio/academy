@@ -105,9 +105,9 @@ export const useCompleteLesson = () => {
 			console.log(data, status, error);
 			if (error === undefined && status === '204') {
 				shootConfetti();
+				await queryClient.invalidateQueries({ queryKey: ['academy'] });
+				await queryClient.invalidateQueries({ queryKey: ['academy', 'section'] });
 			}
-			await queryClient.invalidateQueries({ queryKey: ['academy'] });
-			await queryClient.invalidateQueries({ queryKey: ['academy', 'section'] });
 		},
 	});
 };

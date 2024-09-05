@@ -40,7 +40,7 @@ function Layout() {
 	const code = JSON.parse(localStorage.getItem('code') || '{}');
 	const parent = code.parent;
 	return (
-		<div className={'p-2 md:p-3 lg:p-4 text-white h-full flex flex-col gap-10 md:gap-3 lg:gap-10'}>
+		<div className={'p-2 md:p-3 lg:p-4 text-white h-full flex flex-col gap-2 md:gap-3 lg:gap-4'}>
 			<div className={'grid grid-cols-4 md:grid-cols-4 w-full gap-2 md:gap-3 lg:gap-4  rounded-xl '}>
 				{['docs', 'new', 'advanced', 'events'].map((link) => (
 					<Link

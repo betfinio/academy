@@ -2,11 +2,10 @@ import CollapseSection from '@/src/components/Advanced/CollapseSection.tsx';
 import { useAdvancedSections } from '@/src/lib/query';
 import { Accordion } from 'betfinio_app/accordion';
 import { Loader } from 'lucide-react';
+import type { FC } from 'react';
 
-export const Staking = () => {
-	const { data = [], isLoading } = useAdvancedSections('staking');
-	console.log(data);
-	console.log('staking tab');
+export const Sections: FC<{ tab: string }> = ({ tab }) => {
+	const { data = [], isLoading } = useAdvancedSections(tab);
 	if (isLoading) {
 		return <Loader className="animate-spin" />;
 	}
