@@ -1,9 +1,9 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from 'betfinio_app/tabs';
-import { Staking } from './Staking.tsx';
-import { useAccount } from 'wagmi';
 import { useProgress } from '@/src/lib/query';
 import { ZeroAddress } from '@betfinio/abi';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from 'betfinio_app/tabs';
 import { useTranslation } from 'react-i18next';
+import { useAccount } from 'wagmi';
+import { Staking } from './Staking.tsx';
 
 const tabs = ['staking', 'affiliate', 'games', 'partner'];
 export const AdvancedTabs = () => {
