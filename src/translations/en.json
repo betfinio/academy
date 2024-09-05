@@ -8,5 +8,13 @@
 	"document": {
 		"visit": "Visit",
 		"play": "Play"
+	},
+	"advanced": {
+		"tabs": {
+			"staking": "Staking",
+			"affiliate": "Affiliate",
+			"games": "Games",
+			"partner": "Partners"
+		}
 	}
 }

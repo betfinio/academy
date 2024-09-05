@@ -1,17 +1,14 @@
-import CollapseSection from '@/src/components/Advanced/CollapseSection.tsx';
 import { useAdvancedSections } from '@/src/lib/query';
-import { Accordion } from 'betfinio_app/accordion';
 import { Loader } from 'lucide-react';
+import { Accordion } from 'betfinio_app/accordion';
+import CollapseSection from '@/src/components/Advanced/CollapseSection.tsx';
 
-export const AdvancedCollapseList = () => {
-	const { data = [], isLoading } = useAdvancedSections();
-
+export const Staking = () => {
+	const { data = [], isLoading } = useAdvancedSections('staking');
+	console.log(data)
+	console.log('staking tab')
 	if (isLoading) {
-		return (
-			<div>
-				<Loader className="animate-spin" />
-			</div>
-		);
+		return <Loader className="animate-spin" />;
 	}
 	return (
 		<Accordion type="single" collapsible className="w-full gap-4 flex flex-col">

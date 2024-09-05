@@ -19,9 +19,7 @@ export const QuizCompleteModal: FC<{ onClose: () => void; newXp: number }> = ({ 
 
 	useEffect(() => {
 		shootConfetti();
-		setTimeout(() => {
-			queryClient.invalidateQueries({ queryKey: ['academy', 'progress'] });
-		}, 1000);
+		setTimeout(() => queryClient.invalidateQueries({ queryKey: ['academy'] }), 1000);
 	}, []);
 
 	return (
@@ -43,7 +41,7 @@ export const QuizCompleteModal: FC<{ onClose: () => void; newXp: number }> = ({ 
 				<Progress value={((xp % 1000) * 100) / 1000} className={'bg-primary h-[8px] w-full mt-4'} size={100} height={100} />
 			</div>
 
-			<Link to={'/academy/advanced'}>
+			<Link to={'/advanced'}>
 				<Button className={'uppercase w-full'} size={'lg'}>
 					Tackle to the next unit
 				</Button>

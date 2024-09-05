@@ -12,11 +12,11 @@ export const fetchDocs = async (lang: string, client?: SupabaseClient): Promise<
 	const data = await client.from('documents').select('*').eq('language', lang).returns<Document[]>();
 	return data.data || [];
 };
-export const fetchAdvancedSections = async (client?: SupabaseClient): Promise<AdvancedLessonSection[]> => {
+export const fetchAdvancedSections = async (tab: string, client?: SupabaseClient): Promise<AdvancedLessonSection[]> => {
 	if (!client) {
 		throw new Error('No client provided');
 	}
-	const sections = await client.from('sections').select('title::text, xp, id').returns<AdvancedLessonSection[]>();
+	const sections = await client.from('sections').select('title::text, xp, id').eq('tab', tab).order('order').returns<AdvancedLessonSection[]>();
 	console.log(sections);
 	return sections.data as AdvancedLessonSection[];
 };
@@ -54,6 +54,7 @@ export const fetchSection = async (id: number, client?: SupabaseClient): Promise
 };
 
 export const fetchSectionStatus = async (sectionId: number, address: Address, client?: SupabaseClient): Promise<Status> => {
+	console.log('fetching section status', sectionId);
 	if (!client) {
 		throw new Error('No client provided');
 	}

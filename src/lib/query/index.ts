@@ -34,11 +34,11 @@ export const useStaked = (address: Address) => {
 		queryFn: () => fetchStaked(address, config),
 	});
 };
-export const useAdvancedSections = () => {
+export const useAdvancedSections = (tab: string) => {
 	const { client } = useSupabase();
 	return useQuery({
-		queryKey: ['academy', 'section', 'all'],
-		queryFn: () => fetchAdvancedSections(client),
+		queryKey: ['academy', 'section', tab],
+		queryFn: () => fetchAdvancedSections(tab, client),
 	});
 };
 export const useAdvancedLessons = (id: number) => {
@@ -60,6 +60,7 @@ export const useSectionStatus = (sectionId: number, address: Address) => {
 	return useQuery<Status>({
 		queryKey: ['academy', 'section', sectionId, 'status', address],
 		queryFn: () => fetchSectionStatus(sectionId, address, client),
+		refetchOnMount: true,
 	});
 };
 export const useLessonStatus = (lessonId: number, address: Address) => {
@@ -74,6 +75,7 @@ export const useProgress = (address: Address) => {
 	return useQuery<number>({
 		queryKey: ['academy', 'progress', address],
 		queryFn: () => fetchProgress(address, client),
+		refetchOnMount: true,
 	});
 };
 export const useSection = (id: number) => {
@@ -99,13 +101,13 @@ export const useCompleteLesson = () => {
 	return useMutation<{ data: string; error?: string; status?: string }, DefaultError, { lesson: number; xp: number }>({
 		mutationKey: ['academy', 'lesson', 'complete'],
 		mutationFn: ({ lesson, xp }) => completeLesson(lesson, xp, address, client),
-		onSuccess: ({ data, status, error }) => {
+		onSuccess: async ({ data, status, error }) => {
 			console.log(data, status, error);
 			if (error === undefined && status === '204') {
 				shootConfetti();
-				queryClient.invalidateQueries({ queryKey: ['academy', 'section'] });
-				queryClient.invalidateQueries({ queryKey: ['academy', 'progress'] });
 			}
+			await queryClient.invalidateQueries({ queryKey: ['academy'] });
+			await queryClient.invalidateQueries({ queryKey: ['academy', 'section'] });
 		},
 	});
 };
