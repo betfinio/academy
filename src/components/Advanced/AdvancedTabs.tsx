@@ -1,12 +1,12 @@
 import { useProgress } from '@/src/lib/query';
 import { ZeroAddress } from '@betfinio/abi';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'betfinio_app/tabs';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from 'betfinio_app/tooltip';
+import { LockIcon } from 'lucide-react';
+import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAccount } from 'wagmi';
 import { Sections } from './Staking.tsx';
-import type { FC } from 'react';
-import { LockIcon } from 'lucide-react';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from 'betfinio_app/tooltip';
 
 const tabs = ['staking', 'affiliate', 'games', 'partner'];
 export const AdvancedTabs = () => {
