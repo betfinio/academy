@@ -1,5 +1,5 @@
 import { ZeroAddress } from '@betfinio/abi';
-import { Link, Outlet, createFileRoute, useLocation, ScrollRestoration } from '@tanstack/react-router';
+import { Link, Outlet, ScrollRestoration, createFileRoute, useLocation } from '@tanstack/react-router';
 import { useIsMember } from 'betfinio_app/lib/query/pass';
 import { cx } from 'class-variance-authority';
 import { BookIcon, CalendarHeart, GraduationCap, PencilRulerIcon } from 'lucide-react';
