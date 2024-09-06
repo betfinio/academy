@@ -1,11 +1,11 @@
 import CollapseSection from '@/src/components/Advanced/CollapseSection.tsx';
 import { useAdvancedSections, useProgress } from '@/src/lib/query';
+import { getRequired } from '@/src/lib/utilts.ts';
+import { ZeroAddress } from '@betfinio/abi';
 import { Accordion } from 'betfinio_app/accordion';
 import { Loader } from 'lucide-react';
 import type { FC } from 'react';
-import { ZeroAddress } from '@betfinio/abi';
 import { useAccount } from 'wagmi';
-import { getRequired } from '@/src/lib/utilts.ts';
 
 export const Sections: FC<{ tab: string }> = ({ tab }) => {
 	const { data = [], isLoading } = useAdvancedSections(tab);
