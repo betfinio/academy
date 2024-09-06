@@ -39,6 +39,9 @@ export const QuizCompleteModal: FC<{ onClose: () => void; newXp: number }> = ({ 
 			<div className={'text-center w-full'}>
 				<span className={'text-[#6A6F84]'}>Your progress</span>
 				<Progress value={((xp % 1000) * 100) / 1000} className={'bg-primary h-[8px] w-full mt-4'} size={100} height={100} />
+				<div className={'flex flex-row'}>
+				
+				</div>
 			</div>
 
 			<Link to={'/advanced'}>
