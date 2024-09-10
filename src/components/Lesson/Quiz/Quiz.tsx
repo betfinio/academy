@@ -9,7 +9,7 @@ import { Button } from 'betfinio_app/button';
 import { Dialog, DialogContent } from 'betfinio_app/dialog';
 import { cx } from 'class-variance-authority';
 import { AnimatePresence, motion } from 'framer-motion';
-import {ArrowRight, House, Loader} from 'lucide-react';
+import { ArrowRight, House, Loader } from 'lucide-react';
 import { type FC, useEffect, useMemo, useState } from 'react';
 import { useAccount } from 'wagmi';
 import { QuizQuestion } from './QuizQuestion';
@@ -229,11 +229,10 @@ export const Quiz = () => {
 												<House height={18} className={'duration-300'} />
 											</>
 										)}
-									
 									</Button>
 								</motion.div>
 							) : (
-								<motion.div key="submitButton" initial={{opacity: 0}} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
+								<motion.div key="submitButton" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
 									<Button disabled={isQuizLoading || !allAnswered || finished} onClick={handleSubmit} className={'w-32 duration-300'}>
 										Submit
 									</Button>
