@@ -9,7 +9,7 @@ import { Button } from 'betfinio_app/button';
 import { Dialog, DialogContent } from 'betfinio_app/dialog';
 import { cx } from 'class-variance-authority';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowRight, Loader } from 'lucide-react';
+import {ArrowRight, House, Loader} from 'lucide-react';
 import { type FC, useEffect, useMemo, useState } from 'react';
 import { useAccount } from 'wagmi';
 import { QuizQuestion } from './QuizQuestion';
@@ -58,7 +58,6 @@ export const Quiz = () => {
 
 	const current = lessons.findIndex((l) => l.id === Number(lesson));
 	const next = lessons[current + 1];
-	console.log(next);
 	const handleNext = async () => {
 		if (!next) {
 			await navigate({ to: '/advanced' });
@@ -109,7 +108,6 @@ export const Quiz = () => {
 	}, [quiz, answers.selected]);
 
 	const validateAnswers = (answers: answersState): { hasError: boolean; syncExp: number } => {
-		console.log('change', answers, lesson, address, quiz.length);
 
 		if (quiz.length === 0) return { hasError: true, syncExp: 0 };
 
@@ -221,12 +219,22 @@ export const Quiz = () => {
 							{finished ? (
 								<motion.div key="nextLesson" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
 									<Button className={'cursor-pointer group'} onClick={handleNext}>
-										<span className={'duration-300'}>Next lesson</span>
-										<ArrowRight height={18} className={'group-hover:translate-x-[3px] duration-300'} />
+										{next ? (
+											<>
+												<span className={'duration-300'}>Next lesson</span>
+												<ArrowRight height={18} className={'group-hover:translate-x-[3px] duration-300'}/>
+											</>
+										) : (
+											<>
+												<span className={'duration-300'}>Overview</span>
+												<House height={18} className={'duration-300'}/>
+											</>
+										)}
+									
 									</Button>
 								</motion.div>
 							) : (
-								<motion.div key="submitButton" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
+								<motion.div key="submitButton" initial={{opacity: 0}} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
 									<Button disabled={isQuizLoading || !allAnswered || finished} onClick={handleSubmit} className={'w-32 duration-300'}>
 										Submit
 									</Button>
