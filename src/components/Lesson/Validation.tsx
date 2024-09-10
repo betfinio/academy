@@ -31,6 +31,8 @@ const Validation = () => {
 	const { data: balance } = useBalance({ address: address || ZeroAddress });
 	const { data: betBalance = 0n } = useBetBalance(address || ZeroAddress);
 
+	const [manual, setManual] = useState<boolean>(false);
+
 	useEffect(() => {
 		refetch();
 	}, [data, status]);
@@ -98,8 +100,25 @@ const Validation = () => {
 					setSuccess('');
 				}
 			}
+			if (validation.key === 'manual') {
+				console.log(manual);
+				if (!!address && address !== ZeroAddress && manual) {
+					setValid(true);
+					setError('');
+					setSuccess('You have passed the lesson!');
+					handleFinish();
+					setTimeout(() => handleNext(), 2000);
+				} else {
+					setValid(false);
+					setSuccess('');
+				}
+			}
 		}
-	}, [validation, address, balance, hasPass, staked]);
+	}, [validation, address, balance, hasPass, staked, manual]);
+
+	const handleComplete = () => {
+		setManual(true);
+	};
 
 	const handleFinish = () => {
 		if (address && address !== ZeroAddress) {
@@ -135,7 +154,7 @@ const Validation = () => {
 		return (
 			<div className={'mt-4 flex flex-row justify-end gap-2 items-center'}>
 				<div className={'border border-green-500 bg-green-500/10 rounded-lg p-2 w-full text-center'}>Lesson completed</div>
-				<Button onClick={handleNext} className={'w-48'} disabled={!valid}>
+				<Button onClick={handleNext} className={'w-48'}>
 					{next ? 'Next lesson' : 'Go to advanced'}
 				</Button>
 			</div>
@@ -149,6 +168,16 @@ const Validation = () => {
 				<div className={cx('border border-green-500 bg-green-500/10 rounded-lg p-2 w-full text-center')}>You have been invited to Betfin.io</div>
 				<Button onClick={handleMint} className={'w-48'} disabled={hasPass}>
 					{isPending ? <Loader className={'animate-spin'} /> : 'Mint pass'}
+				</Button>
+			</div>
+		);
+	}
+	if (validation && validation.key === 'manual') {
+		return (
+			<div className={'flex flex-row items-center gap-2 my-2'}>
+				<div className={cx('border border-green-500 bg-green-500/10 rounded-lg p-2 w-full text-center')}>Click the button to complete lesson</div>
+				<Button onClick={handleComplete} className={'w-48'}>
+					Complete
 				</Button>
 			</div>
 		);

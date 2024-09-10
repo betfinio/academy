@@ -1,15 +1,15 @@
 import { QuizCompleteModal } from '@/src/components/Lesson/Quiz/QuizCompleteModal.tsx';
-import { useCompleteLesson, useLesson, useLessonStatus } from '@/src/lib/query';
+import { useAdvancedLessons, useCompleteLesson, useLesson, useLessonStatus } from '@/src/lib/query';
 import { useQuiz } from '@/src/lib/query/quiz';
 import { Route } from '@/src/routes/_index/lesson/$section.$lesson';
 import { roundToOneDecimalPoint } from '@/src/utils/utils';
 import { ZeroAddress } from '@betfinio/abi';
-import { Link } from '@tanstack/react-router';
+import { useNavigate } from '@tanstack/react-router';
 import { Button } from 'betfinio_app/button';
 import { Dialog, DialogContent } from 'betfinio_app/dialog';
 import { cx } from 'class-variance-authority';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowRight, Loader } from 'lucide-react';
+import { ArrowRight, House, Loader } from 'lucide-react';
 import { type FC, useEffect, useMemo, useState } from 'react';
 import { useAccount } from 'wagmi';
 import { QuizQuestion } from './QuizQuestion';
@@ -47,12 +47,26 @@ const decodeErrors = (errors: SerializedErrors): Errors => {
 };
 
 export const Quiz = () => {
-	const { lesson } = Route.useParams();
+	const { lesson, section } = Route.useParams();
 	const { data: lessonData = null } = useLesson(Number(lesson));
 	const { address = ZeroAddress } = useAccount();
 	const { data: lessonStatus } = useLessonStatus(Number(lesson), address);
 	const { mutate: complete, isSuccess, data: mutationData } = useCompleteLesson();
 	const { data: quiz = [], isLoading: isQuizLoading } = useQuiz(Number(lesson));
+	const { data: lessons = [] } = useAdvancedLessons(Number(section));
+	const navigate = useNavigate();
+
+	const current = lessons.findIndex((l) => l.id === Number(lesson));
+	const next = lessons[current + 1];
+	const handleNext = async () => {
+		if (!next) {
+			await navigate({ to: '/advanced' });
+		}
+		await navigate({
+			to: '/lesson/$section/$lesson',
+			params: { lesson: lessons[current + 1].id.toString(), section: lessons[current + 1].section.toString() },
+		});
+	};
 
 	const [answers, setAnswers] = useState(() => getInitialQuizState(lesson, address));
 	const [exp, setExp] = useState<{ [key: number]: number }>({});
@@ -94,8 +108,6 @@ export const Quiz = () => {
 	}, [quiz, answers.selected]);
 
 	const validateAnswers = (answers: answersState): { hasError: boolean; syncExp: number } => {
-		console.log('change', answers, lesson, address, quiz.length);
-
 		if (quiz.length === 0) return { hasError: true, syncExp: 0 };
 
 		let hasError = false;
@@ -169,7 +181,7 @@ export const Quiz = () => {
 	return (
 		<Dialog open={modalOpen} onOpenChange={handleClose}>
 			<DialogContent className={'academy'}>
-				<QuizCompleteModal onClose={handleClose} newXp={calculateXp()} />
+				<QuizCompleteModal onButtonClick={handleNext} onClose={handleClose} newXp={calculateXp()} />
 			</DialogContent>
 			<motion.div
 				initial={{ opacity: 0, y: 20 }}
@@ -205,12 +217,19 @@ export const Quiz = () => {
 						<AnimatePresence mode={'wait'}>
 							{finished ? (
 								<motion.div key="nextLesson" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
-									<Link to={'/advanced'}>
-										<Button className={'cursor-pointer group'}>
-											<span className={'duration-300'}>Next lesson</span>
-											<ArrowRight height={18} className={'group-hover:translate-x-[3px] duration-300'} />
-										</Button>
-									</Link>
+									<Button className={'cursor-pointer group'} onClick={handleNext}>
+										{next ? (
+											<>
+												<span className={'duration-300'}>Next lesson</span>
+												<ArrowRight height={18} className={'group-hover:translate-x-[3px] duration-300'} />
+											</>
+										) : (
+											<>
+												<span className={'duration-300'}>Overview</span>
+												<House height={18} className={'duration-300'} />
+											</>
+										)}
+									</Button>
 								</motion.div>
 							) : (
 								<motion.div key="submitButton" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>

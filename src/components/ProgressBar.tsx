@@ -21,7 +21,7 @@ const ProgressBar = () => {
 					<Progress value={((xp % 1000) * 100) / 1000} className={'bg-primaryLighter '} />
 				</div>
 				<div className={'font-semibold text-lg'}>
-					{xp % 1000}XP <span className={'text-gray-600'}> / 1000</span>
+					{xp}XP <span className={'text-gray-600'}> / {(Math.floor(xp / 1000) + 1) * 1000}</span>
 				</div>
 			</div>
 		</div>

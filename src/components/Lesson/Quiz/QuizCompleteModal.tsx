@@ -11,7 +11,7 @@ import { X } from 'lucide-react';
 import React, { type FC, useEffect } from 'react';
 import { useAccount } from 'wagmi';
 
-export const QuizCompleteModal: FC<{ onClose: () => void; newXp: number }> = ({ onClose, newXp }) => {
+export const QuizCompleteModal: FC<{ onClose: () => void; newXp: number; onButtonClick: () => void }> = ({ onClose, onButtonClick, newXp }) => {
 	const { address = ZeroAddress } = useAccount();
 	const { data: xp = 0 } = useProgress(address);
 
@@ -39,13 +39,16 @@ export const QuizCompleteModal: FC<{ onClose: () => void; newXp: number }> = ({ 
 			<div className={'text-center w-full'}>
 				<span className={'text-[#6A6F84]'}>Your progress</span>
 				<Progress value={((xp % 1000) * 100) / 1000} className={'bg-primary h-[8px] w-full mt-4'} size={100} height={100} />
+				<div className={'flex flex-row items-center mt-1'}>
+					<div className={'text-[#6A6F84]'}>LVL {Math.floor(xp / 1000) + 1}</div>
+					<div className={'flex-grow'} />
+					<div className={'text-[#6A6F84]'}>LVL {Math.floor(xp / 1000) + 2}</div>
+				</div>
 			</div>
 
-			<Link to={'/advanced'}>
-				<Button className={'uppercase w-full'} size={'lg'}>
-					Tackle to the next unit
-				</Button>
-			</Link>
+			<Button className={'uppercase w-full'} onClick={onButtonClick} size={'lg'}>
+				Tackle to the next unit
+			</Button>
 		</motion.div>
 	);
 };
