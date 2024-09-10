@@ -11,7 +11,7 @@ import { X } from 'lucide-react';
 import React, { type FC, useEffect } from 'react';
 import { useAccount } from 'wagmi';
 
-export const QuizCompleteModal: FC<{ onClose: () => void; newXp: number }> = ({ onClose, newXp }) => {
+export const QuizCompleteModal: FC<{ onClose: () => void; newXp: number; onButtonClick: () => void }> = ({ onClose, onButtonClick, newXp }) => {
 	const { address = ZeroAddress } = useAccount();
 	const { data: xp = 0 } = useProgress(address);
 
@@ -46,11 +46,9 @@ export const QuizCompleteModal: FC<{ onClose: () => void; newXp: number }> = ({ 
 				</div>
 			</div>
 
-			<Link to={'/advanced'}>
-				<Button className={'uppercase w-full'} size={'lg'}>
-					Tackle to the next unit
-				</Button>
-			</Link>
+			<Button className={'uppercase w-full'} onClick={onButtonClick} size={'lg'}>
+				Tackle to the next unit
+			</Button>
 		</motion.div>
 	);
 };
