@@ -1,5 +1,5 @@
 import type { QuizQuestion } from '@/src/lib/types.ts';
-import type {SupabaseClient} from 'betfinio_app/supabase';
+import type { SupabaseClient } from 'betfinio_app/supabase';
 
 export const fetchQuiz = async (lesson: number, client?: SupabaseClient): Promise<QuizQuestion[]> => {
 	if (!client) {
