@@ -58,7 +58,7 @@ function Layout() {
 				))}
 			</div>
 			<div className={'relative w-full'}>
-				<div className={cx(!hasPass && !parent && 'blur')}>
+				<div className={cx(!hasPass && !parent && 'blur pointer-events-none')}>
 					<Outlet />
 				</div>
 				{!hasPass && !parent && (
