@@ -2,8 +2,7 @@
 module.exports = {
 	darkMode: ['class'],
 	important: '.academy',
-	content: ['./pages/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './app/**/*.{ts,tsx}', './src/**/*.{ts,tsx}', './@mf-types/**/*.*'],
-	prefix: '',
+	content: ['./src/**/*.{ts,tsx}'],
 	theme: {
 		container: {
 			center: true,
