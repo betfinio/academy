@@ -5,13 +5,16 @@ import { cx } from 'class-variance-authority';
 import { BookIcon, CalendarHeart, GraduationCap, PencilRulerIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAccount } from 'wagmi';
+import type { ILanguageKeys } from '../i18next';
 
 export const Route = createFileRoute('/_index')({
 	component: () => <Layout />,
 });
 
+type IAcademyLinks = Array<keyof ILanguageKeys['layout']>;
+
 function Layout() {
-	const { t } = useTranslation('', { keyPrefix: 'academy.layout' });
+	const { t } = useTranslation('academy');
 	const router = useLocation();
 	const { address } = useAccount();
 	const { data: hasPass, refetch } = useIsMember(address || ZeroAddress);
@@ -43,7 +46,7 @@ function Layout() {
 		<div className={'p-2 md:p-3 lg:p-4 text-white h-full flex flex-col gap-2 md:gap-3 lg:gap-4'}>
 			<ScrollRestoration />
 			<div className={'grid grid-cols-4 md:grid-cols-4 w-full gap-2 md:gap-3 lg:gap-4  rounded-xl '}>
-				{['docs', 'new', 'advanced', 'events'].map((link) => (
+				{(['docs', 'new', 'advanced', 'events'] as IAcademyLinks).map((link) => (
 					<Link
 						to={`/${link}`}
 						key={link}
@@ -53,7 +56,7 @@ function Layout() {
 						)}
 					>
 						<span className={cx(isActive(link) ? 'text-yellow-400' : 'text-gray-400 ')}>{getIcon(link)}</span>
-						{t(link)}
+						{t(`layout.${link}`)}
 					</Link>
 				))}
 			</div>
@@ -64,7 +67,7 @@ function Layout() {
 				{!hasPass && !parent && (
 					<div className={'absolute top-[200px] flex z-[10] justify-center w-full'}>
 						<div className={cx(!hasPass && !parent && 'bg-primaryLight text-center  border border-red-roulette rounded-lg p-4')}>
-							Content is locked for you <br /> Please connect wallet or paste invitation link
+							{t('contentIsLockedForYou')} <br /> {t('pleaseConnetWallet')}
 						</div>
 					</div>
 				)}

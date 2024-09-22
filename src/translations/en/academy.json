@@ -1,0 +1,61 @@
+{
+	"layout": {
+		"new": "Newbies",
+		"advanced": "Advanced",
+		"docs": "Documents",
+		"events": "Events"
+	},
+	"document": {
+		"visit": "Visit",
+		"play": "Play"
+	},
+	"advanced": {
+		"tabs": {
+			"staking": "Staking",
+			"affiliate": "Affiliate",
+			"games": "Games",
+			"partner": "Partners"
+		}
+	},
+
+	"commingSoon": "Comming soon",
+	"staking": {
+		"unlockSection": "Get {count}XP to unlock this section",
+		"sectionIsLocked": "Section is locked!"
+	},
+	"quiz": {
+		"nextLesson": "Next lesson",
+		"quiz": "Quiz",
+		"overview": "Overview",
+		"submit": "Submit",
+		"walletNotConnected": "Wallet Not Connected",
+		"pleaseConnectYourWallet": "Please connect your wallet to access the quiz.",
+		"quizComplete": "Quiz complete!",
+		"yourProgress": "Your progress",
+		"tackleNextUnit": "Tackle to the next unit"
+	},
+	"back": "Back",
+	"play": "Play",
+	"validation": {
+		"lessonCompleted": "Lesson completed",
+		"youHaveBeenInvited": "You have been invited to Betfin.io",
+		"clickToCompelete": "Click the button to complete lesson",
+		"complete": "Complete",
+		"nextLesson": "Next lesson",
+		"youHavePassedTheLesson": "You have passed the lesson!",
+		"stakeBetToFinishLesson": "Stake BET tokens to finish the lesson",
+		"youHaveStaked": "You have staked",
+		"mintAPassToFinish": "Mint a Pass to finish the lesson",
+		"ownBetToFinishLesson": "Own BETs to finish the lesson",
+		"buyMaticToFinishTheLesson": "Buy MATIC to finish the lesson",
+		"connectWallettTFinishTheLesson": "Connect your wallet to finish the lesson",
+		"wallectConnected": "Wallet connected",
+		"youHaveCountMatic": "You have {count} MATIC",
+		"youHaveCountBet": "You have {count} BET",
+		"youHavePass": "You have a Pass",
+		"goToAdvanced": "Go to advanced"
+	},
+	"advancedAcademy": "Advanced academy",
+	"contentIsLockedForYou": "Content is locked for you",
+	"pleaseConnetWallet": "Please connect wallet or paste invitation link"
+}
