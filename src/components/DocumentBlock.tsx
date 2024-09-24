@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 const DocumentBlock: FC<Document> = ({ isPlayable = false, title = 'Placeholder', points = '', url = '/' }) => {
 	const { t } = useTranslation('', { keyPrefix: 'academy.document' });
 	return (
-		<div className={'border border-gray-800 bg-primaryLighter aspect-video rounded-lg flex flex-col'}>
+		<div className={'border border-gray-800 bg-primaryLighter  rounded-lg flex flex-col h-full'}>
 			<div className={'flex-grow p-4'}>
 				<div className={'flex flex-row gap-2 items-center'}>
 					<BookIcon className={'w-8 h-8 text-purple-box'} />
