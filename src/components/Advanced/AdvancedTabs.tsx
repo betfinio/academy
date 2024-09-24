@@ -1,17 +1,11 @@
-import { useProgress } from '@/src/lib/query';
-import { ZeroAddress } from '@betfinio/abi';
+import type { ILanguageKeys } from '@/src/i18next.js';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'betfinio_app/tabs';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from 'betfinio_app/tooltip';
-import { LockIcon } from 'lucide-react';
-import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAccount } from 'wagmi';
 import { Sections } from './Staking.tsx';
 
-const tabs = ['staking', 'affiliate', 'games', 'partner'];
+const tabs: Array<keyof ILanguageKeys['advanced']['tabs']> = ['staking', 'affiliate', 'games', 'partner'];
 export const AdvancedTabs = () => {
-	const { t } = useTranslation('', { keyPrefix: 'academy.advanced.tabs' });
-	const { address = ZeroAddress } = useAccount();
+	const { t } = useTranslation('academy');
 
 	return (
 		<div className={'w-full mt-4'}>
@@ -19,7 +13,7 @@ export const AdvancedTabs = () => {
 				<TabsList className=" w-full grid grid-cols-4 mb-5 ">
 					{tabs.map((tab) => (
 						<TabsTrigger variant="contained" className="w-full bg-primaryLight text-base flex gap-2 items-center " value={tab} key={tab}>
-							{t(tab)}
+							{t(`advanced.tabs.${tab}`)}
 						</TabsTrigger>
 					))}
 				</TabsList>
@@ -29,8 +23,8 @@ export const AdvancedTabs = () => {
 				<TabsContent value="affiliate">
 					<Sections tab={'affiliate'} />
 				</TabsContent>
-				<TabsContent value="games">Comming soon...</TabsContent>
-				<TabsContent value="partner">Comming soon...</TabsContent>
+				<TabsContent value="games">{t('comingSoon')}...</TabsContent>
+				<TabsContent value="partner">{t('comingSoon')}...</TabsContent>
 			</Tabs>
 		</div>
 	);

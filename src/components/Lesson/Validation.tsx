@@ -9,10 +9,12 @@ import { useBalance as useBetBalance } from 'betfinio_app/lib/query/token';
 import { cx } from 'class-variance-authority';
 import { Loader } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Address } from 'viem';
 import { useAccount, useBalance } from 'wagmi';
 
 const Validation = () => {
+	const { t } = useTranslation();
 	const { lesson, section } = Route.useParams();
 	const { address } = useAccount();
 	const { data: hasPass, refetch } = useIsMember(address || ZeroAddress);
@@ -43,11 +45,11 @@ const Validation = () => {
 				if (!!address && address !== ZeroAddress) {
 					setValid(true);
 					setError('');
-					setSuccess('Wallet connected');
+					setSuccess(t('validation.walletConnected'));
 					handleFinish();
 				} else {
 					setValid(false);
-					setError('Connect your wallet to finish the lesson');
+					setError(t('validation.connectWalletToFinishTheLesson'));
 					handleFinish();
 					setSuccess('');
 				}
@@ -56,11 +58,11 @@ const Validation = () => {
 				if (!!address && address !== ZeroAddress && (balance?.value || 0) > 0) {
 					setValid(true);
 					setError('');
-					setSuccess(`You have ${valueToNumber(balance?.value).toFixed(2)} MATIC`);
+					setSuccess(t('validation.youHaveCountMatic', { count: +valueToNumber(balance?.value).toFixed(2) }));
 					handleFinish();
 				} else {
 					setValid(false);
-					setError('Buy MATIC to finish the lesson');
+					setError(t('validation.buyMaticToFinishTheLesson'));
 					setSuccess('');
 				}
 			}
@@ -68,11 +70,11 @@ const Validation = () => {
 				if (!!address && address !== ZeroAddress && betBalance > 0n) {
 					setValid(true);
 					setError('');
-					setSuccess(`You have ${valueToNumber(betBalance).toFixed(2)} BET`);
+					setSuccess(t('validation.youHaveCountBet', { count: +valueToNumber(betBalance).toFixed(2) }));
 					handleFinish();
 				} else {
 					setValid(false);
-					setError('Own BETs to finish the lesson');
+					setError(t('validation.ownBetToFinishLesson'));
 					setSuccess('');
 				}
 			}
@@ -80,11 +82,11 @@ const Validation = () => {
 				if (!!address && address !== ZeroAddress && hasPass) {
 					setValid(true);
 					setError('');
-					setSuccess('You have a Pass');
+					setSuccess(t('validation.youHavePass'));
 					handleFinish();
 				} else {
 					setValid(false);
-					setError('Mint a Pass to finish the lesson');
+					setError(t('validation.mintAPassToFinish'));
 					setSuccess('');
 				}
 			}
@@ -92,11 +94,11 @@ const Validation = () => {
 				if (!!address && address !== ZeroAddress && staked > 0n) {
 					setValid(true);
 					setError('');
-					setSuccess('You have staked');
+					setSuccess(t('validation.youHaveStaked'));
 					handleFinish();
 				} else {
 					setValid(false);
-					setError('Stake BET tokens to finish the lesson');
+					setError(t('validation.stakeBetToFinishLesson'));
 					setSuccess('');
 				}
 			}
@@ -105,7 +107,7 @@ const Validation = () => {
 				if (!!address && address !== ZeroAddress && manual) {
 					setValid(true);
 					setError('');
-					setSuccess('You have passed the lesson!');
+					setSuccess(t('validation.youHavePassedTheLesson'));
 					handleFinish();
 					setTimeout(() => handleNext(), 2000);
 				} else {
@@ -153,9 +155,9 @@ const Validation = () => {
 	if (lessonStatus.done) {
 		return (
 			<div className={'mt-4 flex flex-row justify-end gap-2 items-center'}>
-				<div className={'border border-green-500 bg-green-500/10 rounded-lg p-2 w-full text-center'}>Lesson completed</div>
+				<div className={'border border-green-500 bg-green-500/10 rounded-lg p-2 w-full text-center'}>{t('validation.lessonCompleted')}</div>
 				<Button onClick={handleNext} className={'w-48'}>
-					{next ? 'Next lesson' : 'Go to advanced'}
+					{next ? t('validation.nextLesson') : t('validation.goToAdvanced')}
 				</Button>
 			</div>
 		);
@@ -165,7 +167,7 @@ const Validation = () => {
 	if (validation && validation.key === 'has_pass' && !hasPass && code.parent && code.inviter) {
 		return (
 			<div className={'flex flex-row items-center gap-2 my-2'}>
-				<div className={cx('border border-green-500 bg-green-500/10 rounded-lg p-2 w-full text-center')}>You have been invited to Betfin.io</div>
+				<div className={cx('border border-green-500 bg-green-500/10 rounded-lg p-2 w-full text-center')}>{t('validation.youHaveBeenInvited')}</div>
 				<Button onClick={handleMint} className={'w-48'} disabled={hasPass}>
 					{isPending ? <Loader className={'animate-spin'} /> : 'Mint pass'}
 				</Button>
@@ -175,9 +177,9 @@ const Validation = () => {
 	if (validation && validation.key === 'manual') {
 		return (
 			<div className={'flex flex-row items-center gap-2 my-2'}>
-				<div className={cx('border border-green-500 bg-green-500/10 rounded-lg p-2 w-full text-center')}>Click the button to complete lesson</div>
+				<div className={cx('border border-green-500 bg-green-500/10 rounded-lg p-2 w-full text-center')}>{t('validation.clickToComplete')}</div>
 				<Button onClick={handleComplete} className={'w-48'}>
-					Complete
+					{t('validation.complete')}
 				</Button>
 			</div>
 		);
@@ -188,7 +190,7 @@ const Validation = () => {
 			<div className={cx('border border-red-roulette bg-red-roulette/10 rounded-lg p-2 w-full text-center', valid && 'hidden')}>{error}</div>
 			<div className={cx('border border-green-500 bg-green-500/10 rounded-lg p-2 w-full text-center', !valid && 'hidden')}>{success}</div>
 			<Button onClick={handleFinish} className={'w-48'} disabled={!valid}>
-				Next lesson
+				{t('validation.nextLesson')}
 			</Button>
 		</div>
 	);

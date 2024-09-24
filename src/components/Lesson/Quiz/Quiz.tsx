@@ -11,6 +11,7 @@ import { cx } from 'class-variance-authority';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, House, Loader } from 'lucide-react';
 import { type FC, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAccount } from 'wagmi';
 import { QuizQuestion } from './QuizQuestion';
 
@@ -47,6 +48,7 @@ const decodeErrors = (errors: SerializedErrors): Errors => {
 };
 
 export const Quiz = () => {
+	const { t } = useTranslation('academy');
 	const { lesson, section } = Route.useParams();
 	const { data: lessonData = null } = useLesson(Number(lesson));
 	const { address = ZeroAddress } = useAccount();
@@ -191,7 +193,7 @@ export const Quiz = () => {
 			>
 				{address === ZeroAddress && <WalletWarning />}
 				<div className={cx(address === ZeroAddress && 'blur-sm pointer-events-none')}>
-					<span className={'text-gray-500'}>Quiz:</span>
+					<span className={'text-gray-500'}>{t('quiz.quiz')}:</span>
 					<div className={'flex flex-col gap-8 min-h-[300px]'}>
 						{isQuizLoading ? (
 							<div className={'w-full h-full grow flex items-center justify-center'}>
@@ -220,12 +222,12 @@ export const Quiz = () => {
 									<Button className={'cursor-pointer group'} onClick={handleNext}>
 										{next ? (
 											<>
-												<span className={'duration-300'}>Next lesson</span>
+												<span className={'duration-300'}>{t('quiz.nextLesson')}</span>
 												<ArrowRight height={18} className={'group-hover:translate-x-[3px] duration-300'} />
 											</>
 										) : (
 											<>
-												<span className={'duration-300'}>Overview</span>
+												<span className={'duration-300'}>{t('quiz.overview')}</span>
 												<House height={18} className={'duration-300'} />
 											</>
 										)}
@@ -234,7 +236,7 @@ export const Quiz = () => {
 							) : (
 								<motion.div key="submitButton" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
 									<Button disabled={isQuizLoading || !allAnswered || finished} onClick={handleSubmit} className={'w-32 duration-300'}>
-										Submit
+										{t('quiz.submit')}
 									</Button>
 								</motion.div>
 							)}
@@ -247,11 +249,12 @@ export const Quiz = () => {
 };
 
 export const WalletWarning: FC = () => {
+	const { t } = useTranslation();
 	return (
 		<div className="sticky top-0 flex items-center justify-center bg-gradient-to-r from-yellow-400 to-yellow-600 text-black text-center font-bold py-4 px-6 rounded-lg shadow-lg">
 			<div className="relative z-10">
-				<span className="text-lg">Wallet Not Connected</span>
-				<p className="mt-1 text-sm">Please connect your wallet to access the quiz.</p>
+				<span className="text-lg">{t('quiz.walletNotConnected')}</span>
+				<p className="mt-1 text-sm">{t('quiz.pleaseConnectYourWallet')}</p>
 			</div>
 		</div>
 	);

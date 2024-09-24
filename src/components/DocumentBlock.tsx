@@ -6,7 +6,7 @@ import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const DocumentBlock: FC<Document> = ({ isPlayable = false, title = 'Placeholder', points = '', url = '/' }) => {
-	const { t } = useTranslation('', { keyPrefix: 'academy.document' });
+	const { t } = useTranslation('academy', { keyPrefix: 'document' });
 	return (
 		<div className={'border border-gray-800 bg-primaryLighter  rounded-lg flex flex-col h-full'}>
 			<div className={'flex-grow p-4'}>
@@ -28,7 +28,7 @@ const DocumentBlock: FC<Document> = ({ isPlayable = false, title = 'Placeholder'
 					</Button>
 				</a>
 
-				{isPlayable && <Button>Play</Button>}
+				{isPlayable && <Button>{t('play')}</Button>}
 			</div>
 		</div>
 	);
