@@ -1,13 +1,13 @@
-import * as i18 from 'i18next';
+import { sharedLang } from 'betfinio_app/locales/index';
 import type { i18n } from 'i18next';
+import * as i18 from 'i18next';
 import ICU from 'i18next-icu';
 import { initReactI18next } from 'react-i18next';
 import czAcademy from './translations/cz/academy.json';
 import enAcademy from './translations/en/academy.json';
 import ruAcademy from './translations/ru/academy.json';
-export const defaultNS = 'academy';
 
-import { sharedLang } from 'betfinio_app/locales/index';
+export const defaultNS = 'academy';
 
 export const resources = {
 	en: {

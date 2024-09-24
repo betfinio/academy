@@ -17,7 +17,7 @@ function Layout() {
 	const { t } = useTranslation('academy');
 	const router = useLocation();
 	const { address } = useAccount();
-	const { data: hasPass, refetch } = useIsMember(address || ZeroAddress);
+	const { data: hasPass } = useIsMember(address || ZeroAddress);
 	const isActive = (path: string) => {
 		switch (path) {
 			case 'new':
@@ -49,6 +49,8 @@ function Layout() {
 				{(['docs', 'new', 'advanced', 'events'] as IAcademyLinks).map((link) => (
 					<Link
 						to={`/${link}`}
+						search={{}}
+						params={{}}
 						key={link}
 						className={cx(
 							'flex flex-col md:flex-row text-xs md:text-base py-2 lg:p-2 justify-center font-semibold items-center gap-2   rounded-xl duration-200 hover:bg-secondary/50 ',
@@ -66,8 +68,14 @@ function Layout() {
 				</div>
 				{!hasPass && !parent && (
 					<div className={'absolute top-[200px] flex z-[10] justify-center w-full'}>
-						<div className={cx(!hasPass && !parent && 'bg-primaryLight text-center  border border-red-roulette rounded-lg p-4')}>
-							{t('contentIsLockedForYou')} <br /> {t('pleaseConnetWallet')}
+						<div className={cx(!hasPass && !parent && 'bg-primaryLight text-center border rounded-lg p-4 flex flex-col items-start')}>
+							<div className={'text-lg'}>{t('contentIsLockedForYou')}</div>
+							<br />
+							<div className={'text-yellow-400'}>{t('newUsers')}:</div>
+							<div>{t('newUsersDescription')}</div>
+							<br />
+							<div className={'text-yellow-400'}>{t('betfinMembers')}:</div>
+							<div>{t('betfinMembersDescription')}</div>
 						</div>
 					</div>
 				)}

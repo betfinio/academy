@@ -45,11 +45,11 @@ const Validation = () => {
 				if (!!address && address !== ZeroAddress) {
 					setValid(true);
 					setError('');
-					setSuccess(t('validation.wallectConnected'));
+					setSuccess(t('validation.walletConnected'));
 					handleFinish();
 				} else {
 					setValid(false);
-					setError(t('validation.connectWallettTFinishTheLesson'));
+					setError(t('validation.connectWalletToFinishTheLesson'));
 					handleFinish();
 					setSuccess('');
 				}
@@ -177,7 +177,7 @@ const Validation = () => {
 	if (validation && validation.key === 'manual') {
 		return (
 			<div className={'flex flex-row items-center gap-2 my-2'}>
-				<div className={cx('border border-green-500 bg-green-500/10 rounded-lg p-2 w-full text-center')}>{t('validation.clickToCompelete')}</div>
+				<div className={cx('border border-green-500 bg-green-500/10 rounded-lg p-2 w-full text-center')}>{t('validation.clickToComplete')}</div>
 				<Button onClick={handleComplete} className={'w-48'}>
 					{t('validation.complete')}
 				</Button>

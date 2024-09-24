@@ -23,8 +23,8 @@ export const AdvancedTabs = () => {
 				<TabsContent value="affiliate">
 					<Sections tab={'affiliate'} />
 				</TabsContent>
-				<TabsContent value="games">{t('commingSoon')}...</TabsContent>
-				<TabsContent value="partner">{t('commingSoon')}...</TabsContent>
+				<TabsContent value="games">{t('comingSoon')}...</TabsContent>
+				<TabsContent value="partner">{t('comingSoon')}...</TabsContent>
 			</Tabs>
 		</div>
 	);
