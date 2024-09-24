@@ -9,9 +9,11 @@ import { Progress } from 'betfinio_app/progress';
 import { motion } from 'framer-motion';
 import { X } from 'lucide-react';
 import React, { type FC, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAccount } from 'wagmi';
 
 export const QuizCompleteModal: FC<{ onClose: () => void; newXp: number; onButtonClick: () => void }> = ({ onClose, onButtonClick, newXp }) => {
+	const { t } = useTranslation();
 	const { address = ZeroAddress } = useAccount();
 	const { data: xp = 0 } = useProgress(address);
 
@@ -33,11 +35,11 @@ export const QuizCompleteModal: FC<{ onClose: () => void; newXp: number; onButto
 				}
 			/>
 
-			<div className={'text-xl font-semibold'}>Quiz complete!</div>
+			<div className={'text-xl font-semibold'}>{t('quiz.quizComplete')}</div>
 			<div className={'text-[32px] font-semibold text-yellow-400'}>+{newXp} XP</div>
 
 			<div className={'text-center w-full'}>
-				<span className={'text-[#6A6F84]'}>Your progress</span>
+				<span className={'text-[#6A6F84]'}>{t('quiz.yourProgress')}</span>
 				<Progress value={((xp % 1000) * 100) / 1000} className={'bg-primary h-[8px] w-full mt-4'} size={100} height={100} />
 				<div className={'flex flex-row items-center mt-1'}>
 					<div className={'text-[#6A6F84]'}>LVL {Math.floor(xp / 1000) + 1}</div>
@@ -47,7 +49,7 @@ export const QuizCompleteModal: FC<{ onClose: () => void; newXp: number; onButto
 			</div>
 
 			<Button className={'uppercase w-full'} onClick={onButtonClick} size={'lg'}>
-				Tackle to the next unit
+				{t('quiz.tackleNextUnit')}
 			</Button>
 		</motion.div>
 	);

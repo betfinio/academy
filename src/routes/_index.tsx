@@ -5,16 +5,19 @@ import { cx } from 'class-variance-authority';
 import { BookIcon, CalendarHeart, GraduationCap, PencilRulerIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAccount } from 'wagmi';
+import type { ILanguageKeys } from '../i18next';
 
 export const Route = createFileRoute('/_index')({
 	component: () => <Layout />,
 });
 
+type IAcademyLinks = Array<keyof ILanguageKeys['layout']>;
+
 function Layout() {
-	const { t } = useTranslation('', { keyPrefix: 'academy.layout' });
+	const { t } = useTranslation('academy');
 	const router = useLocation();
 	const { address } = useAccount();
-	const { data: hasPass, refetch } = useIsMember(address || ZeroAddress);
+	const { data: hasPass } = useIsMember(address || ZeroAddress);
 	const isActive = (path: string) => {
 		switch (path) {
 			case 'new':
@@ -43,9 +46,11 @@ function Layout() {
 		<div className={'p-2 md:p-3 lg:p-4 text-white h-full flex flex-col gap-2 md:gap-3 lg:gap-4'}>
 			<ScrollRestoration />
 			<div className={'grid grid-cols-4 md:grid-cols-4 w-full gap-2 md:gap-3 lg:gap-4  rounded-xl '}>
-				{['docs', 'new', 'advanced', 'events'].map((link) => (
+				{(['docs', 'new', 'advanced', 'events'] as IAcademyLinks).map((link) => (
 					<Link
 						to={`/${link}`}
+						search={{}}
+						params={{}}
 						key={link}
 						className={cx(
 							'flex flex-col md:flex-row text-xs md:text-base py-2 lg:p-2 justify-center font-semibold items-center gap-2   rounded-xl duration-200 hover:bg-secondary/50 ',
@@ -53,7 +58,7 @@ function Layout() {
 						)}
 					>
 						<span className={cx(isActive(link) ? 'text-yellow-400' : 'text-gray-400 ')}>{getIcon(link)}</span>
-						{t(link)}
+						{t(`layout.${link}`)}
 					</Link>
 				))}
 			</div>
@@ -63,8 +68,14 @@ function Layout() {
 				</div>
 				{!hasPass && !parent && (
 					<div className={'absolute top-[200px] flex z-[10] justify-center w-full'}>
-						<div className={cx(!hasPass && !parent && 'bg-primaryLight text-center  border border-red-roulette rounded-lg p-4')}>
-							Content is locked for you <br /> Please connect wallet or paste invitation link
+						<div className={cx(!hasPass && !parent && 'bg-primaryLight text-center border rounded-lg p-4 flex flex-col items-start')}>
+							<div className={'text-lg'}>{t('contentIsLockedForYou')}</div>
+							<br />
+							<div className={'text-yellow-400'}>{t('newUsers')}:</div>
+							<div>{t('newUsersDescription')}</div>
+							<br />
+							<div className={'text-yellow-400'}>{t('betfinMembers')}:</div>
+							<div>{t('betfinMembersDescription')}</div>
 						</div>
 					</div>
 				)}
