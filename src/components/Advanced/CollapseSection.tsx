@@ -14,13 +14,14 @@ const CollapseSection: FC<{ section: AdvancedLessonSection }> = ({ section }) =>
 	const { data: lessons = [] } = useAdvancedLessons(section.id);
 	const { data: status = initialStatus } = useSectionStatus(section.id, address);
 	const { i18n } = useTranslation();
+	const title = JSON.parse(section.title || '{}');
 	return (
 		<AccordionItem className="p-0 w-full" key={section.title} value={section.title}>
 			<AccordionTrigger className="bg-card-secondary   rounded-md  flex  py-5 px-6 h-20 gap-4">
 				<div className="flex items-center flex-grow flex-wrap">
 					<div className="flex gap-4 items-center lg:text-xl font-semibold whitespace-nowrap">
 						{getBlockIcon(status, section.xp)}
-						{JSON.parse(section.title)[i18n.language]}
+						{title[i18n.language] || title.en}
 					</div>
 					<span className="text-yellow-400 font-semibold  ml-auto lg:text-lg">{section.xp}XP</span>
 				</div>

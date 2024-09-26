@@ -22,6 +22,9 @@ export const LessonLeft = () => {
 		history.go(-1);
 	};
 
+	const content = JSON.parse(lessonData.content || '{}');
+	const title = JSON.parse(lessonData.title || '{}');
+
 	return (
 		<motion.div initial={{ opacity: 1 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0 }}>
 			<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1 }}>
@@ -37,7 +40,7 @@ export const LessonLeft = () => {
 					transition={{ duration: 0.5, delay: 0.1 }}
 					className={'text-[24px] leading-[24px] font-semibold'}
 				>
-					{JSON.parse(lessonData.title)[i18n.language]}
+					{title[i18n.language] ?? title.en}
 				</motion.div>
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
@@ -54,7 +57,7 @@ export const LessonLeft = () => {
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.5, delay: 0.6 }}
 					className={'mt-6 text-lg text-[#E8E8E8]'}
-					dangerouslySetInnerHTML={{ __html: decodeURIComponent(atob(JSON.parse(lessonData.content)[i18n.language])) }}
+					dangerouslySetInnerHTML={{ __html: decodeURIComponent(atob(content[i18n.language] ?? content.en)) }}
 				/>
 			)}
 			<Quiz />

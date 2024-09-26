@@ -15,6 +15,7 @@ const NavigationItem: FC<{ lesson: AdvancedLesson }> = ({ lesson }) => {
 	const lang = i18n.language;
 	const { address = ZeroAddress } = useAccount();
 	const { data: lessonStatus = initialStatus } = useLessonStatus(lesson.id, address);
+	const title = JSON.parse(lesson.title || '{}');
 	return (
 		<Link
 			to={'/lesson/$section/$lesson'}
@@ -22,7 +23,7 @@ const NavigationItem: FC<{ lesson: AdvancedLesson }> = ({ lesson }) => {
 			className={cx('p-4 flex flex-row items-center gap-4', Number(activeLesson) === lesson.id && 'border-yellow-400 border rounded-lg')}
 		>
 			<Icon status={lessonStatus} />
-			<div className={'flex-grow'}>{JSON.parse(lesson.title)[lang]}</div>
+			<div className={'flex-grow'}>{title[lang] ?? title.en}</div>
 			<div className={cx(lessonStatus.done ? 'text-yellow-400' : 'text-gray-600')}>+{lesson.xp}XP</div>
 		</Link>
 	);
