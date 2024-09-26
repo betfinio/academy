@@ -84,6 +84,10 @@ export default defineConfig({
 							singleton: true,
 							requiredVersion: dependencies['@web3modal/wagmi'],
 						},
+						'i18next-browser-languagedetector': {
+							singleton: true,
+							requiredVersion: dependencies['i18next-browser-languagedetector'],
+						},
 					},
 				}),
 			],
