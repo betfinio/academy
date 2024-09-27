@@ -1,18 +1,24 @@
 import { Quiz } from '@/src/components/Lesson/Quiz/Quiz.tsx';
 import Validation from '@/src/components/Lesson/Validation.tsx';
-import { useLesson } from '@/src/lib/query';
+import { useLesson, useLessonStatus } from '@/src/lib/query';
+import { initialStatus } from '@/src/lib/types.ts';
 import { Route } from '@/src/routes/_index/lesson/$section.$lesson.tsx';
+import { ZeroAddress } from '@betfinio/abi';
 import { useRouter } from '@tanstack/react-router';
+import { Tooltip, TooltipContent, TooltipTrigger } from 'betfinio_app/tooltip';
 import { cx } from 'class-variance-authority';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Loader, TriangleIcon } from 'lucide-react';
+import { ArrowLeft, CheckIcon, Loader, TriangleIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import ReactPlayer from 'react-player/lazy';
+import { useAccount } from 'wagmi';
 
 export const LessonLeft = () => {
 	const { lesson, section } = Route.useParams();
+	const { address } = useAccount();
 
 	const { data: lessonData } = useLesson(Number(lesson));
+	const { data: lessonStatus = initialStatus } = useLessonStatus(Number(lesson), address || ZeroAddress);
 	const { i18n, t } = useTranslation();
 	const { history } = useRouter();
 	if (!lessonData) {
@@ -33,14 +39,22 @@ export const LessonLeft = () => {
 					<span className={'duration-300'}>{t('back')}</span>
 				</div>
 			</motion.div>
-			<div className={'mt-8'}>
+			<div className={cx(section !== '1' && 'mt-4')}>
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.5, delay: 0.1 }}
 					className={'text-[24px] leading-[24px] font-semibold'}
 				>
-					{title[i18n.language] ?? title.en}
+					<div className={'flex gap-2 items-center'}>
+						<span>{title[i18n.language] ?? title.en}</span>
+						<Tooltip>
+							<TooltipTrigger>
+								<CheckIcon className={'text-green-400 w-5 h-5'} />
+							</TooltipTrigger>
+							<TooltipContent>{t('tooltip.completed')}</TooltipContent>
+						</Tooltip>
+					</div>
 				</motion.div>
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
@@ -57,7 +71,9 @@ export const LessonLeft = () => {
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.5, delay: 0.6 }}
 					className={'mt-6 text-lg text-[#E8E8E8]'}
-					dangerouslySetInnerHTML={{ __html: decodeURIComponent(atob(content[i18n.language] ?? content.en)) }}
+					dangerouslySetInnerHTML={{
+						__html: decodeURIComponent(atob(content[i18n.language] ?? content.en)),
+					}}
 				/>
 			)}
 			<Quiz />

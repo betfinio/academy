@@ -35,6 +35,9 @@
 		"tackleNextUnit": "Tackle to the next unit"
 	},
 	"back": "Back",
+	"tooltip": {
+		"completed": "Lesson completed"
+	},
 	"play": "Play",
 	"validation": {
 		"lessonCompleted": "Lesson completed",
