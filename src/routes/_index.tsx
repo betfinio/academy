@@ -43,10 +43,10 @@ function Layout() {
 	const code = JSON.parse(localStorage.getItem('code') || '{}');
 	const parent = code.parent;
 	return (
-		<div className={'p-2 md:p-3 lg:p-4 text-white h-full flex flex-col gap-2 md:gap-3 lg:gap-4'}>
+		<div className={'p-2 md:p-3 lg:p-4 text-white h-full flex flex-col gap-8 md:gap-6'}>
 			<ScrollRestoration />
-			<div className={'grid grid-cols-4 md:grid-cols-4 w-full gap-2 md:gap-3 lg:gap-4  rounded-xl '}>
-				{(['docs', 'new', 'advanced', 'events'] as IAcademyLinks).map((link) => (
+			<div className={'grid grid-cols-3 md:grid-cols-3 w-full gap-2 md:gap-3 lg:gap-4  rounded-xl '}>
+				{(['docs', 'new', 'advanced'] as IAcademyLinks).map((link) => (
 					<Link
 						to={`/${link}`}
 						search={{}}

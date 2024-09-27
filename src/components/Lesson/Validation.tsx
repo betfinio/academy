@@ -154,8 +154,8 @@ const Validation = () => {
 
 	if (lessonStatus.done) {
 		return (
-			<div className={'mt-4 flex flex-row justify-end gap-2 items-center'}>
-				<div className={'border border-green-500 bg-green-500/10 rounded-lg p-2 w-full text-center'}>{t('validation.lessonCompleted')}</div>
+			<div className={'mt-10 sm:mt-4 flex flex-row justify-between gap-2 items-center'}>
+				<div className={'text-green-500 text-sm'}>{t('validation.lessonCompleted')}</div>
 				<Button onClick={handleNext} className={'w-48'}>
 					{next ? t('validation.nextLesson') : t('validation.goToAdvanced')}
 				</Button>
@@ -166,8 +166,8 @@ const Validation = () => {
 	const code = JSON.parse(localStorage.getItem('code') || '{}');
 	if (validation && validation.key === 'has_pass' && !hasPass && code.parent && code.inviter) {
 		return (
-			<div className={'flex flex-row items-center gap-2 my-2'}>
-				<div className={cx('border border-green-500 bg-green-500/10 rounded-lg p-2 w-full text-center')}>{t('validation.youHaveBeenInvited')}</div>
+			<div className={'mt-10 sm:mt-4 flex flex-row justify-between items-center gap-2'}>
+				<div className={'text-green-500 text-sm'}>{t('validation.youHaveBeenInvited')}</div>
 				<Button onClick={handleMint} className={'w-48'} disabled={hasPass}>
 					{isPending ? <Loader className={'animate-spin'} /> : 'Mint pass'}
 				</Button>
@@ -176,8 +176,8 @@ const Validation = () => {
 	}
 	if (validation && validation.key === 'manual') {
 		return (
-			<div className={'flex flex-row items-center gap-2 my-2'}>
-				<div className={cx('border border-green-500 bg-green-500/10 rounded-lg p-2 w-full text-center')}>{t('validation.clickToComplete')}</div>
+			<div className={'mt-10 sm:mt-4 flex flex-row justify-between items-center gap-2'}>
+				<div className={'text-gray-500 text-sm'}>{t('validation.clickToComplete')}</div>
 				<Button onClick={handleComplete} className={'w-48'}>
 					{t('validation.complete')}
 				</Button>
@@ -186,7 +186,7 @@ const Validation = () => {
 	}
 
 	return (
-		<div className={'mt-4 flex flex-row justify-end gap-2 items-center'}>
+		<div className={'mt-10 sm:mt-4 flex flex-row justify-end gap-2 items-center'}>
 			<div className={cx('border border-red-roulette bg-red-roulette/10 rounded-lg p-2 w-full text-center', valid && 'hidden')}>{error}</div>
 			<div className={cx('border border-green-500 bg-green-500/10 rounded-lg p-2 w-full text-center', !valid && 'hidden')}>{success}</div>
 			<Button onClick={handleFinish} className={'w-48'} disabled={!valid}>
