@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  background: #0f121d;
+}
+
+@layer base {
+  * {
+    user-select: none;
+  }
+}
+
+strong {
+  font-weight: 600 !important;
+}
+
+
+.editor {
+  --basePageBg: #0F121D;
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.75rem;
+  }
+
+  h4 {
+    font-size: 1.5rem;
+  }
+
+  h5 {
+    font-size: 1.25rem;
+  }
+
+  h6 {
+    font-size: 1rem;
+  }
+
+  blockquote {
+    border-left: 4px solid rgb(250 204 21);
+    padding-left: 1rem;
+    margin-left: 0;
+  }
+}
+

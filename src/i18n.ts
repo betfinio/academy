@@ -23,6 +23,10 @@ export const resources = {
 		academy: czAcademy,
 		shared: sharedLang.cz,
 	},
+	cs: {
+		academy: czAcademy,
+		shared: sharedLang.cz,
+	},
 } as const;
 
 const instance: i18n = i18.createInstance();

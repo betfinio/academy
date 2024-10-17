@@ -4,6 +4,20 @@ import { useLesson, useLessonStatus } from '@/src/lib/query';
 import { initialStatus } from '@/src/lib/types.ts';
 import { Route } from '@/src/routes/_index/lesson/$section.$lesson.tsx';
 import { ZeroAddress } from '@betfinio/abi';
+import {
+	AdmonitionDirectiveDescriptor,
+	MDXEditor,
+	diffSourcePlugin,
+	directivesPlugin,
+	headingsPlugin,
+	imagePlugin,
+	linkDialogPlugin,
+	linkPlugin,
+	listsPlugin,
+	quotePlugin,
+	tablePlugin,
+	thematicBreakPlugin,
+} from '@mdxeditor/editor';
 import { useRouter } from '@tanstack/react-router';
 import { Tooltip, TooltipContent, TooltipTrigger } from 'betfinio_app/tooltip';
 import { cx } from 'class-variance-authority';
@@ -66,15 +80,26 @@ export const LessonLeft = () => {
 				</motion.div>
 			</div>
 			{lessonData.content && (
-				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.5, delay: 0.6 }}
-					className={'mt-6 text-lg text-[#E8E8E8]'}
-					dangerouslySetInnerHTML={{
-						__html: decodeURIComponent(atob(content[i18n.language] ?? content.en)),
-					}}
-				/>
+				<motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.6 }} className={'mt-6 text'}>
+					<MDXEditor
+						className={'dark-theme editor'}
+						markdown={content[i18n.language.split('-')[0]]}
+						readOnly
+						plugins={[
+							headingsPlugin(),
+							linkPlugin(),
+							quotePlugin(),
+							thematicBreakPlugin(),
+							linkDialogPlugin(),
+							diffSourcePlugin(),
+							directivesPlugin({ directiveDescriptors: [AdmonitionDirectiveDescriptor] }),
+							imagePlugin(),
+							thematicBreakPlugin(),
+							tablePlugin(),
+							listsPlugin(),
+						]}
+					/>
+				</motion.div>
 			)}
 			<Quiz />
 			<Validation />
