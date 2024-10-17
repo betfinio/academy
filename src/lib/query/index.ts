@@ -53,8 +53,6 @@ export const useLesson = (lesson: number) => {
 	return useQuery<AdvancedLesson>({
 		queryKey: ['academy', 'section', 'any', 'lesson', lesson],
 		queryFn: () => fetchLesson(lesson, client),
-		refetchOnWindowFocus: false,
-		refetchOnMount: false,
 	});
 };
 export const useSectionStatus = (sectionId: number, address: Address) => {
