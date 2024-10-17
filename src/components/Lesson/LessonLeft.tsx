@@ -1,12 +1,11 @@
 import { Quiz } from '@/src/components/Lesson/Quiz/Quiz.tsx';
 import Validation from '@/src/components/Lesson/Validation.tsx';
-import { useLesson, useLessonStatus } from '@/src/lib/query';
-import { initialStatus } from '@/src/lib/types.ts';
+import { useLesson } from '@/src/lib/query';
 import { Route } from '@/src/routes/_index/lesson/$section.$lesson.tsx';
-import { ZeroAddress } from '@betfinio/abi';
 import {
 	AdmonitionDirectiveDescriptor,
 	MDXEditor,
+	type MDXEditorMethods,
 	diffSourcePlugin,
 	directivesPlugin,
 	headingsPlugin,
@@ -23,27 +22,33 @@ import { Tooltip, TooltipContent, TooltipTrigger } from 'betfinio_app/tooltip';
 import { cx } from 'class-variance-authority';
 import { motion } from 'framer-motion';
 import { ArrowLeft, CheckIcon, Loader, TriangleIcon } from 'lucide-react';
+import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactPlayer from 'react-player/lazy';
-import { useAccount } from 'wagmi';
 
 export const LessonLeft = () => {
 	const { lesson, section } = Route.useParams();
-	const { address } = useAccount();
+	const mdRef = useRef<MDXEditorMethods>(null);
 
 	const { data: lessonData } = useLesson(Number(lesson));
-	const { data: lessonStatus = initialStatus } = useLessonStatus(Number(lesson), address || ZeroAddress);
 	const { i18n, t } = useTranslation();
 	const { history } = useRouter();
+
+	const content = JSON.parse(lessonData?.content || '{}');
+	const title = JSON.parse(lessonData?.title || '{}');
+
+	useEffect(() => {
+		if (lessonData) {
+			mdRef.current?.setMarkdown(content[i18n.language.split('-')[0]]);
+		}
+	}, [lessonData]);
+
 	if (!lessonData) {
 		return <Loader className={'animate-spin'} />;
 	}
 	const onBack = () => {
 		history.go(-1);
 	};
-
-	const content = JSON.parse(lessonData.content || '{}');
-	const title = JSON.parse(lessonData.title || '{}');
 
 	return (
 		<motion.div initial={{ opacity: 1 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0 }}>
@@ -82,6 +87,7 @@ export const LessonLeft = () => {
 			{lessonData.content && (
 				<motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.6 }} className={'mt-6 text'}>
 					<MDXEditor
+						ref={mdRef}
 						className={'dark-theme editor'}
 						markdown={content[i18n.language.split('-')[0]]}
 						readOnly
