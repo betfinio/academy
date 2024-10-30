@@ -196,7 +196,7 @@ function CreateLessonPage() {
 				/>
 			</div>
 			<div className={'w-full flex gap-2'}>
-				<Button className={'w-[200px]'} onClick={() => window.navigator.clipboard.writeText(JSON.stringify({ en: contentEN, cs: contentCS, cz: contentCS }))}>
+				<Button className={'w-[200px]'} onClick={() => window.navigator.clipboard.writeText(JSON.stringify({ en: contentEN, cs: contentCS }))}>
 					Copy content
 				</Button>
 				<Button className={'w-[200px]'} onClick={handleSave}>

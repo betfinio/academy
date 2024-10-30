@@ -36,12 +36,13 @@ export const LessonLeft = () => {
 
 	const content = JSON.parse(lessonData?.content || '{}');
 	const title = JSON.parse(lessonData?.title || '{}');
+	const markdown = content[i18n.language] || '';
 
 	useEffect(() => {
 		if (lessonData) {
-			mdRef.current?.setMarkdown(content[i18n.language.split('-')[0]]);
+			mdRef.current?.setMarkdown(markdown);
 		}
-	}, [lessonData]);
+	}, [lessonData, i18n.language]);
 
 	if (!lessonData) {
 		return <Loader className={'animate-spin'} />;
@@ -66,7 +67,7 @@ export const LessonLeft = () => {
 					className={'text-[24px] leading-[24px] font-semibold'}
 				>
 					<div className={'flex gap-2 items-center'}>
-						<span>{title[i18n.language] ?? title.en}</span>
+						<span>{title[i18n.language] || title.en}</span>
 						<Tooltip>
 							<TooltipTrigger>
 								<CheckIcon className={'text-green-400 w-5 h-5'} />
@@ -89,7 +90,7 @@ export const LessonLeft = () => {
 					<MDXEditor
 						ref={mdRef}
 						className={'dark-theme editor'}
-						markdown={content[i18n.language.split('-')[0]]}
+						markdown={markdown}
 						readOnly
 						plugins={[
 							headingsPlugin(),

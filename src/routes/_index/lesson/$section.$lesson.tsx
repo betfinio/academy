@@ -24,11 +24,12 @@ function LessonPage() {
 			</div>
 		);
 	}
+	const title: Record<string, string> = JSON.parse(sectionData.title);
 	return (
 		<TooltipProvider delayDuration={0}>
 			<div className={'flex flex-col items-center mb-10 gap-6 sm:gap-4'}>
 				<ScrollRestoration />
-				<div className={'font-semibold  text-4xl uppercase'}>{JSON.parse(sectionData.title)[language]}</div>
+				<div className={'font-semibold  text-4xl uppercase'}>{title[language] || title.en}</div>
 				<ProgressBar />
 				<div className={'w-full grid grid-cols-5 gap-10 sm:gap-4'}>
 					<div className={'col-span-5 sm:col-span-3'}>
