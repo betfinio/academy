@@ -31,6 +31,8 @@ import '@mdxeditor/editor/style.css';
 import { useLesson } from '@/src/lib/query';
 import { Button } from 'betfinio_app/button';
 import { Input } from 'betfinio_app/input';
+import { useSupabase } from 'betfinio_app/supabase';
+import { toast } from 'betfinio_app/use-toast';
 import { cx } from 'class-variance-authority';
 
 export const Route = createFileRoute('/_index/lesson/create')({
@@ -52,6 +54,7 @@ function CreateLessonPage() {
 		if (lang === 'cs') setContentCS(markdown);
 	};
 
+	const supabase = useSupabase();
 	const handleLoad = () => {
 		setLesson(value);
 	};
@@ -60,17 +63,32 @@ function CreateLessonPage() {
 		if (lessonData) {
 			refEn.current?.setMarkdown(JSON.parse(lessonData.content).en || '');
 			refCs.current?.setMarkdown(JSON.parse(lessonData.content).cs || '');
+			setContentEN(JSON.parse(lessonData.content).en || '');
+			setContentCS(JSON.parse(lessonData.content).cs || '');
 		}
 	}, [lessonData]);
+
+	const handleSave = async () => {
+		if (!supabase.client) return;
+		const result = await supabase.client
+			.from('lessons')
+			.update({ content: { en: contentEN, cs: contentCS } })
+			.eq('id', Number(lesson))
+			.select();
+		console.log(result);
+		if (!result.error) {
+			toast({ title: 'Lesson saved', status: 'success' });
+		}
+	};
 
 	return (
 		<div className={'p-4 flex flex-col gap-4'}>
 			<div className={'uppercase text-xl'}>Create new lesson</div>
 			<div className={'w-full flex flex-row items-end gap-2'}>
-				<label className={'flex-grow'}>
+				<div className={'flex-grow'}>
 					Load lesson:
 					<Input value={value} onChange={(e) => setValue(e.target.value)} />
-				</label>
+				</div>
 				<Button onClick={handleLoad} className={'w-[100px]'}>
 					Load
 				</Button>
@@ -177,9 +195,12 @@ function CreateLessonPage() {
 					]}
 				/>
 			</div>
-			<div className={'w-full'}>
+			<div className={'w-full flex gap-2'}>
 				<Button className={'w-[200px]'} onClick={() => window.navigator.clipboard.writeText(JSON.stringify({ en: contentEN, cs: contentCS, cz: contentCS }))}>
 					Copy content
+				</Button>
+				<Button className={'w-[200px]'} onClick={handleSave}>
+					Save
 				</Button>
 			</div>
 		</div>
