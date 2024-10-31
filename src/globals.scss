@@ -45,6 +45,14 @@ strong {
     font-size: 1rem;
   }
 
+  ul {
+    list-style: inside !important;
+  }
+
+  ol {
+    list-style: decimal inside !important;
+  }
+
   blockquote {
     border-left: 4px solid rgb(250 204 21);
     padding-left: 1rem;
