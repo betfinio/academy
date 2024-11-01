@@ -11,7 +11,7 @@ const QuizConstructor: FC<{ quiz: QuizQuestion[]; setQuiz: (quiz: QuizQuestion[]
 		setQuiz([
 			...quiz,
 			{
-				exp: 500,
+				exp: 100,
 				question: 'What is your question?',
 				options: [
 					{ content: 'Answer 1', is_right: true },
