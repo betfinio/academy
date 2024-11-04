@@ -158,9 +158,6 @@ function CreateLessonPage() {
 				</div>
 				<div className={'flex justify-between'}>
 					<span>Quiz</span>
-					<Button variant={'ghost'} onClick={() => setQuizEn(quizCs)}>
-						Copy from CZ
-					</Button>
 				</div>
 				<QuizConstructor quiz={quizEn} setQuiz={setQuizEn} />
 			</div>
@@ -214,9 +211,6 @@ function CreateLessonPage() {
 				</div>
 				<div className={'flex justify-between'}>
 					<span>Quiz</span>
-					<Button variant={'ghost'} onClick={() => setQuizCs(quizEn)}>
-						Copy from En
-					</Button>
 				</div>
 				<QuizConstructor quiz={quizCs} setQuiz={setQuizCs} />
 			</div>
