@@ -53,6 +53,11 @@ strong {
     list-style: decimal inside !important;
   }
 
+  a {
+    color: #0088cc;
+    text-decoration: underline;
+  }
+
   blockquote {
     border-left: 4px solid rgb(250 204 21);
     padding-left: 1rem;
