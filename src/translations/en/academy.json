@@ -50,10 +50,10 @@
 		"youHaveStaked": "You have staked",
 		"mintAPassToFinish": "Mint a Pass to finish the lesson",
 		"ownBetToFinishLesson": "Own BETs to finish the lesson",
-		"buyMaticToFinishTheLesson": "Buy MATIC to finish the lesson",
+		"buyMaticToFinishTheLesson": "Buy POL to finish the lesson",
 		"connectWalletToFinishTheLesson": "Connect your wallet to finish the lesson",
 		"walletConnected": "Wallet connected",
-		"youHaveCountMatic": "You have {count} MATIC",
+		"youHaveCountMatic": "You have {count} POL",
 		"youHaveCountBet": "You have {count} BET",
 		"youHavePass": "You have a Pass",
 		"goToAdvanced": "Go to advanced"
