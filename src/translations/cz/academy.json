@@ -62,5 +62,7 @@
 	"newUsers": "Noví uživatelé",
 	"newUsersDescription": "Požádej svého referrala, aby ti zaslal \"Academy Link\"",
 	"betfinMembers": "Členové Betfinu",
-	"betfinMembersDescription": "Připoj svou peněženku"
+	"betfinMembersDescription": "Připoj svou peněženku",
+	"onlyEn": "Tato lekce je zatím dostupná pouze v angličtině",
+	"changeToEn": "Přepnout jazyk na angličtinu"
 }
