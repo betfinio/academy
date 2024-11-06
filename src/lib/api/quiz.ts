@@ -1,7 +1,7 @@
 import type { QuizQuestion } from '@/src/lib/types.ts';
 import type { SupabaseClient } from 'betfinio_app/supabase';
 
-export const fetchQuiz = async (lesson: number, client?: SupabaseClient): Promise<QuizQuestion[]> => {
+export const fetchQuiz = async (lesson: number, client?: SupabaseClient): Promise<Record<string, QuizQuestion[]>> => {
 	if (!client) {
 		throw new Error('No client provided');
 	}

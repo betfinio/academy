@@ -131,7 +131,7 @@ const Validation = () => {
 	const next = lessons[current + 1];
 	const handleNext = async () => {
 		if (!next) {
-			await navigate({ to: '/advanced' });
+			await navigate({ to: '/lesson/$section/$lesson', params: { lesson: '6', section: '2' } });
 		}
 		await navigate({
 			to: '/lesson/$section/$lesson',

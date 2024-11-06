@@ -48,15 +48,17 @@ const decodeErrors = (errors: SerializedErrors): Errors => {
 };
 
 export const Quiz = () => {
-	const { t } = useTranslation('academy');
+	const { t, i18n } = useTranslation('academy');
 	const { lesson, section } = Route.useParams();
 	const { data: lessonData = null } = useLesson(Number(lesson));
 	const { address = ZeroAddress } = useAccount();
 	const { data: lessonStatus } = useLessonStatus(Number(lesson), address);
 	const { mutate: complete, isSuccess, data: mutationData } = useCompleteLesson();
-	const { data: quiz = [], isLoading: isQuizLoading } = useQuiz(Number(lesson));
+	const { data: quiz = {}, isLoading: isQuizLoading } = useQuiz(Number(lesson));
 	const { data: lessons = [] } = useAdvancedLessons(Number(section));
 	const navigate = useNavigate();
+
+	const finalQuiz = quiz[i18n.language] || [];
 
 	const current = lessons.findIndex((l) => l.id === Number(lesson));
 	const next = lessons[current + 1];
@@ -74,11 +76,11 @@ export const Quiz = () => {
 	const [exp, setExp] = useState<{ [key: number]: number }>({});
 	const [modalOpen, setModalOpen] = useState(false);
 	useEffect(() => {
-		if (quiz.length === 0) return;
+		if (finalQuiz.length === 0) return;
 		const newState = getInitialQuizState(lesson, address);
 		validateAnswers(newState);
 		setAnswers(newState);
-	}, [lesson, address, quiz.length]);
+	}, [lesson, address, finalQuiz.length]);
 
 	const finished = useMemo(() => {
 		return !!(lessonStatus?.done === true || isSuccess || mutationData);
@@ -106,11 +108,11 @@ export const Quiz = () => {
 	}, [isSuccess, mutationData]);
 
 	const allAnswered = useMemo(() => {
-		return quiz.length > 0 && quiz.every((_, index) => answers.selected[index] !== undefined);
-	}, [quiz, answers.selected]);
+		return finalQuiz.length > 0 && finalQuiz.every((_, index) => answers.selected[index] !== undefined);
+	}, [finalQuiz, answers.selected]);
 
 	const validateAnswers = (answers: answersState): { hasError: boolean; syncExp: number } => {
-		if (quiz.length === 0) return { hasError: true, syncExp: 0 };
+		if (finalQuiz.length === 0) return { hasError: true, syncExp: 0 };
 
 		let hasError = false;
 		const newErrors = { ...answers.errors };
@@ -118,7 +120,7 @@ export const Quiz = () => {
 		setExp({});
 
 		let syncExp = 0;
-		quiz.forEach((q, i) => {
+		finalQuiz.forEach((q, i) => {
 			const correctAnswer = q.options.findIndex((option) => option.is_right).toString();
 			const selected = answers.selected[i];
 
@@ -176,7 +178,7 @@ export const Quiz = () => {
 		setModalOpen(false);
 	};
 
-	if (quiz.length === 0) {
+	if (finalQuiz.length === 0) {
 		return null;
 	}
 
@@ -200,7 +202,7 @@ export const Quiz = () => {
 								<Loader className={'animate-spin'} />
 							</div>
 						) : (
-							quiz.map(({ question, options }, index) => (
+							finalQuiz.map(({ question, options }, index) => (
 								<QuizQuestion
 									key={index}
 									index={index}

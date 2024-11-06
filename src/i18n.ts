@@ -19,7 +19,7 @@ export const resources = {
 		academy: ruAcademy,
 		shared: sharedLang.ru,
 	},
-	cz: {
+	cs: {
 		academy: czAcademy,
 		shared: sharedLang.cz,
 	},
@@ -31,6 +31,11 @@ instance
 	.use(ICU)
 	.use(I18nextBrowserLanguageDetector)
 	.init({
+		detection: {
+			order: ['localStorage', 'navigator'],
+			convertDetectedLanguage: (lng) => lng.split('-')[0],
+		},
+		supportedLngs: ['en', 'ru', 'cs'],
 		resources,
 		fallbackLng: 'en',
 		defaultNS,

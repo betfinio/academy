@@ -17,7 +17,7 @@ const CollapseSection: FC<{ section: AdvancedLessonSection }> = ({ section }) =>
 	const title = JSON.parse(section.title || '{}');
 	return (
 		<AccordionItem className="p-0 w-full" key={section.title} value={section.title}>
-			<AccordionTrigger className="bg-card-secondary   rounded-md  flex  py-5 px-6 h-20 gap-4">
+			<AccordionTrigger className=" bg-secondary rounded-md  flex  py-5 px-6 h-20 gap-4">
 				<div className="flex items-center flex-grow flex-wrap">
 					<div className="flex gap-4 items-center lg:text-xl font-semibold whitespace-nowrap">
 						{getBlockIcon(status, section.xp)}
@@ -44,8 +44,8 @@ const getBlockIcon = (block: Status, required: number) => {
 	const { xp, done } = block;
 	if (done) {
 		return (
-			<div className="text-success rounded-full border-success w-8 h-8 flex justify-center items-center border-2">
-				<Check className="w-4 h-4" />
+			<div className="text-green-500 rounded-full border-green-500 w-8 h-8 flex justify-center items-center border-2">
+				<Check className="w-4 h-4 stroke-2" />
 			</div>
 		);
 	}

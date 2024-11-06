@@ -18,7 +18,7 @@ export interface AdvancedLesson {
 	section: number;
 	content: string;
 	video: string;
-	quiz: QuizQuestion[];
+	quiz: Record<string, QuizQuestion[]>;
 }
 
 export interface Status {
