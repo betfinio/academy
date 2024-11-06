@@ -63,5 +63,7 @@
 	"newUsers": "New users",
 	"newUsersDescription": "Ask your referral to send you the \"Academy Link\"",
 	"betfinMembers": "Betfin members",
-	"betfinMembersDescription": "Connect your wallet"
+	"betfinMembersDescription": "Connect your wallet",
+	"onlyEn": "This lesson is only available on english",
+	"changeToEn": "Change language to English"
 }
