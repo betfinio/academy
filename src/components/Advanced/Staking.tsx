@@ -1,4 +1,4 @@
-import CollapseSection from '@/src/components/Advanced/CollapseSection.tsx';
+import CollapseSection from '@/src/components/Advanced/CollapseSection';
 import { useAdvancedSections, useProgress } from '@/src/lib/query';
 import { getRequired } from '@/src/lib/utilts.ts';
 import { ZeroAddress } from '@betfinio/abi';

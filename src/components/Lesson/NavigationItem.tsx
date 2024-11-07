@@ -1,6 +1,6 @@
 import { useLessonStatus } from '@/src/lib/query';
 import { type AdvancedLesson, type Status, initialStatus } from '@/src/lib/types.ts';
-import { Route } from '@/src/routes/_index/lesson/$section.$lesson.tsx';
+import { Route } from '@/src/routes/_index/lesson/$section.$lesson';
 import { ZeroAddress } from '@betfinio/abi';
 import { Link } from '@tanstack/react-router';
 import { cx } from 'class-variance-authority';

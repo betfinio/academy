@@ -9,6 +9,19 @@
 		"visit": "Navštívit",
 		"play": "Play"
 	},
+	"events": {
+		"title": "Události",
+		"minStake": "Minimální staking:",
+		"live": "Živě",
+		"table": {
+			"time": "Čas",
+			"event": "Událost",
+			"language": "Jazyk",
+			"date": "Datum",
+			"join": "Připojit se",
+			"noEvents": "Žádné události k zobrazení"
+		}
+	},
 	"advanced": {
 		"tabs": {
 			"staking": "Staking",
@@ -17,6 +30,7 @@
 			"partner": "Partneři"
 		}
 	},
+
 	"comingSoon": "Již brzy",
 	"staking": {
 		"unlockSection": "Získej {count}XP k odemčení této sekce",
@@ -38,6 +52,8 @@
 		"completed": "Lekce dokončena"
 	},
 	"play": "Play",
+	"stake": "Stake",
+	"join": "Připojit se",
 	"validation": {
 		"lessonCompleted": "Lekce dokončena",
 		"youHaveBeenInvited": "Byl jsi pozván na betfin.network",

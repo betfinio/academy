@@ -1,4 +1,5 @@
 import { CONSERVATIVE, DYNAMIC } from '@/src/lib/global.ts';
+import type { Event } from '@/src/lib/types.ts';
 import { type AdvancedLesson, type AdvancedLessonSection, type Document, type LessonValidation, type Status, initialStatus } from '@/src/lib/types.ts';
 import { ConservativeStakingContract, DynamicStakingContract, ZeroAddress } from '@betfinio/abi';
 import { type Config, readContract } from '@wagmi/core';
@@ -126,4 +127,10 @@ export const fetchLessonValidation = async (id: number, client?: SupabaseClient)
 	}
 	const lesson = await client.from('lessons').select('validation').eq('id', id).single();
 	return lesson.data?.validation || null;
+};
+
+export const fetchEvents = async (supabase?: SupabaseClient): Promise<Event[]> => {
+	if (!supabase) throw new Error('No client provided');
+	const events = await supabase.from('events').select('*');
+	return events.data || [];
 };
