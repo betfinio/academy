@@ -9,6 +9,20 @@
 		"visit": "Visit",
 		"play": "Play"
 	},
+	"events": {
+		"title": "Events",
+		"subtitle": "(You must have minimum of <b>120,000 BET</b> in staking to join events)",
+		"minStake": "Minimum staking requirement:",
+		"live": "Live",
+		"table": {
+			"time": "Time",
+			"event": "Event",
+			"language": "Language",
+			"date": "Date",
+			"join": "How to join",
+			"noEvents": "No events available at this moment"
+		}
+	},
 	"advanced": {
 		"tabs": {
 			"staking": "Staking",
@@ -39,6 +53,8 @@
 		"completed": "Lesson completed"
 	},
 	"play": "Play",
+	"stake": "Stake",
+	"join": "Join",
 	"validation": {
 		"lessonCompleted": "Lesson completed",
 		"youHaveBeenInvited": "You have been invited to Betfin.io",

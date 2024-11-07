@@ -1,4 +1,4 @@
-import { QuizCompleteModal } from '@/src/components/Lesson/Quiz/QuizCompleteModal.tsx';
+import { QuizCompleteModal } from '@/src/components/Lesson/Quiz/QuizCompleteModal';
 import { useAdvancedLessons, useCompleteLesson, useLesson, useLessonStatus } from '@/src/lib/query';
 import { useQuiz } from '@/src/lib/query/quiz';
 import { Route } from '@/src/routes/_index/lesson/$section.$lesson';

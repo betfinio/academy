@@ -1,7 +1,7 @@
 import type { ILanguageKeys } from '@/src/i18next.js';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'betfinio_app/tabs';
 import { useTranslation } from 'react-i18next';
-import { Sections } from './Staking.tsx';
+import { Sections } from './Staking';
 
 const tabs: Array<keyof ILanguageKeys['advanced']['tabs']> = ['staking', 'affiliate', 'games', 'partner'];
 export const AdvancedTabs = () => {

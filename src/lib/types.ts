@@ -46,3 +46,15 @@ export type LessonValidation = {
 	key: string;
 	value?: unknown;
 };
+
+export interface Localized {
+	[key: string]: string;
+}
+
+export interface Event {
+	timestamp: number;
+	title: Localized;
+	language: string;
+	url: string;
+	minToStake: number;
+}

@@ -45,15 +45,15 @@ function Layout() {
 	return (
 		<div className={'p-2 md:p-3 lg:p-4 text-white h-full flex flex-col gap-8 md:gap-6'}>
 			<ScrollRestoration />
-			<div className={'grid grid-cols-3 md:grid-cols-3 w-full gap-2 md:gap-3 lg:gap-4  rounded-xl '}>
-				{(['docs', 'new', 'advanced'] as IAcademyLinks).map((link) => (
+			<div className={'grid grid-cols-4 md:grid-cols-4 w-full gap-2 md:gap-3 lg:gap-4  rounded-xl '}>
+				{(['docs', 'new', 'advanced', 'events'] as IAcademyLinks).map((link) => (
 					<Link
 						to={`/${link}`}
 						search={{}}
 						params={{}}
 						key={link}
 						className={cx(
-							'flex flex-col md:flex-row text-xs md:text-base py-2 lg:p-2 justify-center font-semibold items-center gap-2   rounded-xl duration-200 hover:bg-secondary/50 ',
+							'flex flex-col md:flex-row text-xs md:text-base border py-2 lg:p-2 justify-center font-semibold items-center gap-2   rounded-lg duration-200 hover:bg-secondary/50 ',
 							isActive(link) ? 'bg-primary-gradient' : 'text-gray-400 ',
 						)}
 					>

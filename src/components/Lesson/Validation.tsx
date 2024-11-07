@@ -1,6 +1,6 @@
 import { useAdvancedLessons, useCompleteLesson, useLesson, useLessonStatus, useLessonValidation, useStaked } from '@/src/lib/query';
 import { initialStatus } from '@/src/lib/types.ts';
-import { Route } from '@/src/routes/_index/lesson/$section.$lesson.tsx';
+import { Route } from '@/src/routes/_index/lesson/$section.$lesson';
 import { ZeroAddress, valueToNumber } from '@betfinio/abi';
 import { useNavigate } from '@tanstack/react-router';
 import { Button } from 'betfinio_app/button';

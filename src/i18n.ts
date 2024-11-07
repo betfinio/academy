@@ -4,7 +4,7 @@ import * as i18 from 'i18next';
 import I18nextBrowserLanguageDetector from 'i18next-browser-languagedetector';
 import ICU from 'i18next-icu';
 import { initReactI18next } from 'react-i18next';
-import czAcademy from './translations/cz/academy.json';
+import csAcademy from './translations/cs/academy.json';
 import enAcademy from './translations/en/academy.json';
 import ruAcademy from './translations/ru/academy.json';
 
@@ -20,7 +20,7 @@ export const resources = {
 		shared: sharedLang.ru,
 	},
 	cs: {
-		academy: czAcademy,
+		academy: csAcademy,
 		shared: sharedLang.cz,
 	},
 } as const;

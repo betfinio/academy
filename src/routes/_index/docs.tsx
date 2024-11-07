@@ -1,4 +1,4 @@
-import DocumentBlock from '@/src/components/DocumentBlock.tsx';
+import DocumentBlock from '@/src/components/DocumentBlock';
 import { useDocs } from '@/src/lib/query';
 import { createFileRoute } from '@tanstack/react-router';
 

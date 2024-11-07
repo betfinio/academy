@@ -28,7 +28,7 @@ import {
 import { createFileRoute } from '@tanstack/react-router';
 import { useEffect, useRef, useState } from 'react';
 import '@mdxeditor/editor/style.css';
-import QuizConstructor from '@/src/components/Create/QuizConstructor.tsx';
+import QuizConstructor from '@/src/components/Create/QuizConstructor';
 import { useLesson, useSection } from '@/src/lib/query';
 import type { QuizQuestion } from '@/src/lib/types.ts';
 import { Button } from 'betfinio_app/button';
