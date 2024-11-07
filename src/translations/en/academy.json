@@ -18,6 +18,7 @@
 			"time": "Time",
 			"event": "Event",
 			"language": "Language",
+			"link": "Link",
 			"date": "Date",
 			"join": "How to join",
 			"noEvents": "No events available at this moment"

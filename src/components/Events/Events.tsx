@@ -8,7 +8,8 @@ import { Dialog, DialogClose, DialogContent, DialogTitle, DialogTrigger } from '
 import { getStakingUrl } from 'betfinio_app/lib';
 import { useTreeMember } from 'betfinio_app/lib/query/affiliate';
 import { Separator } from 'betfinio_app/separator';
-import { EyeIcon, Sun, XCircle } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from 'betfinio_app/tooltip';
+import { ExternalLink, EyeIcon, Sun, XCircle } from 'lucide-react';
 import { DateTime } from 'luxon';
 import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -22,9 +23,10 @@ const Events = () => {
 		<div className={'flex flex-col gap-2 my-4 w-full'}>
 			<div className={'w-full rounded-lg grid grid-cols-10 bg-primaryLighter text-muted-foreground p-3 text-sm md:text-base gap-2'}>
 				<div className={'text-center col-span-2'}>{t('date')}</div>
-				<div className={'text-center col-span-2 md:col-span-1'}>{t('time')}</div>
-				<div className={'col-span-5 md:col-span-3 text-center'}>{t('event')}</div>
+				<div className={'text-center col-span-3 md:col-span-1'}>{t('time')}</div>
+				<div className={'col-span-4 md:col-span-2 text-center'}>{t('event')}</div>
 				<div className={'text-center col-span-2 hidden md:block'}>{t('language')}</div>
+				<div className={'col-span-1 text-center hidden md:block'}>{t('link')}</div>
 				<div className={'hidden md:block md:col-span-2 text-center'}>{t('join')}</div>
 			</div>
 			{events.map((e, index) => (
@@ -48,16 +50,29 @@ const SingleEvent: FC<{ event: Event }> = ({ event }) => {
 		<Dialog>
 			<div className={'w-full rounded-lg grid grid-cols-10 bg-primaryLighter p-2 items-center gap-2 text-sm md:text-base '}>
 				<div className={'text-center col-span-2'}>{DateTime.fromSeconds(event.timestamp).toFormat('dd.MM.yy')}</div>
-				<div className={'text-center col-span-2 md:col-span-1  flex justify-center gap-1 items-center flex-col md:flex-row '}>
-					{DateTime.fromSeconds(event.timestamp).toFormat('T')}
-					{isLive && (
-						<Badge variant={'secondary'} className={'bg-yellow-400/20 text-yellow-400 gap-1 px-2 py-1 animate-pulse uppercase'}>
-							{t('events.live')} <Sun className={'w-3 h-3'} />
-						</Badge>
+				<div className={'text-center col-span-3 md:col-span-1  flex  gap-1 justify-center items-center flex-row '}>
+					{isLive ? (
+						<TooltipProvider>
+							<Tooltip>
+								<TooltipTrigger>
+									<Badge variant={'secondary'} className={'bg-yellow-400/20 text-yellow-400 md:text-base gap-1 px-2 py-1 animate-pulse uppercase'}>
+										{DateTime.fromSeconds(event.timestamp).toFormat('T')} LIVE
+									</Badge>
+								</TooltipTrigger>
+								<TooltipContent className={'bg-yellow-400 text-black'}>{t('events.live')}</TooltipContent>
+							</Tooltip>
+						</TooltipProvider>
+					) : (
+						DateTime.fromSeconds(event.timestamp).toFormat('T')
 					)}
 				</div>
-				<div className={'col-span-5 md:col-span-3 text-center'}>{title}</div>
+				<div className={'col-span-4 md:col-span-2 text-center'}>{title}</div>
 				<div className={'text-center col-span-2 hidden md:block'}>{event.language}</div>
+				<div className={'text-center col-span-1 hidden md:flex items-center justify-center'}>
+					<a href={event.link} rel={'noreferrer'} target={'_blank'} className={'text-center'}>
+						<ExternalLink className={'w-4 h-4'} />
+					</a>
+				</div>
 				<div className={'hidden md:block md:col-span-2 text-center w-full'}>
 					{member && staked > required ? (
 						<a href={event.url} target={'_blank'} rel={'noreferrer'}>
@@ -112,17 +127,16 @@ const SingleEvent: FC<{ event: Event }> = ({ event }) => {
 				<Separator />
 				<div className={'flex flex-col gap-4'}>
 					<div className={'text-muted-foreground'}>{t('events.table.join')}</div>
-					<div className={'flex flex-row items-center justify-between'}>
+					<div className={'flex items-start justify-between flex-col gap-1'}>
 						<div className={'text-xs text-gray-500'}>
-							{t('events.minStake')}
-							<br /> {event.minToStake.toLocaleString()} BET
+							{t('events.minStake')} {event.minToStake.toLocaleString()} BET
 						</div>
 						{member && staked > required ? (
-							<a href={event.url} target={'_blank'} className={'w-1/2'} rel={'noreferrer'}>
+							<a href={event.url} target={'_blank'} className={'w-full'} rel={'noreferrer'}>
 								<Button className={'w-full'}>{t('join')}</Button>
 							</a>
 						) : (
-							<Link to={getStakingUrl()} className={'w-1/2'}>
+							<Link to={getStakingUrl()} className={'w-full'}>
 								<Button className={'w-full bg-green-500 hover:bg-green-500/40'}>{t('stake')}</Button>
 							</Link>
 						)}

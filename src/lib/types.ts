@@ -56,5 +56,6 @@ export interface Event {
 	title: Localized;
 	language: string;
 	url: string;
+	link: string;
 	minToStake: number;
 }
