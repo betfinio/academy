@@ -34,6 +34,7 @@ export const initialStatus: Status = {
 export type QuizOption = {
 	content: string;
 	is_right: boolean;
+	id: number;
 };
 
 export type QuizQuestion = {
