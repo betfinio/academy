@@ -1,4 +1,4 @@
-import { QuizCompleteModal } from '@/src/components/Lesson/Quiz/QuizCompleteModal.tsx';
+import { QuizCompleteModal } from '@/src/components/Lesson/Quiz/QuizCompleteModal';
 import { useAdvancedLessons, useCompleteLesson, useLesson, useLessonStatus } from '@/src/lib/query';
 import { useQuiz } from '@/src/lib/query/quiz';
 import { Route } from '@/src/routes/_index/lesson/$section.$lesson';
@@ -15,16 +15,17 @@ import { useTranslation } from 'react-i18next';
 import { useAccount } from 'wagmi';
 import { QuizQuestion } from './QuizQuestion';
 
-type Errors = Record<string, Set<string>>;
-type SerializedErrors = Record<string, string[]>;
-type Selected = Record<string, string>;
-type Correct = Record<string, string>;
+type Errors = Record<string, Set<number>>;
+type SerializedErrors = Record<string, number[]>;
+type Selected = Record<string, number>;
+type Correct = Record<string, number>;
 
 interface answersState {
 	errors: Errors;
 	selected: Selected;
 	correct: Correct;
 }
+
 const getInitialQuizState = (lesson: string, address: string): answersState => {
 	const storedData = JSON.parse(localStorage.getItem(`lesson-${lesson}-${address}`) || '{}');
 
@@ -40,11 +41,11 @@ const getInitialQuizState = (lesson: string, address: string): answersState => {
 };
 
 const encodeErrors = (errors: Errors): SerializedErrors => {
-	return Object.fromEntries(Object.entries(errors).map(([question, error]) => [question, Array.from(error)]));
+	return Object.fromEntries(Object.entries(errors).map(([question, errorSet]) => [question, Array.from(errorSet)]));
 };
 
 const decodeErrors = (errors: SerializedErrors): Errors => {
-	return Object.fromEntries(Object.entries(errors).map(([question, error]) => [question, new Set(error)]));
+	return Object.fromEntries(Object.entries(errors).map(([question, errorArray]) => [question, new Set<number>(errorArray)]));
 };
 
 export const Quiz = () => {
@@ -59,22 +60,23 @@ export const Quiz = () => {
 	const navigate = useNavigate();
 
 	const finalQuiz = quiz[i18n.language] || [];
-
 	const current = lessons.findIndex((l) => l.id === Number(lesson));
 	const next = lessons[current + 1];
 	const handleNext = async () => {
 		if (!next) {
 			await navigate({ to: '/advanced' });
+		} else {
+			await navigate({
+				to: '/lesson/$section/$lesson',
+				params: { lesson: lessons[current + 1].id.toString(), section: lessons[current + 1].section.toString() },
+			});
 		}
-		await navigate({
-			to: '/lesson/$section/$lesson',
-			params: { lesson: lessons[current + 1].id.toString(), section: lessons[current + 1].section.toString() },
-		});
 	};
 
 	const [answers, setAnswers] = useState(() => getInitialQuizState(lesson, address));
 	const [exp, setExp] = useState<{ [key: number]: number }>({});
 	const [modalOpen, setModalOpen] = useState(false);
+
 	useEffect(() => {
 		if (finalQuiz.length === 0) return;
 		const newState = getInitialQuizState(lesson, address);
@@ -86,12 +88,12 @@ export const Quiz = () => {
 		return !!(lessonStatus?.done === true || isSuccess || mutationData);
 	}, [isSuccess, mutationData, lessonStatus]);
 
-	const handleOptionChange = (questionIndex: number, optionIndex: string) => {
+	const handleOptionChange = (questionIndex: number, optionId: number) => {
 		setAnswers((prev) => ({
 			...prev,
 			selected: {
 				...prev.selected,
-				[questionIndex]: optionIndex,
+				[questionIndex]: optionId,
 			},
 		}));
 	};
@@ -115,21 +117,22 @@ export const Quiz = () => {
 		if (finalQuiz.length === 0) return { hasError: true, syncExp: 0 };
 
 		let hasError = false;
-		const newErrors = { ...answers.errors };
-		const newCorrect = { ...answers.correct };
+		const newErrors: Errors = { ...answers.errors };
+		const newCorrect: Correct = { ...answers.correct };
 		setExp({});
 
 		let syncExp = 0;
 		finalQuiz.forEach((q, i) => {
-			const correctAnswer = q.options.findIndex((option) => option.is_right).toString();
-			const selected = answers.selected[i];
+			const correctOption = q.options.find((option) => option.is_right);
+			const correctAnswerId = correctOption?.id;
+			const selectedAnswerId = answers.selected[i];
 
-			if (selected !== correctAnswer) {
+			if (selectedAnswerId !== correctAnswerId) {
 				hasError = true;
-				newErrors[i] = newErrors[i] || new Set();
-				if (selected) newErrors[i].add(selected);
+				newErrors[i] = newErrors[i] || new Set<number>();
+				if (selectedAnswerId) newErrors[i].add(selectedAnswerId);
 			} else {
-				newCorrect[i] = selected;
+				newCorrect[i] = selectedAnswerId;
 				const newExp = newErrors[i]?.size ? roundToOneDecimalPoint(q.exp / 2) : q.exp;
 				syncExp += newExp;
 				setExp((prev) => ({ ...prev, [i]: newExp }));
@@ -160,9 +163,7 @@ export const Quiz = () => {
 	};
 
 	const calculateXp = (): number => {
-		return Object.entries(exp).reduce((acc, [question, xp]) => {
-			return acc + xp;
-		}, 0);
+		return Object.values(exp).reduce((acc, xp) => acc + xp, 0);
 	};
 
 	const handleSubmit = async () => {

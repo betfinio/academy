@@ -1,7 +1,7 @@
-import { Quiz } from '@/src/components/Lesson/Quiz/Quiz.tsx';
-import Validation from '@/src/components/Lesson/Validation.tsx';
+import { Quiz } from '@/src/components/Lesson/Quiz/Quiz';
+import Validation from '@/src/components/Lesson/Validation';
 import { useLesson } from '@/src/lib/query';
-import { Route } from '@/src/routes/_index/lesson/$section.$lesson.tsx';
+import { Route } from '@/src/routes/_index/lesson/$section.$lesson';
 import {
 	AdmonitionDirectiveDescriptor,
 	MDXEditor,

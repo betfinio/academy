@@ -3,6 +3,7 @@ import {
 	fetchAdvancedLessons,
 	fetchAdvancedSections,
 	fetchDocs,
+	fetchEvents,
 	fetchLesson,
 	fetchLessonStatus,
 	fetchLessonValidation,
@@ -109,5 +110,13 @@ export const useCompleteLesson = () => {
 				await queryClient.invalidateQueries({ queryKey: ['academy', 'section'] });
 			}
 		},
+	});
+};
+
+export const useEvents = () => {
+	const { client } = useSupabase();
+	return useQuery({
+		queryKey: ['academy', 'events'],
+		queryFn: () => fetchEvents(client),
 	});
 };

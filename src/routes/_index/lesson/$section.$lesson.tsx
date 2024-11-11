@@ -1,6 +1,6 @@
-import { LessonLeft } from '@/src/components/Lesson/LessonLeft.tsx';
-import { Navigation } from '@/src/components/Lesson/Navigation.tsx';
-import ProgressBar from '@/src/components/ProgressBar.tsx';
+import { LessonLeft } from '@/src/components/Lesson/LessonLeft';
+import { Navigation } from '@/src/components/Lesson/Navigation';
+import ProgressBar from '@/src/components/ProgressBar';
 import { useSection } from '@/src/lib/query';
 import { ScrollRestoration, createFileRoute } from '@tanstack/react-router';
 import { TooltipProvider } from 'betfinio_app/tooltip';

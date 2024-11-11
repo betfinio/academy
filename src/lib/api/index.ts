@@ -1,4 +1,5 @@
 import { CONSERVATIVE, DYNAMIC } from '@/src/lib/global.ts';
+import type { Event } from '@/src/lib/types.ts';
 import { type AdvancedLesson, type AdvancedLessonSection, type Document, type LessonValidation, type Status, initialStatus } from '@/src/lib/types.ts';
 import { ConservativeStakingContract, DynamicStakingContract, ZeroAddress } from '@betfinio/abi';
 import { type Config, readContract } from '@wagmi/core';
@@ -17,7 +18,6 @@ export const fetchAdvancedSections = async (tab: string, client?: SupabaseClient
 		throw new Error('No client provided');
 	}
 	const sections = await client.from('sections').select('title::text, xp, id').eq('tab', tab).order('order').returns<AdvancedLessonSection[]>();
-	console.log(sections);
 	return sections.data as AdvancedLessonSection[];
 };
 export const fetchAdvancedLessons = async (id: number, client?: SupabaseClient): Promise<AdvancedLesson[]> => {
@@ -38,7 +38,6 @@ export const fetchLesson = async (id: number, client?: SupabaseClient): Promise<
 		throw new Error('No client provided');
 	}
 	const lesson = await client.from('lessons').select('title::text, xp, id, section, content::text, video, quiz').eq('id', id).maybeSingle<AdvancedLesson>();
-	console.log();
 	if (!lesson.data) throw new Error('not found');
 	return lesson.data;
 };
@@ -48,7 +47,6 @@ export const fetchSection = async (id: number, client?: SupabaseClient): Promise
 		throw new Error('No client provided');
 	}
 	const section = await client.from('sections').select('title::text, xp, id').eq('id', id).maybeSingle<AdvancedLesson>();
-	console.log();
 	if (!section.data) throw new Error('not found');
 	return section.data;
 };
@@ -106,7 +104,6 @@ export const completeLesson = async (
 	}
 
 	const { data, error, status } = await client.rpc('complete_lesson', { lesson_id: lesson, xp: xp, member: address.toLowerCase() });
-	console.log(data, error, status);
 	return { data, error: error?.message, status: status.toString() };
 };
 
@@ -126,4 +123,10 @@ export const fetchLessonValidation = async (id: number, client?: SupabaseClient)
 	}
 	const lesson = await client.from('lessons').select('validation').eq('id', id).single();
 	return lesson.data?.validation || null;
+};
+
+export const fetchEvents = async (supabase?: SupabaseClient): Promise<Event[]> => {
+	if (!supabase) throw new Error('No client provided');
+	const events = await supabase.from('events').select('*').order('timestamp', { ascending: true }).returns<Event[]>();
+	return events.data || [];
 };
