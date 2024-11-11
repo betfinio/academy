@@ -10,10 +10,10 @@ interface QuizQuestionProps {
 	question: string;
 	options: QuizOptionType[];
 	exp?: number;
-	selectedAnswer?: string;
-	correctAnswer?: string;
-	errorAnswers?: Set<string>;
-	onOptionChange: (questionIndex: number, optionIndex: string) => void;
+	selectedAnswer?: number;
+	correctAnswer?: number;
+	errorAnswers?: Set<number>;
+	onOptionChange: (questionIndex: number, optionId: number) => void;
 }
 
 export const QuizQuestion: FC<QuizQuestionProps> = ({ index, question, options, exp, selectedAnswer, correctAnswer, errorAnswers, onOptionChange }) => {
@@ -27,17 +27,17 @@ export const QuizQuestion: FC<QuizQuestionProps> = ({ index, question, options, 
 			</div>
 			<div className={cx('mt-4 flex flex-col gap-2', correctAnswer !== undefined && 'pointer-events-none')}>
 				<RadioGroup
-					onValueChange={(value: string) => onOptionChange(index, value.toString())}
+					onValueChange={(value: number) => onOptionChange(index, value)}
 					disabled={correctAnswer !== undefined}
-					value={selectedAnswer || ''}
+					value={selectedAnswer !== undefined ? selectedAnswer : -1}
 				>
-					{options.map((option, i) => (
+					{options.map((option) => (
 						<QuizOption
-							key={option.content}
+							key={option.id}
 							option={option}
-							index={i.toString()}
-							hasError={errorAnswers?.has(i.toString()) || false}
-							correct={correctAnswer === i.toString()}
+							index={option.id}
+							hasError={errorAnswers?.has(option.id) || false}
+							correct={correctAnswer === option.id}
 						/>
 					))}
 				</RadioGroup>
