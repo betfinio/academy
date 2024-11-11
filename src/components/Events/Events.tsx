@@ -58,7 +58,7 @@ const SingleEvent: FC<{ event: Event }> = ({ event }) => {
 	}, [searchEvent]);
 
 	const handleCopy = async () => {
-		await navigator.clipboard.writeText(`${window.origin}/academy/events?event=${event.id}`);
+		await navigator.clipboard.writeText(`${window.origin}/academy/events/?event=${event.id}`);
 	};
 
 	return (
