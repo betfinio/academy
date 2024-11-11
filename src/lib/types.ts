@@ -52,6 +52,7 @@ export interface Localized {
 }
 
 export interface Event {
+	id: number;
 	timestamp: number;
 	title: Localized;
 	language: string;

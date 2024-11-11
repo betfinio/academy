@@ -4,6 +4,10 @@ import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/_index/events')({
 	component: () => <EventsPage />,
+	validateSearch: (search: Record<string, unknown>) => {
+		if (!search.event) return {};
+		return { event: Number(search.event) };
+	},
 });
 
 const EventsPage = () => {

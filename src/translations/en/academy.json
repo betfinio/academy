@@ -13,6 +13,7 @@
 		"title": "Events",
 		"subtitle": "(You must have minimum of <b>120,000 BET</b> in staking to join events)",
 		"minStake": "Minimum staking requirement:",
+		"copy": "Copy link to this event",
 		"live": "Live",
 		"table": {
 			"time": "Time",

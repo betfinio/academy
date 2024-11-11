@@ -40,7 +40,6 @@ const Validation = () => {
 	}, [data, status]);
 	useEffect(() => {
 		if (validation) {
-			console.log(validation);
 			if (validation.key === 'wallet_connect') {
 				if (!!address && address !== ZeroAddress) {
 					setValid(true);
@@ -103,7 +102,6 @@ const Validation = () => {
 				}
 			}
 			if (validation.key === 'manual') {
-				console.log(manual);
 				if (!!address && address !== ZeroAddress && manual) {
 					setValid(true);
 					setError('');
@@ -142,8 +140,6 @@ const Validation = () => {
 	const handleMint = () => {
 		const code = JSON.parse(localStorage.getItem('code') || '{}');
 		if (code.parent && code.inviter) {
-			console.log('minting');
-			console.log(code.inviter, code.parent);
 			mint({ address: address as Address, inviter: code.inviter, parent: code.parent });
 		}
 	};
