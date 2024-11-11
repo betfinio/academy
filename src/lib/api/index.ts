@@ -127,6 +127,6 @@ export const fetchLessonValidation = async (id: number, client?: SupabaseClient)
 
 export const fetchEvents = async (supabase?: SupabaseClient): Promise<Event[]> => {
 	if (!supabase) throw new Error('No client provided');
-	const events = await supabase.from('events').select('*');
+	const events = await supabase.from('events').select('*').order('timestamp', { ascending: true }).returns<Event[]>();
 	return events.data || [];
 };
