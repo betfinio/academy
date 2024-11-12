@@ -5,7 +5,7 @@ import type { FC } from 'react';
 
 interface QuizOptionProps {
 	option: QuizOptionType;
-	index: string;
+	index: number;
 	hasError: boolean;
 	correct: boolean;
 }
