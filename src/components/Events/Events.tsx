@@ -10,6 +10,7 @@ import { getStakingUrl } from 'betfinio_app/lib';
 import { useTreeMember } from 'betfinio_app/lib/query/affiliate';
 import { Separator } from 'betfinio_app/separator';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from 'betfinio_app/tooltip';
+import { toast } from 'betfinio_app/use-toast';
 import { CopyIcon, EyeIcon, Sun, XCircle } from 'lucide-react';
 import { DateTime } from 'luxon';
 import { type FC, useEffect, useState } from 'react';
@@ -59,6 +60,7 @@ const SingleEvent: FC<{ event: Event }> = ({ event }) => {
 
 	const handleCopy = async () => {
 		await navigator.clipboard.writeText(`${window.origin}/academy/events/?event=${event.id}`);
+		toast({ title: t('events.copied') });
 	};
 
 	return (
