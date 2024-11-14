@@ -1,4 +1,4 @@
-import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { Loader } from 'lucide-react';
 import { useEffect } from 'react';
 
@@ -8,9 +8,10 @@ export const Route = createFileRoute('/_index/new')({
 		if (!search.code) return {};
 		const inviter = search.code.toString().slice(0, 42);
 		const parent = search.code.toString().slice(42);
-		localStorage.setItem('code', JSON.stringify({ inviter, parent }));
-		console.log({ inviter, parent });
-		return { inviter, parent };
+		const type = search.type || 'normal';
+		localStorage.setItem('code', JSON.stringify({ inviter, parent, type }));
+		console.log({ inviter, parent, type });
+		return { inviter, parent, type };
 	},
 });
 
