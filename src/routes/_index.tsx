@@ -41,7 +41,7 @@ function Layout() {
 		}
 	};
 	const code = JSON.parse(localStorage.getItem('code') || '{}');
-	const parent = code.parent;
+	const parent = code.inviter;
 	return (
 		<div className={'p-2 md:p-3 lg:p-4 text-white h-full flex flex-col gap-8 md:gap-6'}>
 			<ScrollRestoration />
