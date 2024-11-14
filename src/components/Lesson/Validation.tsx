@@ -148,7 +148,7 @@ const Validation = () => {
 		}
 		if (inviter && code.type === 'line') {
 			// find left member
-			let parent = await findLastLeftMember(inviter);
+			let parent = await findLastLeftMember(code.parent || inviter);
 			if (parent === ZeroAddress) {
 				parent = inviter;
 			}
