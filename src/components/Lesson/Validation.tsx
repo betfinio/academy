@@ -172,7 +172,7 @@ const Validation = () => {
 	}
 
 	const code = JSON.parse(localStorage.getItem('code') || '{}');
-	if (validation && validation.key === 'has_pass' && !hasPass && code.parent && code.inviter) {
+	if (validation && validation.key === 'has_pass' && !hasPass && code.inviter) {
 		return (
 			<div className={'mt-10 sm:mt-4 flex flex-row justify-between items-center gap-2'}>
 				<div className={'text-green-500 text-sm'}>{t('validation.youHaveBeenInvited')}</div>
