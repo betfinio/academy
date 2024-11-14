@@ -4,6 +4,7 @@ import { Route } from '@/src/routes/_index/lesson/$section.$lesson';
 import { ZeroAddress, valueToNumber } from '@betfinio/abi';
 import { useNavigate } from '@tanstack/react-router';
 import { Button } from 'betfinio_app/button';
+import { findLastLeftMember } from 'betfinio_app/lib/gql/affiliate';
 import { useIsMember, useMint } from 'betfinio_app/lib/query/pass';
 import { useBalance as useBetBalance } from 'betfinio_app/lib/query/token';
 import { cx } from 'class-variance-authority';
@@ -137,10 +138,21 @@ const Validation = () => {
 		});
 	};
 
-	const handleMint = () => {
+	const handleMint = async () => {
 		const code = JSON.parse(localStorage.getItem('code') || '{}');
-		if (code.parent && code.inviter) {
-			mint({ address: address as Address, inviter: code.inviter, parent: code.parent });
+		const inviter = code.inviter;
+		if (code.parent && inviter && code.type !== 'line') {
+			const parent = code.parent;
+			mint({ address: address as Address, inviter: inviter, parent: parent });
+			return;
+		}
+		if (inviter && code.type === 'line') {
+			// find left member
+			let parent = await findLastLeftMember(inviter);
+			if (parent === ZeroAddress) {
+				parent = inviter;
+			}
+			mint({ address: address as Address, inviter: inviter, parent: parent });
 		}
 	};
 
