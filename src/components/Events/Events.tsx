@@ -91,7 +91,7 @@ const SingleEvent: FC<{ event: Event }> = ({ event }) => {
 					</div>
 				</div>
 				<div className={'hidden md:block md:col-span-2 text-center w-full'}>
-					{member && staked > required ? (
+					{member && staked >= required ? (
 						<a href={event.url} target={'_blank'} rel={'noreferrer'}>
 							<Button className={'w-full'}>{t('join')}</Button>
 						</a>
@@ -154,7 +154,7 @@ const SingleEvent: FC<{ event: Event }> = ({ event }) => {
 						<div className={'text-xs text-gray-500'}>
 							{t('events.minStake')} {event.minToStake.toLocaleString()} BET
 						</div>
-						{member && staked > required ? (
+						{member && staked >= required ? (
 							<a href={event.url} target={'_blank'} className={'w-full'} rel={'noreferrer'}>
 								<Button className={'w-full'}>{t('join')}</Button>
 							</a>
