@@ -153,7 +153,9 @@ const Validation = () => {
 				parent = inviter;
 			}
 			mint({ address: address as Address, inviter: inviter, parent: parent });
+			return;
 		}
+		mint({ address: address as Address, inviter: inviter, parent: code.parent || inviter });
 	};
 
 	if (validation === null) {
