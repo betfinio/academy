@@ -2,8 +2,7 @@ import { Quiz } from '@/src/components/Lesson/Quiz/Quiz';
 import Validation from '@/src/components/Lesson/Validation';
 import { useLesson } from '@/src/lib/query';
 import { Route } from '@/src/routes/_index/lesson/$section.$lesson';
-import { Button } from '@betfinio/components/ui';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@betfinio/components/ui';
+import { Button, Tooltip, TooltipContent, TooltipTrigger } from '@betfinio/components/ui';
 import {
 	AdmonitionDirectiveDescriptor,
 	MDXEditor,

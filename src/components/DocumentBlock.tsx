@@ -1,6 +1,5 @@
 import type { Document } from '@/src/lib/types.ts';
-import { Button } from '@betfinio/components/ui';
-import { Separator } from '@betfinio/components/ui';
+import { Button, Separator } from '@betfinio/components/ui';
 import { BookIcon } from 'lucide-react';
 import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
