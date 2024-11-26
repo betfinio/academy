@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  background: #0f121d;
-}
-
 @layer base {
   * {
     user-select: none;
@@ -56,12 +51,6 @@ strong {
   a {
     color: #0088cc;
     text-decoration: underline;
-  }
-
-  blockquote {
-    border-left: 4px solid rgb(250 204 21);
-    padding-left: 1rem;
-    margin-left: 0;
   }
 }
 

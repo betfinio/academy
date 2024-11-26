@@ -1,5 +1,5 @@
 import type { QuizOption as QuizOptionType } from '@/src/lib/types';
-import { RadioGroup } from 'betfinio_app/radio-group';
+import { RadioGroup } from '@betfinio/components/ui';
 import { cx } from 'class-variance-authority';
 import { motion } from 'framer-motion';
 import type { FC } from 'react';
@@ -24,13 +24,13 @@ export const QuizQuestion: FC<QuizQuestionProps> = ({ index, question, options, 
 				<span className="text-lg font-semibold">
 					{index + 1}. {question}
 				</span>
-				<span className={cx('font-semibold text-yellow-400 opacity-0 duration-500', exp && 'opacity-100')}>+{exp}XP</span>
+				<span className={cx('font-semibold text-secondary-foreground opacity-0 duration-500', exp && 'opacity-100')}>+{exp}XP</span>
 			</div>
 			<div className={cx('mt-4 flex flex-col gap-2', correctAnswer !== undefined && 'pointer-events-none')}>
 				<RadioGroup
-					onValueChange={(value: number) => onOptionChange(index, value)}
+					onValueChange={(value: string) => onOptionChange(index, Number(value))}
 					disabled={correctAnswer !== undefined}
-					value={selectedAnswer !== undefined ? selectedAnswer : -1}
+					value={(selectedAnswer !== undefined ? selectedAnswer : -1).toString()}
 				>
 					{options.map((option) => (
 						<QuizOption

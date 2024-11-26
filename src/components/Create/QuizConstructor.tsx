@@ -1,7 +1,5 @@
 import type { QuizOption, QuizQuestion } from '@/src/lib/types.ts';
-import { Button } from 'betfinio_app/button';
-import { Checkbox } from 'betfinio_app/checkbox';
-import { Input } from 'betfinio_app/input';
+import { Button, Checkbox, Input } from '@betfinio/components/ui';
 import { cx } from 'class-variance-authority';
 import { TrashIcon } from 'lucide-react';
 import type { FC } from 'react';
@@ -14,10 +12,10 @@ const QuizConstructor: FC<{ quiz: QuizQuestion[]; setQuiz: (quiz: QuizQuestion[]
 				exp: 100,
 				question: 'What is your question?',
 				options: [
-					{ content: 'Answer 1', is_right: true },
-					{ content: 'Answer 2', is_right: false },
-					{ content: 'Answer 3', is_right: false },
-					{ content: 'Answer 4', is_right: false },
+					{ content: 'Answer 1', is_right: true, id: 0 },
+					{ content: 'Answer 2', is_right: false, id: 1 },
+					{ content: 'Answer 3', is_right: false, id: 2 },
+					{ content: 'Answer 4', is_right: false, id: 3 },
 				],
 			},
 		]);

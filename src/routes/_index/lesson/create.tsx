@@ -31,10 +31,9 @@ import '@mdxeditor/editor/style.css';
 import QuizConstructor from '@/src/components/Create/QuizConstructor';
 import { useLesson, useSection } from '@/src/lib/query';
 import type { QuizQuestion } from '@/src/lib/types.ts';
-import { Button } from 'betfinio_app/button';
-import { Input } from 'betfinio_app/input';
+import { toast } from '@betfinio/components/hooks';
+import { Button, Input } from '@betfinio/components/ui';
 import { useSupabase } from 'betfinio_app/supabase';
-import { toast } from 'betfinio_app/use-toast';
 import { cx } from 'class-variance-authority';
 
 export const Route = createFileRoute('/_index/lesson/create')({
@@ -141,10 +140,10 @@ function CreateLessonPage() {
 				.eq('id', Number(section))
 				.select();
 			if (!sectionsResult.error && !lessonsResult.error) {
-				toast({ title: 'Lesson saved', status: 'success' });
+				toast({ title: 'Lesson saved', variant: 'default' });
 			}
 		} catch {
-			toast({ title: 'Lesson did not save', status: 'destructive' });
+			toast({ title: 'Lesson did not save', variant: 'destructive' });
 		}
 	};
 

@@ -2,6 +2,8 @@ import { Quiz } from '@/src/components/Lesson/Quiz/Quiz';
 import Validation from '@/src/components/Lesson/Validation';
 import { useLesson } from '@/src/lib/query';
 import { Route } from '@/src/routes/_index/lesson/$section.$lesson';
+import { Button } from '@betfinio/components/ui';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@betfinio/components/ui';
 import {
 	AdmonitionDirectiveDescriptor,
 	MDXEditor,
@@ -18,8 +20,6 @@ import {
 	thematicBreakPlugin,
 } from '@mdxeditor/editor';
 import { useRouter } from '@tanstack/react-router';
-import { Button } from 'betfinio_app/button';
-import { Tooltip, TooltipContent, TooltipTrigger } from 'betfinio_app/tooltip';
 import { cx } from 'class-variance-authority';
 import { motion } from 'framer-motion';
 import { ArrowLeft, CheckIcon, Loader, TriangleIcon } from 'lucide-react';
@@ -96,7 +96,7 @@ export const LessonLeft = () => {
 				<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1 }}>
 					<div
 						onClick={onBack}
-						className={cx('flex cursor-pointer gap-1 items-center text-[#6A6F84] hover:text-yellow-400 group', section === '1' && 'hidden')}
+						className={cx('flex cursor-pointer gap-1 items-center text-[#6A6F84] hover:text-secondary-foreground group', section === '1' && 'hidden')}
 					>
 						<ArrowLeft height={18} className={'group-hover:-translate-x-[3px] duration-300'} />
 						<span className={'duration-300'}>{t('back')}</span>
@@ -165,10 +165,10 @@ const PlayButton = () => {
 			<motion.div
 				whileTap={{ scale: 0.95 }}
 				whileHover={{ scale: 1.03 }}
-				className={'bg-quiz-purple cursor-pointer py-3 px-10 flex items-center gap-2 rounded-lg group duration-300 hover:text-black hover:bg-yellow-400'}
+				className={'bg-quiz-purple cursor-pointer py-3 px-10 flex items-center gap-2 rounded-lg group duration-300 hover:text-black hover:bg-primary'}
 			>
 				<span>{t('play')}</span>
-				<TriangleIcon width={16} className={' duration-300 text-yellow-400 group-hover:text-black fill-current rotate-90'} />
+				<TriangleIcon width={16} className={' duration-300 text-secondary-foreground group-hover:text-black fill-current rotate-90'} />
 			</motion.div>
 		</motion.div>
 	);

@@ -1,6 +1,6 @@
 import type { Document } from '@/src/lib/types.ts';
-import { Button } from 'betfinio_app/button';
-import { Separator } from 'betfinio_app/separator';
+import { Button } from '@betfinio/components/ui';
+import { Separator } from '@betfinio/components/ui';
 import { BookIcon } from 'lucide-react';
 import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 const DocumentBlock: FC<Document> = ({ isPlayable = false, title = 'Placeholder', points = '', url = '/' }) => {
 	const { t } = useTranslation('academy', { keyPrefix: 'document' });
 	return (
-		<div className={'border border-gray-800 bg-primaryLighter  rounded-lg flex flex-col h-full'}>
+		<div className={'border border-gray-800 bg-primary-lighter  rounded-lg flex flex-col h-full'}>
 			<div className={'flex-grow p-4'}>
 				<div className={'flex flex-row gap-2 items-center'}>
 					<BookIcon className={'w-8 h-8 text-purple-box'} />
@@ -23,7 +23,7 @@ const DocumentBlock: FC<Document> = ({ isPlayable = false, title = 'Placeholder'
 			<Separator />
 			<div className={'grid grid-cols-2 p-4 gap-2 md:gap-3 lg:gap-4'}>
 				<a target={'_blank'} rel={'noreferrer'} href={url}>
-					<Button variant={'outline'} className={'w-full text-base border-yellow-400 text-yellow-400'}>
+					<Button variant={'outline'} className={'w-full text-base border-yellow-400 text-secondary-foreground'}>
 						{t('visit')}
 					</Button>
 				</a>
