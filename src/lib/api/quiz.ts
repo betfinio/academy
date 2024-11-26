@@ -7,7 +7,7 @@ export const fetchQuiz = async (lesson: number, client?: SupabaseClient): Promis
 		throw new Error('No client provided');
 	}
 	const quiz = await client.from('lessons').select('quiz').eq('id', lesson).single();
-
+	// todo: @bf-plane refactor
 	const quizData = quiz.data?.quiz;
 	if (quizData) {
 		if (quizData.en) {
@@ -17,6 +17,16 @@ export const fetchQuiz = async (lesson: number, client?: SupabaseClient): Promis
 				});
 			}
 			quizData.en = quizData.en.map((quizEn: QuizQuestion) => {
+				return { ...quizEn, options: shuffle(quizEn.options ?? []) };
+			});
+		}
+		if (quizData.cs) {
+			for (const quizCs of quizData.cs) {
+				(quizCs as QuizQuestion).options.forEach((option, i: number) => {
+					option.id = i;
+				});
+			}
+			quizData.cs = quizData.cs.map((quizEn: QuizQuestion) => {
 				return { ...quizEn, options: shuffle(quizEn.options ?? []) };
 			});
 		}
