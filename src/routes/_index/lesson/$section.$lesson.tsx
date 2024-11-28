@@ -2,8 +2,8 @@ import { LessonLeft } from '@/src/components/Lesson/LessonLeft';
 import { Navigation } from '@/src/components/Lesson/Navigation';
 import ProgressBar from '@/src/components/ProgressBar';
 import { useSection } from '@/src/lib/query';
+import { TooltipProvider } from '@betfinio/components/ui';
 import { ScrollRestoration, createFileRoute } from '@tanstack/react-router';
-import { TooltipProvider } from 'betfinio_app/tooltip';
 import { Loader } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 

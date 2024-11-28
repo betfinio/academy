@@ -53,11 +53,11 @@ function Layout() {
 						params={{}}
 						key={link}
 						className={cx(
-							'flex flex-col md:flex-row text-xs md:text-base border py-2 lg:p-2 justify-center font-semibold items-center gap-2   rounded-lg duration-200 hover:bg-secondary/50 ',
-							isActive(link) ? 'bg-primary-gradient' : 'text-gray-400 ',
+							'flex flex-col md:flex-row text-xs md:text-base border border-border py-2 lg:p-2 justify-center font-semibold items-center gap-2   rounded-lg duration-200 hover:bg-secondary/50 ',
+							isActive(link) ? 'bg-primary-gradient' : 'text-muted-foreground ',
 						)}
 					>
-						<span className={cx(isActive(link) ? 'text-yellow-400' : 'text-gray-400 ')}>{getIcon(link)}</span>
+						<span className={cx(isActive(link) ? 'text-secondary-foreground' : 'text-muted-foreground ')}>{getIcon(link)}</span>
 						{t(`layout.${link}`)}
 					</Link>
 				))}
@@ -68,13 +68,13 @@ function Layout() {
 				</div>
 				{!hasPass && !parent && (
 					<div className={'absolute top-[200px] flex z-[10] justify-center w-full'}>
-						<div className={cx(!hasPass && !parent && 'bg-primaryLight text-center border rounded-lg p-4 flex flex-col items-start')}>
+						<div className={cx(!hasPass && !parent && 'bg-primary-light text-center border rounded-lg p-4 flex flex-col items-start')}>
 							<div className={'text-lg'}>{t('contentIsLockedForYou')}</div>
 							<br />
-							<div className={'text-yellow-400'}>{t('newUsers')}:</div>
+							<div className={'text-secondary-foreground'}>{t('newUsers')}:</div>
 							<div>{t('newUsersDescription')}</div>
 							<br />
-							<div className={'text-yellow-400'}>{t('betfinMembers')}:</div>
+							<div className={'text-secondary-foreground'}>{t('betfinMembers')}:</div>
 							<div>{t('betfinMembersDescription')}</div>
 						</div>
 					</div>

@@ -2,15 +2,24 @@ import { useEvents } from '@/src/lib/query';
 import type { Event } from '@/src/lib/types';
 import { Route } from '@/src/routes/_index/events.tsx';
 import { ZeroAddress } from '@betfinio/abi';
+import { toast } from '@betfinio/components/hooks';
+import {
+	Badge,
+	Button,
+	Dialog,
+	DialogClose,
+	DialogContent,
+	DialogTitle,
+	DialogTrigger,
+	Separator,
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from '@betfinio/components/ui';
 import { Link } from '@tanstack/react-router';
-import { Badge } from 'betfinio_app/badge';
-import { Button } from 'betfinio_app/button';
-import { Dialog, DialogClose, DialogContent, DialogTitle, DialogTrigger } from 'betfinio_app/dialog';
 import { getStakingUrl } from 'betfinio_app/lib';
 import { useTreeMember } from 'betfinio_app/lib/query/affiliate';
-import { Separator } from 'betfinio_app/separator';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from 'betfinio_app/tooltip';
-import { toast } from 'betfinio_app/use-toast';
 import { CopyIcon, EyeIcon, Sun, XCircle } from 'lucide-react';
 import { DateTime } from 'luxon';
 import { type FC, useEffect, useState } from 'react';
@@ -22,7 +31,7 @@ const Events = () => {
 	const { t } = useTranslation('academy', { keyPrefix: 'events.table' });
 	return (
 		<div className={'flex flex-col gap-2 my-4 w-full'}>
-			<div className={'w-full rounded-lg grid grid-cols-10 bg-primaryLighter text-muted-foreground p-3 text-sm md:text-base gap-2'}>
+			<div className={'w-full rounded-lg grid grid-cols-10 bg-primary-lighter text-muted-foreground p-3 text-sm md:text-base gap-2'}>
 				<div className={'text-center col-span-2'}>{t('date')}</div>
 				<div className={'text-center col-span-3 md:col-span-1'}>{t('time')}</div>
 				<div className={'col-span-4 md:col-span-2 text-center'}>{t('event')}</div>
@@ -65,18 +74,18 @@ const SingleEvent: FC<{ event: Event }> = ({ event }) => {
 
 	return (
 		<Dialog open={open} onOpenChange={handleDialog}>
-			<div className={'w-full rounded-lg grid grid-cols-10 bg-primaryLighter p-2 items-center gap-2 text-sm md:text-base '}>
+			<div className={'w-full rounded-lg grid grid-cols-10 bg-primary-lighter p-2 items-center gap-2 text-sm md:text-base '}>
 				<div className={'text-center col-span-2'}>{DateTime.fromSeconds(event.timestamp).toFormat('dd.MM.yy')}</div>
 				<div className={'text-center col-span-3 md:col-span-1  flex  gap-1 justify-center items-center flex-row '}>
 					{isLive ? (
 						<TooltipProvider>
 							<Tooltip>
 								<TooltipTrigger>
-									<Badge variant={'secondary'} className={'bg-yellow-400/20 text-yellow-400 md:text-base gap-1 px-2 py-1 animate-pulse uppercase'}>
+									<Badge variant={'secondary'} className={'bg-primary/20 text-secondary-foreground md:text-base gap-1 px-2 py-1 animate-pulse uppercase'}>
 										{DateTime.fromSeconds(event.timestamp).toFormat('T')} LIVE
 									</Badge>
 								</TooltipTrigger>
-								<TooltipContent className={'bg-yellow-400 text-black'}>{t('events.live')}</TooltipContent>
+								<TooltipContent className={'bg-primary text-black'}>{t('events.live')}</TooltipContent>
 							</Tooltip>
 						</TooltipProvider>
 					) : (
@@ -97,7 +106,7 @@ const SingleEvent: FC<{ event: Event }> = ({ event }) => {
 						</a>
 					) : (
 						<DialogTrigger className={'w-full'}>
-							<Button className={'w-full bg-green-500 hover:bg-green-500/40'}>{t('stake')}</Button>
+							<Button className={'w-full bg-success hover:bg-success/40'}>{t('stake')}</Button>
 						</DialogTrigger>
 					)}
 				</div>
@@ -119,7 +128,7 @@ const SingleEvent: FC<{ event: Event }> = ({ event }) => {
 						</div>
 						<div className={'flex flex-col justify-end'}>
 							{isLive && (
-								<Badge variant={'secondary'} className={'bg-yellow-400/20 text-yellow-400 gap-1 px-2 py-1 animate-pulse uppercase'}>
+								<Badge variant={'secondary'} className={'bg-primary/20 text-secondary-foreground gap-1 px-2 py-1 animate-pulse uppercase'}>
 									{t('events.live')} <Sun className={'w-3 h-3'} />
 								</Badge>
 							)}
@@ -160,7 +169,7 @@ const SingleEvent: FC<{ event: Event }> = ({ event }) => {
 							</a>
 						) : (
 							<Link to={getStakingUrl()} className={'w-full'}>
-								<Button className={'w-full bg-green-500 hover:bg-green-500/40'}>{t('stake')}</Button>
+								<Button className={'w-full bg-success hover:bg-success/40'}>{t('stake')}</Button>
 							</Link>
 						)}
 					</div>
