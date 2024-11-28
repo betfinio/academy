@@ -1,8 +1,8 @@
 import { useLessonStatus } from '@/src/lib/query';
 import { type AdvancedLesson, initialStatus } from '@/src/lib/types.ts';
 import { ZeroAddress } from '@betfinio/abi';
+import { AccordionContent } from '@betfinio/components/ui';
 import { Link } from '@tanstack/react-router';
-import { AccordionContent } from 'betfinio_app/accordion';
 import { cx } from 'class-variance-authority';
 import { Check } from 'lucide-react';
 import type { FC } from 'react';
@@ -22,7 +22,7 @@ const Lesson: FC<{ lesson: AdvancedLesson }> = ({ lesson }) => {
 			>
 				{title[i18n.language] ?? title.en}
 				<span className="flex gap-4 items-center">
-					<div className={cx('text-tertiary-foreground flex flex-row gap-1', status.done && 'text-yellow-400')}>
+					<div className={cx('text-tertiary-foreground flex flex-row gap-1', status.done && 'text-secondary-foreground')}>
 						{status.xp > 0 && `${status.xp.toString()} /`} <div className={'text-gray-500'}>{lesson.xp}XP</div>
 					</div>
 					<span

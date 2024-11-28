@@ -2,7 +2,7 @@ import CollapseSection from '@/src/components/Advanced/CollapseSection';
 import { useAdvancedSections, useProgress } from '@/src/lib/query';
 import { getRequired } from '@/src/lib/utilts.ts';
 import { ZeroAddress } from '@betfinio/abi';
-import { Accordion } from 'betfinio_app/accordion';
+import { Accordion } from '@betfinio/components/ui';
 import { Loader } from 'lucide-react';
 import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';

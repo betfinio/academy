@@ -1,11 +1,8 @@
 import { useProgress } from '@/src/lib/query';
 import { shootConfetti } from '@/src/lib/utilts.ts';
 import { ZeroAddress } from '@betfinio/abi';
+import { Button, Progress } from '@betfinio/components/ui';
 import { useQueryClient } from '@tanstack/react-query';
-import { Link } from '@tanstack/react-router';
-import { Button } from 'betfinio_app/button';
-import { DialogClose } from 'betfinio_app/dialog';
-import { Progress } from 'betfinio_app/progress';
 import { motion } from 'framer-motion';
 import { X } from 'lucide-react';
 import React, { type FC, useEffect } from 'react';
@@ -25,7 +22,7 @@ export const QuizCompleteModal: FC<{ onClose: () => void; newXp: number; onButto
 	}, []);
 
 	return (
-		<motion.div className={'rounded-lg bg-primaryLight p-5 lg:p-10 w-[350px] lg:w-[450px] flex flex-col items-center gap-8 text-white'}>
+		<motion.div className={'rounded-lg bg-primary-light p-5 lg:p-10 w-[350px] lg:w-[450px] flex flex-col items-center gap-8 text-white'}>
 			<X
 				width={20}
 				height={20}
@@ -36,15 +33,15 @@ export const QuizCompleteModal: FC<{ onClose: () => void; newXp: number; onButto
 			/>
 
 			<div className={'text-xl font-semibold'}>{t('quiz.quizComplete')}</div>
-			<div className={'text-[32px] font-semibold text-yellow-400'}>+{newXp} XP</div>
+			<div className={'text-[32px] font-semibold text-secondary-foreground'}>+{newXp} XP</div>
 
 			<div className={'text-center w-full'}>
-				<span className={'text-[#6A6F84]'}>{t('quiz.yourProgress')}</span>
-				<Progress value={((xp % 1000) * 100) / 1000} className={'bg-primary h-[8px] w-full mt-4'} size={100} height={100} />
+				<span className={'text-muted-foreground'}>{t('quiz.yourProgress')}</span>
+				<Progress value={((xp % 1000) * 100) / 1000} className={'bg-background h-[8px] w-full mt-4'} />
 				<div className={'flex flex-row items-center mt-1'}>
-					<div className={'text-[#6A6F84]'}>LVL {Math.floor(xp / 1000) + 1}</div>
+					<div className={'text-muted-foreground'}>LVL {Math.floor(xp / 1000) + 1}</div>
 					<div className={'flex-grow'} />
-					<div className={'text-[#6A6F84]'}>LVL {Math.floor(xp / 1000) + 2}</div>
+					<div className={'text-muted-foreground'}>LVL {Math.floor(xp / 1000) + 2}</div>
 				</div>
 			</div>
 

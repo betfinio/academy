@@ -1,7 +1,7 @@
 import { useAdvancedLessons, useSectionStatus } from '@/src/lib/query';
 import { type AdvancedLessonSection, type Status, initialStatus } from '@/src/lib/types.ts';
 import { ZeroAddress } from '@betfinio/abi';
-import { AccordionContent, AccordionItem, AccordionTrigger } from 'betfinio_app/accordion';
+import { AccordionContent, AccordionItem, AccordionTrigger } from '@betfinio/components/ui';
 import { Check } from 'lucide-react';
 import type { FC } from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
@@ -23,7 +23,7 @@ const CollapseSection: FC<{ section: AdvancedLessonSection }> = ({ section }) =>
 						{getBlockIcon(status, section.xp)}
 						{title[i18n.language] || title.en}
 					</div>
-					<span className="text-yellow-400 font-semibold  ml-auto lg:text-lg">{section.xp}XP</span>
+					<span className="text-secondary-foreground font-semibold  ml-auto lg:text-lg">{section.xp}XP</span>
 				</div>
 			</AccordionTrigger>
 			<AccordionContent className="flex p-0">

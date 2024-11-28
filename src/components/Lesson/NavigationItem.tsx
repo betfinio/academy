@@ -24,7 +24,7 @@ const NavigationItem: FC<{ lesson: AdvancedLesson }> = ({ lesson }) => {
 		>
 			<Icon status={lessonStatus} />
 			<div className={'flex-grow'}>{title[lang] ?? title.en}</div>
-			<div className={cx(lessonStatus.done ? 'text-yellow-400' : 'text-gray-600')}>+{lesson.xp}XP</div>
+			<div className={cx(lessonStatus.done ? 'text-secondary-foreground' : 'text-gray-600')}>+{lesson.xp}XP</div>
 		</Link>
 	);
 };
@@ -36,7 +36,7 @@ const Icon: FC<{ status: Status }> = ({ status }) => {
 		<div
 			className={cx('rounded-lg p-2', {
 				'border border-gray-600 text-gray-600': !status.done,
-				'bg-secondaryLight text-yellow-400': status.done,
+				'bg-secondaryLight text-secondary-foreground': status.done,
 			})}
 		>
 			{status.done ? <Check className={'w-4 h-4'} /> : <Book className={'w-4 h-4'} />}
