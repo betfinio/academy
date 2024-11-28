@@ -8,7 +8,7 @@ export const Navigation = () => {
 	const { section } = Route.useParams();
 	const { data: lessons = [] } = useAdvancedLessons(Number(section));
 	return (
-		<div className={' rounded-xl bg-quiz-background flex flex-col'}>
+		<div className={' rounded-xl border border-border flex flex-col'}>
 			{lessons.map((lesson, id) => (
 				<motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: id * 0.1 }} key={id}>
 					{id !== 0 && <Separator />}

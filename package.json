@@ -15,8 +15,7 @@
 	},
 	"dependencies": {
 		"@betfinio/abi": "^1.1.2",
-		"@betfinio/components": "^1.3.0",
-		"@betfinio/ui": "betfinio/ui",
+		"@betfinio/components": "^1.3.3∂",
 		"@mdxeditor/editor": "^3.19.3",
 		"@module-federation/enhanced": "^0.3.5",
 		"@radix-ui/react-primitive": "^2.0.0",
