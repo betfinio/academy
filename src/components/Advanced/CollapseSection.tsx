@@ -20,7 +20,7 @@ const CollapseSection: FC<{ section: AdvancedLessonSection; requiredStake?: numb
 
 	const locked = useMemo(() => {
 		if (requiredStake) {
-			return requiredStake && BigInt(requiredStake) * 10n ** 18n > staked;
+			return BigInt(requiredStake) * 10n ** 18n > staked;
 		}
 		return false;
 	}, [staked, requiredStake]);
