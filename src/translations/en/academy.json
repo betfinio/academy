@@ -84,5 +84,6 @@
 	"betfinMembers": "Betfin members",
 	"betfinMembersDescription": "Connect your wallet",
 	"onlyEn": "This lesson is only available on english",
-	"changeToEn": "Change language to English"
+	"changeToEn": "Change language to English",
+	"stakeRequired": "You need to stake at least {amount} BET to unlock this unit"
 }
