@@ -21,7 +21,7 @@ function Layout() {
 	const isActive = (path: string) => {
 		switch (path) {
 			case 'new':
-				return router.href.includes('lesson/1');
+				return router.href.includes('lesson/1/');
 			case 'advanced':
 				return /lesson\/([2-9]|\d{2,})(\/|$)/.test(router.href) || router.pathname.includes(path);
 			default:

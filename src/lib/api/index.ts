@@ -50,6 +50,20 @@ export const fetchSection = async (id: number, client?: SupabaseClient): Promise
 	if (!section.data) throw new Error('not found');
 	return section.data;
 };
+export const fetchNextSectionId = async (id: number, client?: SupabaseClient): Promise<number> => {
+	if (!client) {
+		throw new Error('No client provided');
+	}
+	const sections = await client.from('sections').select('*').order('order', { ascending: true });
+	if (!sections.data) throw new Error('not found');
+	const currentSection = sections.data.find((section) => section.id === id);
+	const tabSections = sections.data.filter((section) => section.tab === currentSection.tab);
+	const currentSectionIndex = tabSections.findIndex((section) => section.id === currentSection.id);
+	if (currentSectionIndex !== -1 && currentSectionIndex < tabSections.length - 1) {
+		return tabSections[currentSectionIndex + 1].id;
+	}
+	return 0;
+};
 
 export const fetchSectionStatus = async (sectionId: number, address: Address, client?: SupabaseClient): Promise<Status> => {
 	console.log('fetching section status', sectionId);

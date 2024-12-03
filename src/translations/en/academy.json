@@ -42,6 +42,7 @@
 	},
 	"quiz": {
 		"nextLesson": "Next lesson",
+		"nextSection": "Next section",
 		"quiz": "Quiz",
 		"overview": "Overview",
 		"submit": "Submit",
@@ -49,7 +50,7 @@
 		"pleaseConnectYourWallet": "Please connect your wallet to access the quiz.",
 		"quizComplete": "Quiz complete!",
 		"yourProgress": "Your progress",
-		"tackleNextUnit": "Tackle to the next unit"
+		"tackleNextUnit": "Tackle the next unit"
 	},
 	"back": "Back",
 	"tooltip": {
@@ -64,6 +65,7 @@
 		"clickToComplete": "Click the button to complete lesson",
 		"complete": "Complete",
 		"nextLesson": "Next lesson",
+		"nextSection": "Next section",
 		"youHavePassedTheLesson": "You have passed the lesson!",
 		"stakeBetToFinishLesson": "Stake BET tokens to finish the lesson",
 		"youHaveStaked": "You have staked",

@@ -7,6 +7,7 @@ import {
 	fetchLesson,
 	fetchLessonStatus,
 	fetchLessonValidation,
+	fetchNextSectionId,
 	fetchProgress,
 	fetchSection,
 	fetchSectionStatus,
@@ -49,6 +50,7 @@ export const useAdvancedLessons = (id: number) => {
 		queryFn: () => fetchAdvancedLessons(id, client),
 	});
 };
+
 export const useLesson = (lesson: number) => {
 	const { client } = useSupabase();
 	return useQuery<AdvancedLesson>({
@@ -84,6 +86,14 @@ export const useSection = (id: number) => {
 	return useQuery<AdvancedLessonSection>({
 		queryKey: ['academy', 'section', id],
 		queryFn: () => fetchSection(id, client),
+	});
+};
+
+export const useNextSectionId = (currentSectionId: number) => {
+	const { client } = useSupabase();
+	return useQuery<number>({
+		queryKey: ['academy', 'section', currentSectionId, 'next'],
+		queryFn: () => fetchNextSectionId(currentSectionId, client),
 	});
 };
 
