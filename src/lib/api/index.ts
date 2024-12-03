@@ -60,8 +60,7 @@ export const fetchNextSectionId = async (id: number, client?: SupabaseClient): P
 	const tabSections = sections.data.filter((section) => section.tab === currentSection.tab);
 	const currentSectionIndex = tabSections.findIndex((section) => section.id === currentSection.id);
 	if (currentSectionIndex !== -1 && currentSectionIndex < tabSections.length - 1) {
-		// fix for redirecting from 'newbies' to 'advanced'. todo: come up with a better idea
-		return currentSection.tab === 'other' ? 0 : tabSections[currentSectionIndex + 1].id;
+		return tabSections[currentSectionIndex + 1].id;
 	}
 	return 0;
 };
