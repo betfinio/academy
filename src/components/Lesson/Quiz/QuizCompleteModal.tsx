@@ -14,13 +14,6 @@ export const QuizCompleteModal: FC<{ onClose: () => void; newXp: number; onButto
 	const { address = ZeroAddress } = useAccount();
 	const { data: xp = 0 } = useProgress(address);
 
-	const queryClient = useQueryClient();
-
-	useEffect(() => {
-		shootConfetti();
-		setTimeout(() => queryClient.invalidateQueries({ queryKey: ['academy'] }), 1000);
-	}, []);
-
 	return (
 		<motion.div className={'rounded-lg bg-primary-light p-5 lg:p-10 w-[350px] lg:w-[450px] flex flex-col items-center gap-8 text-white'}>
 			<X
@@ -37,7 +30,7 @@ export const QuizCompleteModal: FC<{ onClose: () => void; newXp: number; onButto
 
 			<div className={'text-center w-full'}>
 				<span className={'text-muted-foreground'}>{t('quiz.yourProgress')}</span>
-				<Progress value={((xp % 1000) * 100) / 1000} className={'bg-background h-[8px] w-full mt-4'} />
+				<Progress value={((xp % 1000) * 100) / 1000} className={'bg-secondary h-[8px] w-full mt-4'} />
 				<div className={'flex flex-row items-center mt-1'}>
 					<div className={'text-muted-foreground'}>LVL {Math.floor(xp / 1000) + 1}</div>
 					<div className={'flex-grow'} />

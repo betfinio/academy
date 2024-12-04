@@ -4,7 +4,7 @@ import { useQuiz } from '@/src/lib/query/quiz';
 import { Route } from '@/src/routes/_index/lesson/$section/$lesson.tsx';
 import { roundToOneDecimalPoint } from '@/src/utils/utils';
 import { ZeroAddress } from '@betfinio/abi';
-import { Button, Dialog, DialogContent } from '@betfinio/components/ui';
+import { Button, Dialog, DialogContent, DialogDescription, DialogTitle } from '@betfinio/components/ui';
 import { useNavigate } from '@tanstack/react-router';
 import { cx } from 'class-variance-authority';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -54,6 +54,7 @@ export const Quiz = () => {
 	const { address = ZeroAddress } = useAccount();
 	const { data: lessonStatus } = useLessonStatus(Number(lesson), address);
 	const { mutate: complete, isSuccess, data: mutationData } = useCompleteLesson();
+	console.log(lesson);
 	const { data: quiz = {}, isLoading: isQuizLoading } = useQuiz(Number(lesson));
 	const { data: lessons = [] } = useAdvancedLessons(Number(section));
 	const { data: nextSection } = useNextSectionId(Number(section));
@@ -191,6 +192,8 @@ export const Quiz = () => {
 		<Dialog open={modalOpen} onOpenChange={handleClose}>
 			<DialogContent className={'academy'}>
 				<QuizCompleteModal onButtonClick={handleNext} onClose={handleClose} newXp={calculateXp()} />
+				<DialogTitle className={'hidden'} />
+				<DialogDescription className={'hidden'} />
 			</DialogContent>
 			<motion.div
 				initial={{ opacity: 0, y: 20 }}
