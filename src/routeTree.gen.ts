@@ -18,7 +18,8 @@ import { Route as IndexEventsImport } from './routes/_index/events'
 import { Route as IndexDocsImport } from './routes/_index/docs'
 import { Route as IndexAdvancedImport } from './routes/_index/advanced'
 import { Route as IndexLessonCreateImport } from './routes/_index/lesson/create'
-import { Route as IndexLessonSectionLessonImport } from './routes/_index/lesson/$section.$lesson'
+import { Route as IndexLessonSectionIndexImport } from './routes/_index/lesson/$section/index'
+import { Route as IndexLessonSectionLessonImport } from './routes/_index/lesson/$section/$lesson'
 
 // Create/Update Routes
 
@@ -60,6 +61,12 @@ const IndexAdvancedRoute = IndexAdvancedImport.update({
 const IndexLessonCreateRoute = IndexLessonCreateImport.update({
   id: '/lesson/create',
   path: '/lesson/create',
+  getParentRoute: () => IndexRoute,
+} as any)
+
+const IndexLessonSectionIndexRoute = IndexLessonSectionIndexImport.update({
+  id: '/lesson/$section/',
+  path: '/lesson/$section/',
   getParentRoute: () => IndexRoute,
 } as any)
 
@@ -129,6 +136,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLessonSectionLessonImport
       parentRoute: typeof IndexImport
     }
+    '/_index/lesson/$section/': {
+      id: '/_index/lesson/$section/'
+      path: '/lesson/$section'
+      fullPath: '/lesson/$section'
+      preLoaderRoute: typeof IndexLessonSectionIndexImport
+      parentRoute: typeof IndexImport
+    }
   }
 }
 
@@ -142,6 +156,7 @@ interface IndexRouteChildren {
   IndexIndexRoute: typeof IndexIndexRoute
   IndexLessonCreateRoute: typeof IndexLessonCreateRoute
   IndexLessonSectionLessonRoute: typeof IndexLessonSectionLessonRoute
+  IndexLessonSectionIndexRoute: typeof IndexLessonSectionIndexRoute
 }
 
 const IndexRouteChildren: IndexRouteChildren = {
@@ -152,6 +167,7 @@ const IndexRouteChildren: IndexRouteChildren = {
   IndexIndexRoute: IndexIndexRoute,
   IndexLessonCreateRoute: IndexLessonCreateRoute,
   IndexLessonSectionLessonRoute: IndexLessonSectionLessonRoute,
+  IndexLessonSectionIndexRoute: IndexLessonSectionIndexRoute,
 }
 
 const IndexRouteWithChildren = IndexRoute._addFileChildren(IndexRouteChildren)
@@ -165,6 +181,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexIndexRoute
   '/lesson/create': typeof IndexLessonCreateRoute
   '/lesson/$section/$lesson': typeof IndexLessonSectionLessonRoute
+  '/lesson/$section': typeof IndexLessonSectionIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -175,6 +192,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexIndexRoute
   '/lesson/create': typeof IndexLessonCreateRoute
   '/lesson/$section/$lesson': typeof IndexLessonSectionLessonRoute
+  '/lesson/$section': typeof IndexLessonSectionIndexRoute
 }
 
 export interface FileRoutesById {
@@ -187,6 +205,7 @@ export interface FileRoutesById {
   '/_index/': typeof IndexIndexRoute
   '/_index/lesson/create': typeof IndexLessonCreateRoute
   '/_index/lesson/$section/$lesson': typeof IndexLessonSectionLessonRoute
+  '/_index/lesson/$section/': typeof IndexLessonSectionIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -200,6 +219,7 @@ export interface FileRouteTypes {
     | '/'
     | '/lesson/create'
     | '/lesson/$section/$lesson'
+    | '/lesson/$section'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/advanced'
@@ -209,6 +229,7 @@ export interface FileRouteTypes {
     | '/'
     | '/lesson/create'
     | '/lesson/$section/$lesson'
+    | '/lesson/$section'
   id:
     | '__root__'
     | '/_index'
@@ -219,6 +240,7 @@ export interface FileRouteTypes {
     | '/_index/'
     | '/_index/lesson/create'
     | '/_index/lesson/$section/$lesson'
+    | '/_index/lesson/$section/'
   fileRoutesById: FileRoutesById
 }
 
@@ -252,7 +274,8 @@ export const routeTree = rootRoute
         "/_index/new",
         "/_index/",
         "/_index/lesson/create",
-        "/_index/lesson/$section/$lesson"
+        "/_index/lesson/$section/$lesson",
+        "/_index/lesson/$section/"
       ]
     },
     "/_index/advanced": {
@@ -280,7 +303,11 @@ export const routeTree = rootRoute
       "parent": "/_index"
     },
     "/_index/lesson/$section/$lesson": {
-      "filePath": "_index/lesson/$section.$lesson.tsx",
+      "filePath": "_index/lesson/$section/$lesson.tsx",
+      "parent": "/_index"
+    },
+    "/_index/lesson/$section/": {
+      "filePath": "_index/lesson/$section/index.tsx",
       "parent": "/_index"
     }
   }

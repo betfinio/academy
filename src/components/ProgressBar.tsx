@@ -20,7 +20,7 @@ const ProgressBar = () => {
 			</div>
 			<div className="flex flex-grow items-center gap-x-6 flex-wrap">
 				<div className={'flex-grow min-w-64'}>
-					<Progress value={((xp % 1000) * 100) / 1000} className={'bg-primary-lighter '} />
+					<Progress value={((xp % 1000) * 100) / 1000} className={'bg-secondary'} />
 				</div>
 				<div className={'font-semibold text-lg'}>
 					{xp}XP <span className={'text-gray-600'}> / {(Math.floor(xp / 1000) + 1) * 1000}</span>
