@@ -7,6 +7,7 @@ import {
 	fetchLesson,
 	fetchLessonStatus,
 	fetchLessonValidation,
+	fetchNextSectionId,
 	fetchProgress,
 	fetchSection,
 	fetchSectionStatus,
@@ -49,6 +50,7 @@ export const useAdvancedLessons = (id: number) => {
 		queryFn: () => fetchAdvancedLessons(id, client),
 	});
 };
+
 export const useLesson = (lesson: number) => {
 	const { client } = useSupabase();
 	return useQuery<AdvancedLesson>({
@@ -87,6 +89,14 @@ export const useSection = (id: number) => {
 	});
 };
 
+export const useNextSectionId = (currentSectionId: number) => {
+	const { client } = useSupabase();
+	return useQuery<number>({
+		queryKey: ['academy', 'section', currentSectionId, 'next'],
+		queryFn: () => fetchNextSectionId(currentSectionId, client),
+	});
+};
+
 export const useLessonValidation = (id: number) => {
 	const { client } = useSupabase();
 	return useQuery<LessonValidation | null>({
@@ -106,8 +116,9 @@ export const useCompleteLesson = () => {
 			console.log(data, status, error);
 			if (error === undefined && status === '204') {
 				shootConfetti();
-				await queryClient.invalidateQueries({ queryKey: ['academy'] });
 				await queryClient.invalidateQueries({ queryKey: ['academy', 'section'] });
+				await queryClient.invalidateQueries({ queryKey: ['academy', 'progress'] });
+				await queryClient.invalidateQueries({ queryKey: ['academy', 'staked'] });
 			}
 		},
 	});

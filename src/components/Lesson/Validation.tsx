@@ -1,6 +1,6 @@
-import { useAdvancedLessons, useCompleteLesson, useLesson, useLessonStatus, useLessonValidation, useStaked } from '@/src/lib/query';
+import { useAdvancedLessons, useCompleteLesson, useLesson, useLessonStatus, useLessonValidation, useNextSectionId, useStaked } from '@/src/lib/query';
 import { initialStatus } from '@/src/lib/types.ts';
-import { Route } from '@/src/routes/_index/lesson/$section.$lesson';
+import { Route } from '@/src/routes/_index/lesson/$section/$lesson.tsx';
 import { ZeroAddress, valueToNumber } from '@betfinio/abi';
 import { Button } from '@betfinio/components/ui';
 import { useNavigate } from '@tanstack/react-router';
@@ -25,6 +25,7 @@ const Validation = () => {
 	const { mutate: complete } = useCompleteLesson();
 	const { data: lessonStatus = initialStatus } = useLessonStatus(Number(lesson), address || ZeroAddress);
 	const { data: lessons = [] } = useAdvancedLessons(Number(section));
+	const { data: nextSection } = useNextSectionId(Number(section));
 	const [valid, setValid] = useState(false);
 	const [error, setError] = useState('');
 	const [success, setSuccess] = useState('');
@@ -130,7 +131,11 @@ const Validation = () => {
 	const next = lessons[current + 1];
 	const handleNext = async () => {
 		if (!next) {
-			await navigate({ to: '/lesson/$section/$lesson', params: { lesson: '6', section: '2' } });
+			if (nextSection === 0) {
+				await navigate({ to: '/advanced' });
+			} else {
+				await navigate({ to: '/lesson/$section', params: { section: nextSection } });
+			}
 		}
 		await navigate({
 			to: '/lesson/$section/$lesson',
@@ -171,7 +176,7 @@ const Validation = () => {
 			<div className={'mt-10 sm:mt-4 flex flex-row justify-between gap-2 items-center'}>
 				<div className={'text-green-500 text-sm'}>{t('validation.lessonCompleted')}</div>
 				<Button onClick={handleNext} className={'w-48'}>
-					{next ? t('validation.nextLesson') : t('validation.goToAdvanced')}
+					{next ? t('validation.nextLesson') : nextSection === 0 ? t('validation.goToAdvanced') : t('validation.nextSection')}
 				</Button>
 			</div>
 		);

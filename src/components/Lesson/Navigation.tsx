@@ -1,6 +1,6 @@
 import NavigationItem from '@/src/components/Lesson/NavigationItem';
 import { useAdvancedLessons } from '@/src/lib/query';
-import { Route } from '@/src/routes/_index/lesson/$section.$lesson';
+import { Route } from '@/src/routes/_index/lesson/$section/$lesson.tsx';
 import { Separator } from '@betfinio/components/ui';
 import { motion } from 'framer-motion';
 
