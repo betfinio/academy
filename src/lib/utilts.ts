@@ -26,8 +26,8 @@ export const shootConfetti = () => {
 
 export const getRequired = (tab: string): number => {
 	if (tab === 'staking') return 0;
-	if (tab === 'affiliate') return 1000;
-	if (tab === 'games') return 2000;
-	if (tab === 'partner') return 3000;
+	if (tab === 'affiliate') return 0;
+	if (tab === 'games') return 0;
+	if (tab === 'partner') return 0;
 	return 0;
 };

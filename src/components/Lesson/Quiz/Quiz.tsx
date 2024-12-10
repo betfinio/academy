@@ -1,5 +1,6 @@
 import { QuizCompleteModal } from '@/src/components/Lesson/Quiz/QuizCompleteModal';
-import { useAdvancedLessons, useCompleteLesson, useLesson, useLessonStatus, useNextSectionId } from '@/src/lib/query';
+import { DEFAULT_MINIMAL_STAKE } from '@/src/lib/global.ts';
+import { useAdvancedLessons, useCompleteLesson, useLesson, useLessonStatus, useNextSectionId, useStaked } from '@/src/lib/query';
 import { useQuiz } from '@/src/lib/query/quiz';
 import { Route } from '@/src/routes/_index/lesson/$section/$lesson.tsx';
 import { roundToOneDecimalPoint } from '@/src/utils/utils';
@@ -54,10 +55,15 @@ export const Quiz = () => {
 	const { address = ZeroAddress } = useAccount();
 	const { data: lessonStatus } = useLessonStatus(Number(lesson), address);
 	const { mutate: complete, isSuccess, data: mutationData } = useCompleteLesson();
-	console.log(lesson);
+	const { data: staked = 0n } = useStaked(address || ZeroAddress);
 	const { data: quiz = {}, isLoading: isQuizLoading } = useQuiz(Number(lesson));
 	const { data: lessons = [] } = useAdvancedLessons(Number(section));
 	const { data: nextSection } = useNextSectionId(Number(section));
+
+	const nextLocked = useMemo(() => {
+		return BigInt(DEFAULT_MINIMAL_STAKE) * 10n ** 18n > staked;
+	}, [staked]);
+
 	const navigate = useNavigate();
 
 	const finalQuiz = quiz[i18n.language] || [];
@@ -65,7 +71,7 @@ export const Quiz = () => {
 	const next = lessons[current + 1];
 	const handleNext = async () => {
 		if (!next) {
-			if (nextSection === 0) {
+			if (nextSection === 0 || nextLocked) {
 				await navigate({ to: '/advanced' });
 			} else {
 				await navigate({ to: '/lesson/$section', params: { section: nextSection } });
@@ -235,7 +241,7 @@ export const Quiz = () => {
 												<span className={'duration-300'}>{t('quiz.nextLesson')}</span>
 												<ArrowRight height={18} className={'group-hover:translate-x-[3px] duration-300'} />
 											</>
-										) : nextSection === 0 ? (
+										) : nextSection === 0 || nextLocked ? (
 											<>
 												<span className={'duration-300'}>{t('quiz.overview')}</span>
 												<House height={18} className={'duration-300'} />

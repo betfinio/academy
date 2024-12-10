@@ -1,3 +1,4 @@
+import { DEFAULT_MINIMAL_STAKE } from '@/src/lib/global.ts';
 import { useAdvancedLessons, useCompleteLesson, useLesson, useLessonStatus, useLessonValidation, useNextSectionId, useStaked } from '@/src/lib/query';
 import { initialStatus } from '@/src/lib/types.ts';
 import { Route } from '@/src/routes/_index/lesson/$section/$lesson.tsx';
@@ -9,7 +10,7 @@ import { useIsMember, useMint } from 'betfinio_app/lib/query/pass';
 import { useBalance as useBetBalance } from 'betfinio_app/lib/query/token';
 import { cx } from 'class-variance-authority';
 import { Loader } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Address } from 'viem';
 import { useAccount, useBalance } from 'wagmi';
@@ -31,6 +32,10 @@ const Validation = () => {
 	const [success, setSuccess] = useState('');
 	const navigate = useNavigate();
 	const { mutate: mint, isPending, data, status } = useMint();
+
+	const nextLocked = useMemo(() => {
+		return BigInt(DEFAULT_MINIMAL_STAKE) * 10n ** 18n > staked;
+	}, [staked]);
 
 	const { data: balance } = useBalance({ address: address || ZeroAddress });
 	const { data: betBalance = 0n } = useBetBalance(address || ZeroAddress);
@@ -131,7 +136,7 @@ const Validation = () => {
 	const next = lessons[current + 1];
 	const handleNext = async () => {
 		if (!next) {
-			if (nextSection === 0) {
+			if (nextSection === 0 || nextLocked) {
 				await navigate({ to: '/advanced' });
 			} else {
 				await navigate({ to: '/lesson/$section', params: { section: nextSection } });
@@ -176,7 +181,7 @@ const Validation = () => {
 			<div className={'mt-10 sm:mt-4 flex flex-row justify-between gap-2 items-center'}>
 				<div className={'text-green-500 text-sm'}>{t('validation.lessonCompleted')}</div>
 				<Button onClick={handleNext} className={'w-48'}>
-					{next ? t('validation.nextLesson') : nextSection === 0 ? t('validation.goToAdvanced') : t('validation.nextSection')}
+					{next ? t('validation.nextLesson') : nextSection === 0 || nextLocked ? t('validation.goToAdvanced') : t('validation.nextSection')}
 				</Button>
 			</div>
 		);
