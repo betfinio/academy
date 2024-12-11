@@ -1,9 +1,9 @@
 import { useLessonStatus } from '@/src/lib/query';
 import { type AdvancedLesson, initialStatus } from '@/src/lib/types.ts';
 import { ZeroAddress } from '@betfinio/abi';
+import { cn } from '@betfinio/components';
 import { AccordionContent } from '@betfinio/components/ui';
 import { Link } from '@tanstack/react-router';
-import { cx } from 'class-variance-authority';
 import { Check } from 'lucide-react';
 import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -22,11 +22,11 @@ const Lesson: FC<{ lesson: AdvancedLesson }> = ({ lesson }) => {
 			>
 				{title[i18n.language] ?? title.en}
 				<span className="flex gap-4 items-center">
-					<div className={cx('text-tertiary-foreground flex flex-row gap-1', status.done && 'text-secondary-foreground')}>
+					<div className={cn('text-tertiary-foreground flex flex-row gap-1', status.done && 'text-secondary-foreground')}>
 						{status.xp > 0 && `${status.xp.toString()} /`} <div className={'text-gray-500'}>{lesson.xp}XP</div>
 					</div>
 					<span
-						className={cx({
+						className={cn({
 							'text-success': status.done,
 							'text-transparent': !status.done,
 						})}
