@@ -1,6 +1,6 @@
 import type { QuizOption, QuizQuestion } from '@/src/lib/types.ts';
+import { cn } from '@betfinio/components';
 import { Button, Checkbox, Input } from '@betfinio/components/ui';
-import { cx } from 'class-variance-authority';
 import { TrashIcon } from 'lucide-react';
 import type { FC } from 'react';
 
@@ -102,7 +102,7 @@ const SingleQuestion: FC<SingleQuestionProps> = ({ quiz, onQuestionChange, onXpC
 
 const Answer: FC<{ option: QuizOption; onChange: (option: QuizOption) => void }> = ({ option, onChange }) => {
 	return (
-		<div className={cx('flex flex-row items-center gap-2 border p-2 rounded-lg', option.is_right ? 'border-green-500/50' : 'border-red-500/50')}>
+		<div className={cn('flex flex-row items-center gap-2 border p-2 rounded-lg', option.is_right ? 'border-green-500/50' : 'border-red-500/50')}>
 			<Input value={option.content} onChange={(e) => onChange({ ...option, content: e.target.value })} />
 
 			<Checkbox checked={option.is_right} onCheckedChange={(checked: boolean) => onChange({ ...option, is_right: checked })} />

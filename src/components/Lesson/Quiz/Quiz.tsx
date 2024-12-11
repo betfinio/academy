@@ -5,9 +5,9 @@ import { useQuiz } from '@/src/lib/query/quiz';
 import { Route } from '@/src/routes/_index/lesson/$section/$lesson.tsx';
 import { roundToOneDecimalPoint } from '@/src/utils/utils';
 import { ZeroAddress } from '@betfinio/abi';
+import { cn } from '@betfinio/components';
 import { Button, Dialog, DialogContent, DialogDescription, DialogTitle } from '@betfinio/components/ui';
 import { useNavigate } from '@tanstack/react-router';
-import { cx } from 'class-variance-authority';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, House, Loader } from 'lucide-react';
 import { type FC, useEffect, useMemo, useState } from 'react';
@@ -205,10 +205,10 @@ export const Quiz = () => {
 				initial={{ opacity: 0, y: 20 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.5, delay: 1 }}
-				className={cx('mt-10 bg-quiz-background relative rounded-[10px] p-6 duration-300', isQuizLoading && 'animate-pulse')}
+				className={cn('mt-10 bg-quiz-background relative rounded-[10px] p-6 duration-300', isQuizLoading && 'animate-pulse')}
 			>
 				{address === ZeroAddress && <WalletWarning />}
-				<div className={cx(address === ZeroAddress && 'blur-sm pointer-events-none')}>
+				<div className={cn(address === ZeroAddress && 'blur-sm pointer-events-none')}>
 					<span className={'text-gray-500'}>{t('quiz.quiz')}:</span>
 					<div className={'flex flex-col gap-8 min-h-[300px]'}>
 						{isQuizLoading ? (

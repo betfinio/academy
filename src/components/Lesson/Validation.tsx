@@ -3,12 +3,12 @@ import { useAdvancedLessons, useCompleteLesson, useLesson, useLessonStatus, useL
 import { initialStatus } from '@/src/lib/types.ts';
 import { Route } from '@/src/routes/_index/lesson/$section/$lesson.tsx';
 import { ZeroAddress, valueToNumber } from '@betfinio/abi';
+import { cn } from '@betfinio/components';
 import { Button } from '@betfinio/components/ui';
 import { useNavigate } from '@tanstack/react-router';
 import { findLastLeftMember } from 'betfinio_app/lib/gql/affiliate';
 import { useIsMember, useMint } from 'betfinio_app/lib/query/pass';
 import { useBalance as useBetBalance } from 'betfinio_app/lib/query/token';
-import { cx } from 'class-variance-authority';
 import { Loader } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -211,8 +211,8 @@ const Validation = () => {
 
 	return (
 		<div className={'mt-10 sm:mt-4 flex flex-row justify-end gap-2 items-center'}>
-			<div className={cx('border border-red-roulette bg-red-roulette/10 rounded-lg p-2 w-full text-center', valid && 'hidden')}>{error}</div>
-			<div className={cx('border border-green-500 bg-success/10 rounded-lg p-2 w-full text-center', !valid && 'hidden')}>{success}</div>
+			<div className={cn('border border-red-roulette bg-red-roulette/10 rounded-lg p-2 w-full text-center', valid && 'hidden')}>{error}</div>
+			<div className={cn('border border-green-500 bg-success/10 rounded-lg p-2 w-full text-center', !valid && 'hidden')}>{success}</div>
 			<Button onClick={handleFinish} className={'w-48'} disabled={!valid}>
 				{t('validation.nextLesson')}
 			</Button>

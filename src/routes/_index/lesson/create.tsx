@@ -31,10 +31,10 @@ import '@mdxeditor/editor/style.css';
 import QuizConstructor from '@/src/components/Create/QuizConstructor';
 import { useLesson, useSection } from '@/src/lib/query';
 import type { QuizQuestion } from '@/src/lib/types.ts';
+import { cn } from '@betfinio/components';
 import { toast } from '@betfinio/components/hooks';
 import { Button, Input } from '@betfinio/components/ui';
 import { useSupabase } from 'betfinio_app/supabase';
-import { cx } from 'class-variance-authority';
 
 export const Route = createFileRoute('/_index/lesson/create')({
 	component: CreateLessonPage,
@@ -167,7 +167,7 @@ function CreateLessonPage() {
 					Czech
 				</Button>
 			</div>
-			<div className={cx('flex flex-col gap-2', lang === 'cs' && 'hidden')}>
+			<div className={cn('flex flex-col gap-2', lang === 'cs' && 'hidden')}>
 				<div>Section title</div>
 				<div>
 					<Input value={sectionTitleEn} onChange={(e) => handleSectionTitleChange(e.target.value)} />
@@ -232,7 +232,7 @@ function CreateLessonPage() {
 				</div>
 				<QuizConstructor quiz={quizEn} setQuiz={setQuizEn} />
 			</div>
-			<div className={cx('flex flex-col gap-2', lang === 'en' && 'hidden')}>
+			<div className={cn('flex flex-col gap-2', lang === 'en' && 'hidden')}>
 				<div>Section title</div>
 				<div>
 					<Input value={sectionTitleCs} onChange={(e) => handleSectionTitleChange(e.target.value)} />

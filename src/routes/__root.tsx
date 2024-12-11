@@ -1,3 +1,4 @@
+import 'betfinio_app/style';
 import { VersionValidation } from '@/src/components/VersionValidation.tsx';
 import instance from '@/src/i18n.ts';
 import { Toaster } from '@betfinio/components/ui';
