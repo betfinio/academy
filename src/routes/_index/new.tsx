@@ -10,7 +10,6 @@ export const Route = createFileRoute('/_index/new')({
 		const parent = search.code.toString().slice(42);
 		const type = search.type || 'normal';
 		localStorage.setItem('code', JSON.stringify({ inviter, parent, type }));
-		console.log({ inviter, parent, type });
 		return { inviter, parent, type };
 	},
 });

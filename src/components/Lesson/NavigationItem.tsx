@@ -24,7 +24,7 @@ const NavigationItem: FC<{ lesson: AdvancedLesson }> = ({ lesson }) => {
 		>
 			<Icon status={lessonStatus} />
 			<div className={'flex-grow'}>{title[lang] ?? title.en}</div>
-			<div className={cn(lessonStatus.done ? 'text-secondary-foreground' : 'text-gray-600')}>+{lesson.xp}XP</div>
+			<div className={cn(lessonStatus.done ? 'text-secondary-foreground' : 'text-gray-600')}>+{lessonStatus.done ? lessonStatus.xp : lesson.xp}XP</div>
 		</Link>
 	);
 };

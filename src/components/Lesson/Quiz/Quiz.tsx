@@ -137,11 +137,10 @@ export const Quiz = () => {
 			const correctOption = q.options.find((option) => option.is_right);
 			const correctAnswerId = correctOption?.id;
 			const selectedAnswerId = answers.selected[i];
-
 			if (selectedAnswerId !== correctAnswerId) {
 				hasError = true;
 				newErrors[i] = newErrors[i] || new Set<number>();
-				if (selectedAnswerId) newErrors[i].add(selectedAnswerId);
+				if (selectedAnswerId || selectedAnswerId === 0) newErrors[i].add(selectedAnswerId);
 			} else {
 				newCorrect[i] = selectedAnswerId;
 				const newExp = newErrors[i]?.size ? roundToOneDecimalPoint(q.exp / 2) : q.exp;
