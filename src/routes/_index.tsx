@@ -1,7 +1,7 @@
 import { ZeroAddress } from '@betfinio/abi';
+import { cn } from '@betfinio/components';
 import { Link, Outlet, ScrollRestoration, createFileRoute, useLocation } from '@tanstack/react-router';
 import { useIsMember } from 'betfinio_app/lib/query/pass';
-import { cx } from 'class-variance-authority';
 import { BookIcon, CalendarHeart, GraduationCap, PencilRulerIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAccount } from 'wagmi';
@@ -52,23 +52,23 @@ function Layout() {
 						search={{}}
 						params={{}}
 						key={link}
-						className={cx(
+						className={cn(
 							'flex flex-col md:flex-row text-xs md:text-base border border-border py-2 lg:p-2 justify-center font-semibold items-center gap-2   rounded-lg duration-200 hover:bg-secondary/50 ',
 							isActive(link) ? 'bg-primary-gradient' : 'text-muted-foreground ',
 						)}
 					>
-						<span className={cx(isActive(link) ? 'text-secondary-foreground' : 'text-muted-foreground ')}>{getIcon(link)}</span>
+						<span className={cn(isActive(link) ? 'text-secondary-foreground' : 'text-muted-foreground ')}>{getIcon(link)}</span>
 						{t(`layout.${link}`)}
 					</Link>
 				))}
 			</div>
 			<div className={'relative w-full'}>
-				<div className={cx(!hasPass && !parent && 'blur pointer-events-none')}>
+				<div className={cn(!hasPass && !parent && 'blur pointer-events-none')}>
 					<Outlet />
 				</div>
 				{!hasPass && !parent && (
-					<div className={'absolute top-[200px] flex z-[10] justify-center w-full'}>
-						<div className={cx(!hasPass && !parent && 'bg-primary-light text-center border rounded-lg p-4 flex flex-col items-start')}>
+					<div className={'absolute top-[200px]  flex z-[10] justify-center w-full'}>
+						<div className={cn(!hasPass && !parent && 'bg-primary-light text-center border rounded-lg p-4 flex flex-col items-start', 'bg-secondary')}>
 							<div className={'text-lg'}>{t('contentIsLockedForYou')}</div>
 							<br />
 							<div className={'text-secondary-foreground'}>{t('newUsers')}:</div>
