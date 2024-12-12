@@ -1,12 +1,13 @@
 import { QuizCompleteModal } from '@/src/components/Lesson/Quiz/QuizCompleteModal';
-import { useAdvancedLessons, useCompleteLesson, useLesson, useLessonStatus, useNextSectionId } from '@/src/lib/query';
+import { DEFAULT_MINIMAL_STAKE } from '@/src/lib/global.ts';
+import { useAdvancedLessons, useCompleteLesson, useLesson, useLessonStatus, useNextSectionId, useStaked } from '@/src/lib/query';
 import { useQuiz } from '@/src/lib/query/quiz';
 import { Route } from '@/src/routes/_index/lesson/$section/$lesson.tsx';
 import { roundToOneDecimalPoint } from '@/src/utils/utils';
 import { ZeroAddress } from '@betfinio/abi';
+import { cn } from '@betfinio/components';
 import { Button, Dialog, DialogContent, DialogDescription, DialogTitle } from '@betfinio/components/ui';
 import { useNavigate } from '@tanstack/react-router';
-import { cx } from 'class-variance-authority';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, House, Loader } from 'lucide-react';
 import { type FC, useEffect, useMemo, useState } from 'react';
@@ -54,10 +55,15 @@ export const Quiz = () => {
 	const { address = ZeroAddress } = useAccount();
 	const { data: lessonStatus } = useLessonStatus(Number(lesson), address);
 	const { mutate: complete, isSuccess, data: mutationData } = useCompleteLesson();
-	console.log(lesson);
+	const { data: staked = 0n } = useStaked(address || ZeroAddress);
 	const { data: quiz = {}, isLoading: isQuizLoading } = useQuiz(Number(lesson));
 	const { data: lessons = [] } = useAdvancedLessons(Number(section));
 	const { data: nextSection } = useNextSectionId(Number(section));
+
+	const nextLocked = useMemo(() => {
+		return BigInt(DEFAULT_MINIMAL_STAKE) * 10n ** 18n > staked;
+	}, [staked]);
+
 	const navigate = useNavigate();
 
 	const finalQuiz = quiz[i18n.language] || [];
@@ -65,7 +71,7 @@ export const Quiz = () => {
 	const next = lessons[current + 1];
 	const handleNext = async () => {
 		if (!next) {
-			if (nextSection === 0) {
+			if (nextSection === 0 || nextLocked) {
 				await navigate({ to: '/advanced' });
 			} else {
 				await navigate({ to: '/lesson/$section', params: { section: nextSection } });
@@ -131,11 +137,10 @@ export const Quiz = () => {
 			const correctOption = q.options.find((option) => option.is_right);
 			const correctAnswerId = correctOption?.id;
 			const selectedAnswerId = answers.selected[i];
-
 			if (selectedAnswerId !== correctAnswerId) {
 				hasError = true;
 				newErrors[i] = newErrors[i] || new Set<number>();
-				if (selectedAnswerId) newErrors[i].add(selectedAnswerId);
+				if (selectedAnswerId || selectedAnswerId === 0) newErrors[i].add(selectedAnswerId);
 			} else {
 				newCorrect[i] = selectedAnswerId;
 				const newExp = newErrors[i]?.size ? roundToOneDecimalPoint(q.exp / 2) : q.exp;
@@ -199,10 +204,10 @@ export const Quiz = () => {
 				initial={{ opacity: 0, y: 20 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.5, delay: 1 }}
-				className={cx('mt-10 bg-quiz-background relative rounded-[10px] p-6 duration-300', isQuizLoading && 'animate-pulse')}
+				className={cn('mt-10 bg-quiz-background relative rounded-[10px] p-6 duration-300', isQuizLoading && 'animate-pulse')}
 			>
 				{address === ZeroAddress && <WalletWarning />}
-				<div className={cx(address === ZeroAddress && 'blur-sm pointer-events-none')}>
+				<div className={cn(address === ZeroAddress && 'blur-sm pointer-events-none')}>
 					<span className={'text-gray-500'}>{t('quiz.quiz')}:</span>
 					<div className={'flex flex-col gap-8 min-h-[300px]'}>
 						{isQuizLoading ? (
@@ -235,7 +240,7 @@ export const Quiz = () => {
 												<span className={'duration-300'}>{t('quiz.nextLesson')}</span>
 												<ArrowRight height={18} className={'group-hover:translate-x-[3px] duration-300'} />
 											</>
-										) : nextSection === 0 ? (
+										) : nextSection === 0 || nextLocked ? (
 											<>
 												<span className={'duration-300'}>{t('quiz.overview')}</span>
 												<House height={18} className={'duration-300'} />

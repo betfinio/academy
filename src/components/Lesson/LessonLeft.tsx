@@ -2,6 +2,7 @@ import { Quiz } from '@/src/components/Lesson/Quiz/Quiz';
 import Validation from '@/src/components/Lesson/Validation';
 import { useLesson } from '@/src/lib/query';
 import { Route } from '@/src/routes/_index/lesson/$section/$lesson.tsx';
+import { cn } from '@betfinio/components';
 import { Button, Tooltip, TooltipContent, TooltipTrigger } from '@betfinio/components/ui';
 import {
 	AdmonitionDirectiveDescriptor,
@@ -19,7 +20,6 @@ import {
 	thematicBreakPlugin,
 } from '@mdxeditor/editor';
 import { useRouter } from '@tanstack/react-router';
-import { cx } from 'class-variance-authority';
 import { motion } from 'framer-motion';
 import { ArrowLeft, CheckIcon, Loader, TriangleIcon } from 'lucide-react';
 import { useEffect, useMemo, useRef } from 'react';
@@ -87,7 +87,7 @@ export const LessonLeft = () => {
 			)}
 
 			<motion.div
-				className={cx(onlyEn && 'blur pointer-events-none')}
+				className={cn(onlyEn && 'blur pointer-events-none')}
 				initial={{ opacity: 1 }}
 				animate={{ opacity: 1 }}
 				transition={{ duration: 0.3, delay: 0 }}
@@ -95,13 +95,13 @@ export const LessonLeft = () => {
 				<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1 }}>
 					<div
 						onClick={onBack}
-						className={cx('flex cursor-pointer gap-1 items-center text-[#6A6F84] hover:text-secondary-foreground group', section === '1' && 'hidden')}
+						className={cn('flex cursor-pointer gap-1 items-center text-[#6A6F84] hover:text-secondary-foreground group', section === '1' && 'hidden')}
 					>
 						<ArrowLeft height={18} className={'group-hover:-translate-x-[3px] duration-300'} />
 						<span className={'duration-300'}>{t('back')}</span>
 					</div>
 				</motion.div>
-				<div className={cx(section !== '1' && 'mt-4')}>
+				<div className={cn(section !== '1' && 'mt-4')}>
 					<motion.div
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
@@ -122,7 +122,7 @@ export const LessonLeft = () => {
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5, delay: 0.2 }}
-						className={cx('mt-4 w-full bg-quiz-background rounded-[10px] aspect-video overflow-hidden', !video && 'hidden')}
+						className={cn('mt-4 w-full bg-quiz-background rounded-[10px] aspect-video overflow-hidden', !video && 'hidden')}
 					>
 						<ReactPlayer url={video} light={true} width="100%" height="100%" controls={true} playing={true} playIcon={<PlayButton />} />
 					</motion.div>
