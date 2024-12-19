@@ -2,10 +2,15 @@ import 'betfinio_app/style';
 import { VersionValidation } from '@/src/components/VersionValidation.tsx';
 import instance from '@/src/i18n.ts';
 import { Toaster } from '@betfinio/components/ui';
-import { createRootRoute } from '@tanstack/react-router';
+import { createRootRouteWithContext } from '@tanstack/react-router';
+import type { queryClient, wagmiConfig } from 'betfinio_app/config';
 import { Root } from 'betfinio_app/root';
 
-export const Route = createRootRoute({
+interface IRootRouteContext {
+	queryClient: typeof queryClient;
+	wagmiConfig: typeof wagmiConfig;
+}
+export const Route = createRootRouteWithContext<IRootRouteContext>()({
 	component: () => (
 		<Root id={'academy'} instance={instance}>
 			<Toaster />
