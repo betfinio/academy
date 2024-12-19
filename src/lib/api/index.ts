@@ -1,7 +1,7 @@
 import { CONSERVATIVE, DYNAMIC } from '@/src/lib/global.ts';
 import type { Event } from '@/src/lib/types.ts';
 import { type AdvancedLesson, type AdvancedLessonSection, type Document, type LessonValidation, type Status, initialStatus } from '@/src/lib/types.ts';
-import { ConservativeStakingContract, DynamicStakingContract, ZeroAddress } from '@betfinio/abi';
+import { ConservativeStakingABI, DynamicStakingABI, ZeroAddress } from '@betfinio/abi';
 import { type Config, readContract } from '@wagmi/core';
 import type { SupabaseClient } from 'betfinio_app/supabase';
 import type { Address } from 'viem';
@@ -93,13 +93,13 @@ export const fetchStaked = async (address: Address, config: Config) => {
 	if (address === ZeroAddress) return 0n;
 	const conservative = (await readContract(config, {
 		address: CONSERVATIVE,
-		abi: ConservativeStakingContract.abi,
+		abi: ConservativeStakingABI,
 		functionName: 'getStaked',
 		args: [address],
 	})) as bigint;
 	const dynamic = (await readContract(config, {
 		address: DYNAMIC,
-		abi: DynamicStakingContract.abi,
+		abi: DynamicStakingABI,
 		functionName: 'getStaked',
 		args: [address],
 	})) as bigint;

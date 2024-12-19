@@ -1,3 +1,4 @@
+import { fetchAddressByToken } from '@/src/lib/api/member.ts';
 import { DEFAULT_MINIMAL_STAKE } from '@/src/lib/global.ts';
 import { useAdvancedLessons, useCompleteLesson, useLesson, useLessonStatus, useLessonValidation, useNextSectionId, useStaked } from '@/src/lib/query';
 import { initialStatus } from '@/src/lib/types.ts';
@@ -13,7 +14,7 @@ import { Loader } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Address } from 'viem';
-import { useAccount, useBalance } from 'wagmi';
+import { useAccount, useBalance, useConfig } from 'wagmi';
 
 const Validation = () => {
 	const { t } = useTranslation();
@@ -32,6 +33,8 @@ const Validation = () => {
 	const [success, setSuccess] = useState('');
 	const navigate = useNavigate();
 	const { mutate: mint, isPending, data, status } = useMint();
+	const [loading, setLoading] = useState(false);
+	const config = useConfig();
 
 	const nextLocked = useMemo(() => {
 		return BigInt(DEFAULT_MINIMAL_STAKE) * 10n ** 18n > staked;
@@ -149,28 +152,60 @@ const Validation = () => {
 	};
 
 	const handleMint = async () => {
-		const code = JSON.parse(localStorage.getItem('code') || '{}');
-		const inviter = code.inviter;
-		if (code.parent && inviter && code.type !== 'line') {
-			const parent = code.parent;
-			mint({ address: address as Address, inviter: inviter, parent: parent });
-			return;
-		}
-		if (inviter && code.type === 'line') {
-			let tmpParent = code.parent;
-			if (tmpParent === ZeroAddress) {
-				tmpParent = inviter;
+		try {
+			setLoading(true);
+			// check if old
+			const codeJSON = localStorage.getItem('code');
+			if (codeJSON !== null) {
+				const code = JSON.parse(codeJSON || '{}');
+				const inviter = code.inviter;
+				const tmpParent = code.parent || code.inviter;
+				const type = code.type || 'normal';
+				if (type === 'line') {
+					let parent = await findLastLeftMember(tmpParent);
+					if (parent === ZeroAddress) {
+						parent = tmpParent;
+					}
+					mint({ address: address as Address, inviter: inviter, parent: parent });
+				} else {
+					mint({ address: address as Address, inviter: inviter, parent: tmpParent });
+				}
 			}
-			// find left member
-			let parent = await findLastLeftMember(tmpParent || inviter);
-			if (parent === ZeroAddress) {
-				parent = inviter;
+			// check if new
+			const refJSON = localStorage.getItem('ref');
+			if (refJSON !== null) {
+				const ref = JSON.parse(refJSON || '{}');
+				const inviter = await fetchAddressByToken(BigInt(ref.inviter), config);
+				const tmpParentId = ref.parent || ref.inviter;
+				const tmpParent = await fetchAddressByToken(BigInt(tmpParentId), config);
+				const type = ref.type || 'N';
+				const side = ref.side || 'L';
+
+				if (type === 'S' && side === 'L') {
+					let parent = await findLastLeftMember(tmpParent);
+					if (parent === ZeroAddress) {
+						parent = tmpParent;
+					}
+					mint({ address: address as Address, inviter: inviter, parent: parent });
+				} else if (type === 'S' && side === 'R') {
+					// check if parent has right child
+					// const rightChild =
+					// if do not have, then create right child
+					// if have, then create left child for right child
+				} else if (type === 'N' && side === 'L') {
+				} else if (type === 'N' && side === 'R') {
+				} else {
+					mint({ address: address as Address, inviter: inviter, parent: tmpParent });
+				}
 			}
-			mint({ address: address as Address, inviter: inviter, parent: parent });
-			return;
+		} finally {
+			setLoading(false);
 		}
-		mint({ address: address as Address, inviter: inviter, parent: code.parent || inviter });
 	};
+
+	const refJSON = localStorage.getItem('ref');
+	const codeJSON = localStorage.getItem('code');
+	const isRef = refJSON !== null || codeJSON !== null;
 
 	if (validation === null) {
 		return null;
@@ -187,13 +222,12 @@ const Validation = () => {
 		);
 	}
 
-	const code = JSON.parse(localStorage.getItem('code') || '{}');
-	if (validation && validation.key === 'has_pass' && !hasPass && code.inviter) {
+	if (validation && validation.key === 'has_pass' && !hasPass && isRef) {
 		return (
 			<div className={'mt-10 sm:mt-4 flex flex-row justify-between items-center gap-2'}>
 				<div className={'text-green-500 text-sm'}>{t('validation.youHaveBeenInvited')}</div>
 				<Button onClick={handleMint} className={'w-48'} disabled={hasPass}>
-					{isPending ? <Loader className={'animate-spin'} /> : 'Mint pass'}
+					{isPending || loading ? <Loader className={'animate-spin'} /> : 'Mint pass'}
 				</Button>
 			</div>
 		);

@@ -40,8 +40,9 @@ function Layout() {
 				return <BookIcon className={'w-5 h-5 '} />;
 		}
 	};
-	const code = JSON.parse(localStorage.getItem('code') || '{}');
-	const parent = code.inviter;
+	const refJSON = localStorage.getItem('ref');
+	const codeJSON = localStorage.getItem('code');
+	const isRef = refJSON !== null || codeJSON !== null;
 	return (
 		<div className={'p-2 md:p-3 lg:p-4 text-white h-full flex flex-col gap-8 md:gap-6'}>
 			<ScrollRestoration />
@@ -63,12 +64,12 @@ function Layout() {
 				))}
 			</div>
 			<div className={'relative w-full'}>
-				<div className={cn(!hasPass && !parent && 'blur pointer-events-none')}>
+				<div className={cn(!hasPass && !isRef && 'blur pointer-events-none')}>
 					<Outlet />
 				</div>
-				{!hasPass && !parent && (
+				{!hasPass && !isRef && (
 					<div className={'absolute top-[200px]  flex z-[10] justify-center w-full'}>
-						<div className={cn(!hasPass && !parent && 'bg-primary-light text-center border rounded-lg p-4 flex flex-col items-start', 'bg-secondary')}>
+						<div className={cn(!hasPass && !isRef && 'bg-primary-light text-center border rounded-lg p-4 flex flex-col items-start', 'bg-secondary')}>
 							<div className={'text-lg'}>{t('contentIsLockedForYou')}</div>
 							<br />
 							<div className={'text-secondary-foreground'}>{t('newUsers')}:</div>
